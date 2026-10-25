@@ -56,8 +56,8 @@ const service: Service = {
     },
   ],
   prepare: [
-    'Passport and the travel and immigration documents the partner agency advised, kept in hand luggage.',
-    'The letter from the college or course provider, and any other letters the partner agency says to carry.',
+    'Passport and the travel and immigration documents you need, kept in hand luggage. The official website, or your agency if you have one, lists them.',
+    'The letter from your college or course provider, and any other letters you have been told to carry.',
     'The address of the accommodation for the first nights, with proof of the booking.',
     'Flight details, shared with me in advance.',
     'Some euro in cash and a bank card that works abroad.',
@@ -66,7 +66,7 @@ const service: Service = {
     'Any medicines needed in the first days, with a copy of the prescription.',
   ],
   prepareNote:
-    'This is general guidance. The partner agency and the official Immigration Service Delivery website say exactly which documents to carry for immigration control at the airport.',
+    'This is general guidance. The official Immigration Service Delivery website, and your agency if you have one, say exactly which documents to carry for immigration control at the airport.',
   goodToKnow: [
     {
       title: 'Keep documents in your hand luggage',

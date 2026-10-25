@@ -54,8 +54,8 @@ for (const file of textFiles) {
     continue;
   }
   if (/[\u2014\u2013]/.test(text)) problems.push(`Dash character (em or en dash) found in ${rel(file)}`);
-  const hits = text.match(/students?/gi);
-  if (hits && file.includes(`${path.sep}src${path.sep}`)) studentHits.set(rel(file), hits.length);
+  const hits = text.match(/\bstudents?\b/gi);
+  if (hits && /[\\/]src[\\/]/.test(file)) studentHits.set(rel(file), hits.length);
 }
 notes.push(`"student" used in: ${[...studentHits].map(([f, n]) => `${f} (${n})`).join(', ') || 'none'}`);
 

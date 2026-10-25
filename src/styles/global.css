@@ -139,11 +139,11 @@
     padding-block: 64px;
     /* Off-screen sections are laid out only when they come near the screen, which keeps long pages fast */
     content-visibility: auto;
-    contain-intrinsic-size: auto 900px;
+    contain-intrinsic-block-size: auto 900px;
   }
   .cv-auto {
     content-visibility: auto;
-    contain-intrinsic-size: auto 600px;
+    contain-intrinsic-block-size: auto 600px;
   }
   @media (min-width: 1024px) {
     .section {

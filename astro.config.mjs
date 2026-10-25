@@ -11,6 +11,8 @@ export default defineConfig({
   base: process.env.BASE_PATH || '/',
   trailingSlash: 'always',
   devToolbar: { enabled: false },
+  // Keep the spaces between words and links that start on a new line in the source
+  compressHTML: false,
   build: { format: 'directory' },
   integrations: [
     sitemap({

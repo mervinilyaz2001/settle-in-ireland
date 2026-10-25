@@ -1,191 +1,225 @@
 # Settle in Ireland website
 
-The marketing website for **Settle in Ireland** (settleinireland.com), an independent arrival and
-settling-in support service. Built with [Astro](https://astro.build) and Tailwind CSS as a fully static
-site: no server, no database, no cookies and no tracking.
+The website for **Settle in Ireland**, an independent arrival and settling-in support service.
+Built with [Astro](https://astro.build) and Tailwind CSS as a fully static site.
+
+- **Live (GitHub Pages):** https://mervinilyaz2001.github.io/settle-in-ireland/
+- **Repository:** https://github.com/mervinilyaz2001/settle-in-ireland
+- **Intended domain:** settleinireland.com (not registered yet, see section 4)
+
+Almost everything you will want to change is in **one file: `src/config/site.ts`**. Anything still in
+**[SQUARE BRACKETS]** shows on the site with a **yellow highlight** until you replace it.
 
 ---
 
 ## 1. Run it on your computer
 
-You need **Node.js 22.23.4 or newer** (Node 24 LTS recommended, from nodejs.org).
+You need **Node.js 22.23.4 or newer** (Node 24 LTS is installed on this PC). If a terminal says
+`npm is not recognized`, close it and open a new one: terminals opened before Node was installed
+cannot see it.
 
 ```bash
-npm install          # once, to download the building blocks
-npm run dev          # live preview at http://localhost:4321 while you edit
-npm run build        # builds the finished site into the dist/ folder
-npm run preview      # shows the built site at http://localhost:4321
-npm run check:content  # run after a build: checks wording, links, disclaimers and page titles
-npm run brand        # only if you change the logo: regenerates logos, favicons and the social image
+npm install            # once, to download the building blocks
+npm run dev            # live preview at http://localhost:4321 while you edit
+npm run build          # builds the finished site into the dist/ folder
+npm run preview        # shows the built site at http://localhost:4321
+npm run check:content  # run after a build: wording, links, titles, disclaimers, prices
+npm run brand          # only if the logo changes: regenerates logos, favicons and the social image
 ```
 
-## 2. Publish it
+## 2. How publishing works
 
-**GitHub Pages (set up already).** Every push to the `main` branch builds the site and publishes it at
-https://mervinilyaz2001.github.io/settle-in-ireland/ (see `.github/workflows/deploy.yml`). You can follow each
-build under the repository's **Actions** tab. The only one-time setting is in the repository on GitHub:
-Settings > Pages > Build and deployment > Source: **GitHub Actions**.
+Every push to the **`main`** branch publishes automatically. GitHub runs `.github/workflows/deploy.yml`,
+which builds the site and puts it on GitHub Pages in about a minute. Follow each run under the
+repository's **Actions** tab. A red cross means the build failed and the previous version stays live.
 
-The site is a folder of static files (`dist/`), so any static host works. All three below have free plans.
+GitHub Pages is set to **Source: GitHub Actions** (Settings > Pages). Leave that as it is.
 
-| Host | What to do |
-|---|---|
-| **Netlify** | New site from Git (or drag the `dist` folder onto app.netlify.com/drop). Settings are already in `netlify.toml`. |
-| **Vercel** | Import the project. It detects Astro. Settings are in `vercel.json`. |
-| **Cloudflare Pages** | Create a project. Framework preset: Astro. Build command `npm run build`, output folder `dist`. Set the environment variable `NODE_VERSION` to `24`. |
+The site can also be hosted on Netlify (`netlify.toml`), Vercel (`vercel.json`) or Cloudflare Pages
+(build command `npm run build`, output folder `dist`, environment variable `NODE_VERSION=24`).
 
-Then point **settleinireland.com** at the host (each host has a "Custom domain" page that explains the DNS records)
-and turn on HTTPS (automatic on all three).
+## 3. Before launch: decisions and details still needed
 
-## 3. Where to change things
+Change these in `src/config/site.ts` unless another file is named. Each one is highlighted on the site
+until it is done.
 
-Almost everything lives in **one file: `src/config/site.ts`**. Change a value there and every page, button,
-form, footer and search engine tag updates.
+**About you**
+- [ ] `ownerBio` and `ownerStory`: a few sentences in your own words. No credentials or years of experience you cannot back up.
+- [ ] `ownerPhoto`: a friendly portrait, see section 8.
+- [ ] `languages`: the languages you speak.
+- [ ] `location`: confirm "Dublin, Ireland" is how you want it shown.
 
-| What | Setting in `src/config/site.ts` |
-|---|---|
-| WhatsApp number (international format, no + or spaces, e.g. `353871234567`) | `whatsappNumber` |
-| Phone number shown for "Call" | `phone` |
-| Email address | `email` |
-| Your name, bio, story and photo (About page) | `ownerName`, `ownerBio`, `ownerStory`, `ownerPhoto` |
-| Languages you speak (FAQ, About) | `languages` |
-| Where you are based | `location` |
-| Reply time | `responseTime` |
-| Airports covered | `airportsCovered` |
-| Taxi or transport cost note (airport pickup) | `pickupTransportNote` |
-| How long WhatsApp support lasts | `supportPeriod` |
-| The fee, package name and the two payments | `fee.amount`, `fee.title`, `fee.payments` |
-| **When the second payment is due** (e.g. "On the client's arrival in Ireland.") | `fee.payments[1].when` |
-| The note under the second payment | `fee.milestoneNote` |
-| Payment methods and receipts | `fee.paymentMethods` |
-| Cancellation and refund wording (Fees page and Terms) | `fee.cancellationPolicy` |
-| "Already supporting clients..." line | `currentMarkets` |
-| Pre-filled WhatsApp messages | `whatsappMessages` |
-| Social media profiles (only shown when filled in) | `social` |
-| Legal name, postal address, registration, policy date | `legal` |
-| Testimonials | `showTestimonials`, `testimonials` (see section 5) |
-| Map on the Contact page (off) | `showMap`, `mapEmbedUrl` |
-| Analytics (off) | `analytics` (see section 7) |
-| Keep the site out of Google until launch | `noindex` |
-
-Anything still in **[SQUARE BRACKETS]** shows on the site with a **yellow highlight**, so a quick scroll
-through the preview shows what is left to fill in.
-
-Other content:
-
-- **Services**: one file per service in `src/data/services/`. The menu, footer, services grid, service pages
-  and "Other services" lists are all built from these files.
-- **FAQs**: `src/data/faqs.ts` (the FAQ page, the homepage preview and the FAQ search engine data).
-  Service-specific questions are inside each service file.
-- **Official website links**: `src/data/official.ts` (checked on 25 October 2026).
-- **Disclaimer wording**: `src/data/disclaimers.ts`.
-- **Colours and fonts**: the `@theme` block at the top of `src/styles/global.css`.
-
-## 4. Pre-launch checklist
-
-Work through this before the site goes live.
-
-**Must do**
-
-- [x] `whatsappNumber`: set to 353899741681.
-- [x] `phone`: set to +353 89 974 1681.
-- [ ] `email`: confirm `hello@settleinireland.com` is set up and receiving mail.
-- [x] `ownerName`: Mizan Mohammed.
-- [ ] `ownerBio`, `ownerStory`: write these in your own words (About page).
-- [ ] `languages`: e.g. "English and Bengali".
+**Service and pricing**
+- [ ] `inPersonArea`: where you can meet clients in person.
+- [ ] `travelLimits`: limits for airport pickups and in-person help, and any extra cost outside them.
+- [ ] `airportsCovered`, `supportPeriod`, `pickupTransportNote`: confirm each is accurate.
+- [ ] `fee.payments[1].when`: confirm the second payment is due once the IRP appointment is confirmed.
+- [ ] `fee.appointmentDelayPolicy`: what happens to the second payment if the IRP appointment is delayed, unavailable, rescheduled or cancelled.
 - [ ] `fee.paymentMethods`: how clients pay, and that receipts are given.
-- [ ] `fee.cancellationPolicy`: check the draft wording, remove `[OWNER TO CONFIRM]`, and make sure it matches the Terms.
-- [ ] `fee.payments[1].when`: confirm when the second payment is due.
-- [ ] `supportPeriod`, `airportsCovered`, `pickupTransportNote`, `location`, `responseTime`: confirm each one is true.
+- [ ] `fee.cancellationPolicy`: check the draft, remove `[OWNER TO CONFIRM]`, and make sure it matches the Terms.
+- [ ] `responseTime`: optional. Leave as `null` unless you want to promise a reply time.
+
+**Education agencies** (`agency` in `site.ts`)
+- [ ] `capacity`, `payment`, `reporting`, `escalation`.
+
+**Legal**
 - [ ] `legal.ownerLegalName`, `legal.postalAddress`, `legal.businessRegistration`, `legal.lastUpdated`.
-- [ ] Privacy Policy: replace the two `[12 months]` retention periods in `src/pages/privacy-policy.astro` with your real periods.
-- [ ] **Have the Privacy Policy and Terms of Service reviewed** by a solicitor or adviser (both are templates, not legal advice).
-- [ ] Send yourself a test enquiry from both forms (Contact page and Partner Agencies page), by WhatsApp and by email.
-- [ ] Search the site for yellow highlights: there should be none left.
+- [ ] Data retention periods in `src/pages/privacy-policy.astro` (two `[OWNER TO CONFIRM: e.g. 12 months]`).
+- [ ] **Have the Privacy Policy and Terms reviewed** by a solicitor or adviser against GDPR and Irish consumer law. They are templates, and having them does not by itself make the business compliant.
 
-**Launch day**
+**Contact and launch**
+- [ ] Register **settleinireland.com** and set up the mailbox, then set `emailActive: true` (section 4).
+- [ ] Connect the enquiry form (section 5) and send yourself a test enquiry from both forms.
+- [ ] Optional: analytics and Search Console (section 6).
+- [ ] Launch day: set `noindex: false` so search engines can list the site.
 
-- [ ] Set `noindex: false` in `src/config/site.ts`, so search engines can list the site.
-- [ ] Build and publish, then open settleinireland.com on a phone and check the WhatsApp buttons open a chat with you.
-- [ ] Add the site to Google Search Console and submit `https://settleinireland.com/sitemap-index.xml`.
+## 4. Custom domain (settleinireland.com)
 
-**Nice to have**
+**Current status (checked 25 Oct 2026): settleinireland.com is not registered.** It has no DNS records and
+the .com registry has no entry for it. Until it is registered:
+- the site stays at the GitHub Pages address above;
+- the email address `hello@settleinireland.com` cannot receive mail, so it is hidden on the site (`emailActive: false`).
 
-- [ ] A friendly photo of you for the About page (section 6).
-- [ ] Social profile links in `social`.
-- [ ] Real testimonials, with permission (section 5).
+**To connect it once you own it:**
 
-## 5. Adding testimonials
+1. Register `settleinireland.com` with any registrar (for example Blacknight, Namecheap or Cloudflare).
+2. Recommended: verify the domain in GitHub first, which stops anyone else using it on GitHub Pages.
+   GitHub > your profile picture > **Settings > Pages > Add a domain**, then add the TXT record GitHub shows you at your registrar.
+3. At your registrar, add these DNS records:
 
-The testimonials section is built but hidden. It only appears when **both** are true:
-`showTestimonials: true` **and** there is at least one entry in `testimonials`.
+   | Type | Name / Host | Value |
+   |---|---|---|
+   | A | `@` | `185.199.108.153` |
+   | A | `@` | `185.199.109.153` |
+   | A | `@` | `185.199.110.153` |
+   | A | `@` | `185.199.111.153` |
+   | AAAA | `@` | `2606:50c0:8000::153` |
+   | AAAA | `@` | `2606:50c0:8001::153` |
+   | AAAA | `@` | `2606:50c0:8002::153` |
+   | AAAA | `@` | `2606:50c0:8003::153` |
+   | CNAME | `www` | `mervinilyaz2001.github.io` |
 
-```ts
-showTestimonials: true,
-testimonials: [
-  { quote: 'Their exact words.', name: 'First name and initial', context: 'Client, arrived September 2026' },
-  { quote: 'Their exact words.', name: 'Partner agency, Dhaka' },
-],
+   Remove any other A, AAAA or CNAME records for `@` and `www` that the registrar added by default.
+   Keep any MX records your email provider needs.
+4. In the repository: **Settings > Pages > Custom domain**, enter `settleinireland.com` and save.
+   Wait for the DNS check to pass (minutes to a few hours), then tick **Enforce HTTPS**.
+5. Run the deploy again: **Actions > Deploy to GitHub Pages > Run workflow**. The build picks up the new
+   address automatically, so links, canonical URLs, the sitemap and social previews switch to
+   `https://settleinireland.com` with no code change. GitHub then redirects the old
+   `github.io/settle-in-ireland/` address to the new domain, so there is no duplicate site for Google.
+6. Open https://settleinireland.com and https://www.settleinireland.com to check both load over HTTPS.
+7. Once your mailbox works, set `emailActive: true`.
+
+Only consider the domain connected once step 6 works.
+
+## 5. Enquiry form
+
+**Current status: no form provider is connected.** The forms validate the answers, then open the
+enquiry in WhatsApp, ready to send to you. They never show a fake "sent" message.
+
+To have enquiries emailed to you instead, connect **one** free provider:
+
+**Option A: Formspree** (https://formspree.io)
+1. Create a free account and a new form. Set the email address enquiries should go to.
+2. Copy the form ID from its endpoint, for example `https://formspree.io/f/abcdwxyz` → `abcdwxyz`.
+3. In `src/config/site.ts`: `forms: { provider: 'formspree', formspreeId: 'abcdwxyz', web3formsKey: null }`.
+
+**Option B: Web3Forms** (https://web3forms.com)
+1. Enter your email address on the site to get an access key.
+2. In `src/config/site.ts`: `forms: { provider: 'web3forms', formspreeId: null, web3formsKey: 'your-access-key' }`.
+   This key is designed to be public, so it is safe in the website code.
+
+Then push the change, open the live Contact page and the Agency Partnerships page, and send a test from each.
+You should receive two emails. On Formspree, confirm your email address the first time.
+
+**What you receive:** every field the person filled in, plus `form_type` (`individual` or `agency`), so you
+can tell the two kinds of lead apart. The subject is "Enquiry from [name]" or "Agency partnership enquiry
+from [agency]". Replies go straight to the sender's email address.
+
+**Spam protection:** a hidden field that people never see but bots fill in, and a check that rejects forms
+sent less than 2.5 seconds after the page loads. Both show "Thank you" to the bot and send nothing.
+Formspree and Web3Forms add their own spam filtering.
+
+**Privacy:** the Privacy Policy automatically names the provider once one is connected.
+
+## 6. Analytics and Search Console
+
+Everything is off by default, so the site sets no cookies and shows no banner.
+
+**Google Analytics 4**
+1. Create a GA4 property at https://analytics.google.com and a **Web** data stream for the site's address.
+2. Copy the Measurement ID (it looks like `G-XXXXXXXXXX`) into `analytics.ga4MeasurementId`.
+3. Push. A cookie banner then appears. GA4 only loads after a visitor clicks **Accept**. "Reject" keeps it off,
+   and "Cookie settings" in the footer lets visitors change their mind.
+4. Check it works: accept cookies on the live site, then open GA4 > **Reports > Realtime** and click a WhatsApp button.
+
+**Events sent** (never any names, emails, phone numbers or messages):
+
+| Event | Details | Meaning |
+|---|---|---|
+| `whatsapp_click` | `location` (e.g. `hero_text`, `cta_band`, `floating_button`), `lead_type` (`individual` or `agency`) | Someone tapped a WhatsApp link |
+| `enquiry_submit` | `form` (`individual` or `agency`), `method` (`form`, `whatsapp` or `email`) | An enquiry was sent, or handed to WhatsApp or email |
+| `enquiry_error` | `form` | The form provider could not be reached |
+
+In GA4, mark `enquiry_submit` as a **key event** (Admin > Events). To separate individual and agency leads,
+register `form` and `lead_type` as custom dimensions (Admin > Custom definitions).
+
+**Cookieless alternative:** Plausible or Umami need no banner. Set `analytics.provider` and `siteId`
+(see the comments in `site.ts`). The same events are sent.
+
+**Google Search Console**
+1. Add the property at https://search.google.com/search-console (use the final domain once it is connected).
+2. Choose the **HTML tag** method and paste only the `content="..."` value into `analytics.googleSiteVerification`.
+3. Push, click **Verify**, then submit the sitemap: `sitemap-index.xml` on your site's address.
+
+## 7. Where to change things
+
+| What | Where |
+|---|---|
+| WhatsApp number, phone, email, reply time | `src/config/site.ts` |
+| Price, payments, cancellation and delay wording | `fee` in `src/config/site.ts` |
+| Pre-filled WhatsApp messages | `whatsappMessages` in `src/config/site.ts` |
+| The seven services (one file each) | `src/data/services/` |
+| FAQs | `src/data/faqs.ts` |
+| Disclaimer wording | `src/data/disclaimers.ts` |
+| Official website links | `src/data/official.ts` (checked 25 Oct 2026) |
+| Photos and their credits | `src/data/photos.ts` and `src/assets/photos/` |
+| Colours, fonts, spacing | the `@theme` block in `src/styles/global.css` |
+
+## 8. Photos
+
+- **Your photo:** save a portrait as `public/images/owner.webp` (about 800 x 1000 pixels, under 200 KB) and set
+  `ownerPhoto: '/images/owner.webp'`. Until then a tasteful initials placeholder is shown.
+- **Other photos** are free-licence photos from Unsplash (Unsplash License, commercial use allowed, no credit
+  required): the River Liffey by NIR HIMI, the Ha'penny Bridge by Sophie Popplewell, and an airport walkway by
+  Briana Tozour. They show Dublin and travel in general, never your clients or your service, and are not
+  captioned as such. Credits and links are in `src/data/photos.ts`. To add more, put the image in
+  `src/assets/photos/`, add it to `photos.ts`, and use `<Photo photo="name" ... />`. Images are converted to
+  AVIF and WebP automatically.
+
+## 9. Testimonials
+
+Hidden until real ones exist. Add each quote word for word, with the person's written permission, to
+`testimonials` in `site.ts`, then set `showTestimonials: true`. Until then a "What to expect" section is shown.
+Never add made-up quotes, review scores or client numbers.
+
+## 10. Old addresses
+
+These older pages redirect to the new ones, so old links keep working: `/fees/` → `/pricing/`,
+`/partner-agencies/` → `/agency-partnerships/`, `/services/` and `/moving-to-ireland-on-your-own/` →
+`/individual-support/`.
+
+## 11. Project structure
+
 ```
-
-Only publish real quotes, word for word, with the person's written permission. Never add sample or made-up
-quotes, numbers of clients, reviews or partner logos.
-
-## 6. Adding real photos
-
-- **Your photo (About page)**: save it as `public/images/owner.webp` (about 800 x 1000 pixels, under 200 KB),
-  then set `ownerPhoto: '/images/owner.webp'` in `src/config/site.ts`.
-- The rest of the site uses drawn illustrations and icons, so it does not need photos. If you add any, use
-  your own photos or free-licence ones (e.g. Unsplash or Pexels), keep them generic, never suggest a stock
-  photo shows you or a real client, and note the credit in a comment next to where the photo is used.
-  Save photos as WebP and add `loading="lazy"` to any image below the top of the page.
-
-## 7. Analytics (optional)
-
-Off by default, so the site sets no cookies and needs no cookie banner. To turn on a cookieless, privacy-friendly
-tool, edit `analytics` in `src/config/site.ts`:
-
-```ts
-analytics: { enabled: true, provider: 'plausible', siteId: 'settleinireland.com', scriptUrl: null },
-// or
-analytics: { enabled: true, provider: 'umami', siteId: 'your-website-id', scriptUrl: 'https://cloud.umami.is/script.js' },
+src/config/site.ts            All settings
+src/data/                     Services, FAQs, photos, official links, disclaimers
+src/components/               Header, Footer, forms, price card, FAQ accordion, analytics and more
+src/layouts/                  BaseLayout (every page), ServicePageLayout (7 service pages), Redirect
+src/pages/                    One file per page; services/[slug].astro builds the service pages
+src/scripts/analytics.ts      Event tracking
+src/styles/global.css         Design tokens and shared styles
+public/                       Logos, favicons, social image, security headers
+scripts/                      Brand file generator and content checks
+.github/workflows/deploy.yml  Builds and publishes to GitHub Pages
 ```
-
-Plausible and Umami do not set cookies, so no banner is needed. If you ever use a tool that sets cookies
-(for example Google Analytics), you must add a cookie consent banner first.
-
-## 8. What is in the project
-
-```
-src/config/site.ts          All the settings above
-src/data/services/*.ts      One file per service
-src/data/faqs.ts            FAQs
-src/data/official.ts        Official website links
-src/data/disclaimers.ts     Independence and "no advice" wording
-src/components/             Header, Footer, buttons, forms, FAQ accordion, price card and more
-src/layouts/                BaseLayout (every page) and ServicePageLayout (the 7 service pages)
-src/pages/                  One file per page; services/[slug].astro builds the service pages
-src/styles/global.css       Colours, fonts and shared styles
-public/                     Logos, favicons, social image, security headers
-scripts/generate-brand.mjs  Makes the logo files, favicons and social image
-scripts/check-content.mjs   Pre-launch content checks
-```
-
-**Brand files** in `public/`: `logo-light.svg/png` (for light backgrounds), `logo-dark.svg/png` (for dark
-backgrounds), `favicon.svg`, `favicon-32x32.png`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png` and
-`og-default.png` (the 1200 x 630 image shown when the site is shared on WhatsApp, Facebook or LinkedIn).
-
-## 9. How the enquiry forms work
-
-The forms do not send anything to a server and do not store anything. When someone presses
-**Send on WhatsApp**, their answers are turned into a tidy message and WhatsApp opens with it ready to send to
-your number. **Send by email instead** opens their email app with the same message. A confirmation on the page
-tells them to press send, with buttons to try again or copy the message if nothing opened.
-
-## 10. Checking quality (Lighthouse)
-
-1. `npm run build` then `npm run preview`.
-2. Open the preview in Chrome, press F12, open the **Lighthouse** tab, choose **Mobile**, and run it.
-
-Note: while `noindex` is `true`, Lighthouse's SEO score is lower on purpose ("Page is blocked from indexing").
-It goes back up once you set `noindex: false` at launch.
