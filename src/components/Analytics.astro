@@ -1,0 +1,13 @@
+---
+/**
+ * Optional privacy-friendly analytics. Off by default (see analytics in src/config/site.ts).
+ * Plausible and Umami do not set cookies, so no cookie banner is needed when one of them is on.
+ */
+import { site } from '../config/site';
+
+const { enabled, provider, siteId, scriptUrl } = site.analytics;
+const on = enabled && provider && siteId;
+---
+
+{on && provider === 'plausible' && <script is:inline defer data-domain={siteId} src={scriptUrl ?? 'https://plausible.io/js/script.js'} />}
+{on && provider === 'umami' && <script is:inline defer data-website-id={siteId} src={scriptUrl ?? 'https://cloud.umami.is/script.js'} />}

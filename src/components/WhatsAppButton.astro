@@ -1,0 +1,35 @@
+---
+import Icon from './Icon.astro';
+import { waLink, waMessages } from '../lib/whatsapp';
+
+interface Props {
+  /** The pre-filled message. Defaults to the general message from the site settings. */
+  message?: string;
+  label?: string;
+  size?: 'sm' | 'md' | 'lg';
+  block?: boolean;
+  class?: string;
+  /** Extra classes for the visible label, for example to hide it on smaller screens. */
+  labelClass?: string;
+}
+
+const {
+  message = waMessages.general,
+  label = 'Message on WhatsApp',
+  size = 'md',
+  block = false,
+  class: className,
+  labelClass,
+} = Astro.props;
+---
+
+<a
+  href={waLink(message)}
+  target="_blank"
+  rel="noopener"
+  class:list={['btn btn-wa', size === 'lg' && 'btn-lg', size === 'sm' && 'btn-sm', block && 'btn-block', className]}
+>
+  <Icon name="whatsapp" size={size === 'lg' ? 24 : 22} />
+  <span class={labelClass}>{label}</span>
+  <span class="sr-only"> (opens WhatsApp in a new tab)</span>
+</a>

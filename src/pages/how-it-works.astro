@@ -1,0 +1,174 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTASection from '../components/CTASection.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import { site } from '../config/site';
+import { formatPrice } from '../lib/format';
+import { waMessages } from '../lib/whatsapp';
+import { url } from '../lib/url';
+
+const [first, second] = site.fee.payments;
+
+const phases: { id: string; icon: string; label: string; title: string; intro: string; steps: { title: string; text: string; payment?: boolean }[] }[] = [
+  {
+    id: 'before',
+    icon: 'plane',
+    label: 'Phase 1',
+    title: 'Before you travel',
+    intro: 'Getting ready, so arrival day feels calm and organised.',
+    steps: [
+      { title: 'First contact on WhatsApp', text: 'You or your partner agency send me a message. I introduce myself and answer your questions.' },
+      { title: `${formatPrice(first.amount)} to start`, text: `Due: ${first.when} This first payment covers the pre-arrival planning work.`, payment: true },
+      { title: 'Arrival planning', text: 'You share your flight details and I plan where and when we will meet.' },
+      { title: 'Accommodation help', text: 'I help you understand your options, check listings and avoid rental scams.' },
+      { title: 'Pre-arrival checklist', text: 'I send a simple checklist for your documents, hand luggage, money and phone.' },
+    ],
+  },
+  {
+    id: 'arrival',
+    icon: 'plane-landing',
+    label: 'Phase 2',
+    title: 'When you arrive',
+    intro: 'A familiar contact waiting for you, so you are not alone on day one.',
+    steps: [
+      { title: 'Airport pickup', text: `I meet you at the airport. ${site.airportsCovered}` },
+      { title: 'Getting to your accommodation', text: 'I help you travel to your accommodation and check you can get in.' },
+      { title: 'A working phone', text: 'I help you get a local SIM card or eSIM, so you can call and use data.' },
+      { title: 'First days orientation', text: 'I help you find the shops, pharmacy and transport stops near you.' },
+    ],
+  },
+  {
+    id: 'first-weeks',
+    icon: 'compass',
+    label: 'Phase 3',
+    title: 'Your first weeks',
+    intro: 'The practical steps that help you settle in properly.',
+    steps: [
+      { title: 'IRP guidance', text: 'I explain the official registration process and help you prepare your documents.' },
+      { title: 'PPS Number', text: 'I explain how to apply through the official channels and help you prepare.' },
+      { title: 'Bank account', text: 'I explain your options and the documents banks usually ask for.' },
+      { title: 'TFI Leap Card', text: 'I help you get the right travel card and plan your regular journeys.' },
+      { title: 'Local orientation and WhatsApp support', text: `I help with daily life questions and stay available on WhatsApp ${site.supportPeriod}.` },
+      { title: `${formatPrice(second.amount)} at the milestone`, text: `Due: ${second.when} ${site.fee.milestoneNote}`, payment: true },
+    ],
+  },
+];
+
+const agencyFlow = [
+  'You handle admission and visa',
+  'You refer the client, with their consent',
+  'I contact the client before departure',
+  'I support the client in Ireland',
+  'I keep you updated',
+];
+---
+
+<BaseLayout
+  title="How It Works | Settle in Ireland"
+  description="How arrival and settling-in support works, step by step: before you travel, when you arrive in Ireland and during your first weeks."
+>
+  <PageHero
+    eyebrow="How it works"
+    title="From first message to settled in"
+    intro="A clear plan in three phases. You always know what happens next, and who to ask."
+    crumbs={[{ label: 'How It Works', href: '/how-it-works/' }]}
+  >
+    <nav aria-label="Phases" class="mt-8">
+      <ul class="flex flex-wrap gap-2">
+        {
+          phases.map((p) => (
+            <li>
+              <a href={`#${p.id}`} class="inline-flex min-h-11 items-center gap-2 rounded-full border border-line-strong bg-white px-4 font-semibold text-ink hover:border-brand-600">
+                <Icon name={p.icon} size={18} class="text-accent-600" /> {p.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </PageHero>
+
+  <section class="section" aria-label="The three phases">
+    <div class="container-site">
+      <ol class="grid gap-14 lg:gap-20">
+        {
+          phases.map((phase, pi) => (
+            <li id={phase.id} class="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:gap-14">
+              <div class="lg:sticky lg:top-28 lg:self-start">
+                <span class:list={['icon-tile !h-14 !w-14 !rounded-2xl', pi === 1 && '!bg-gold-100 !text-gold-800']}>
+                  <Icon name={phase.icon} size={28} />
+                </span>
+                <p class="mt-5 font-display text-[0.85rem] font-bold uppercase tracking-[0.12em] text-accent-700">{phase.label}</p>
+                <h2 class="mt-1 text-[1.9rem] sm:text-[2.3rem]">{phase.title}</h2>
+                <p class="lead mt-3">{phase.intro}</p>
+              </div>
+              <ol class="relative grid gap-4 before:absolute before:bottom-8 before:left-[27px] before:top-8 before:border-l-2 before:border-dotted before:border-brand-300 sm:before:left-[31px]">
+                {phase.steps.map((step, si) => {
+                  const isPayment = Boolean(step.payment);
+                  return (
+                    <li class:list={['card relative flex gap-4 p-5 sm:gap-5 sm:p-6', isPayment && '!border-gold-300 !bg-gold-50']} data-reveal>
+                      <span
+                        class:list={[
+                          'relative z-10 grid h-8 w-8 shrink-0 place-items-center rounded-full font-display text-sm font-extrabold sm:h-10 sm:w-10',
+                          isPayment ? 'bg-gold-500 text-brand-950' : 'bg-brand-900 text-white',
+                        ]}
+                      >
+                        {isPayment ? <Icon name="euro" size={16} /> : si + 1}
+                      </span>
+                      <div>
+                        <h3 class="text-[1.1rem]">{step.title}</h3>
+                        <p class="mt-1.5 text-[0.98rem]">{step.text}</p>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ol>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Short version for partner agencies -->
+  <section class="section bg-white" aria-labelledby="agency-flow-heading">
+    <div class="container-site">
+      <div class="rounded-[24px] border border-line bg-canvas p-6 sm:p-10">
+        <SectionHeading
+          id="agency-flow-heading"
+          eyebrow="For partner agencies"
+          title="The same journey, from your side"
+          intro="Your agency stays in the loop from referral to the first weeks in Ireland."
+        />
+        <ol class="mt-8 grid gap-3 md:grid-cols-5">
+          {
+            agencyFlow.map((item, i) => (
+              <li class="flex items-center gap-3 rounded-xl bg-white p-4 shadow-sm md:flex-col md:items-start">
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent-100 font-display font-extrabold text-accent-800">{i + 1}</span>
+                <span class="font-semibold text-ink">{item}</span>
+              </li>
+            ))
+          }
+        </ol>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+          <a href={url('/partner-agencies/')} class="btn btn-primary">
+            Partner agency details <Icon name="arrow-right" size={20} />
+          </a>
+          <WhatsAppButton message={waMessages.partnerAgency} label="Message as a partner agency" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="pt-16 lg:pt-24">
+    <CTASection
+      title="Moving to Ireland soon?"
+      text={`Send me a message on WhatsApp and we can start planning your arrival. ${site.responseTime}`}
+      message={waMessages.client}
+      secondary={{ label: 'Send an enquiry', href: '/contact/' }}
+    />
+  </div>
+</BaseLayout>

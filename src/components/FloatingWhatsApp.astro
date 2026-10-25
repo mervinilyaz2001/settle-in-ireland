@@ -1,0 +1,84 @@
+---
+import Icon from './Icon.astro';
+import { waLink, waMessages } from '../lib/whatsapp';
+
+interface Props {
+  message?: string;
+}
+const { message = waMessages.general } = Astro.props;
+---
+
+<a
+  href={waLink(message)}
+  target="_blank"
+  rel="noopener"
+  class="floating-wa"
+  aria-label="Message Settle in Ireland on WhatsApp (opens in a new tab)"
+  data-floating-wa
+>
+  <Icon name="whatsapp" size={30} />
+</a>
+
+<style>
+  .floating-wa {
+    position: fixed;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    z-index: 30;
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 999px;
+    background: var(--color-wa);
+    color: var(--color-wa-ink);
+    box-shadow:
+      0 0 0 3px #fff,
+      0 14px 30px -10px rgb(5 48 28 / 0.55);
+    transition:
+      transform 0.3s var(--ease-out-soft),
+      opacity 0.3s ease,
+      visibility 0.3s;
+  }
+  .floating-wa:hover {
+    background: var(--color-wa-hover);
+    transform: translateY(-3px);
+  }
+  @media (min-width: 1024px) {
+    .floating-wa {
+      right: 28px;
+      bottom: 28px;
+    }
+  }
+  /* Hidden while someone is typing in a form on a small screen, so it never covers the fields */
+  :global(html.is-typing) .floating-wa {
+    opacity: 0;
+    visibility: hidden;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .floating-wa {
+      animation: wa-in 0.6s var(--ease-out-soft) 0.8s both;
+    }
+    @keyframes wa-in {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.85);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  }
+</style>
+
+<script>
+  const small = window.matchMedia('(max-width: 767px)');
+  document.addEventListener('focusin', (e) => {
+    const t = e.target as HTMLElement;
+    if (small.matches && t.matches('input:not([type="checkbox"]):not([type="radio"]), textarea, select')) {
+      document.documentElement.classList.add('is-typing');
+    }
+  });
+  document.addEventListener('focusout', () => document.documentElement.classList.remove('is-typing'));
+</script>

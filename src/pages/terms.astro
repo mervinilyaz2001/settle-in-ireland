@@ -1,0 +1,151 @@
+---
+/**
+ * ============================================================================
+ * OWNER: PLEASE HAVE THESE TERMS OF SERVICE REVIEWED BEFORE LAUNCH.
+ * This is a plain English template for a small Irish sole trader. It is not legal advice.
+ * Ask a solicitor to check it, in particular the cancellation and refund section and the
+ * limitation of liability. Fee, payment and cancellation wording comes from src/config/site.ts.
+ * ============================================================================
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTASection from '../components/CTASection.astro';
+import Disclaimer from '../components/Disclaimer.astro';
+import PageHero from '../components/PageHero.astro';
+import Text from '../components/Text.astro';
+import { site } from '../config/site';
+import { adviceDisclaimerText, governmentDisclaimerText } from '../data/disclaimers';
+import { services } from '../data/services';
+import { formatPrice, mailHref, packagePrice } from '../lib/format';
+import { url } from '../lib/url';
+---
+
+<BaseLayout
+  title="Terms of Service | Settle in Ireland"
+  description="The terms for using Settle in Ireland's arrival and settling-in support: what is included, fees, payments, cancellations and limits of the service."
+>
+  <PageHero eyebrow="Legal" title="Terms of Service" crumbs={[{ label: 'Terms of Service', href: '/terms/' }]}>
+    <p class="mt-4 text-muted">Last updated: <Text value={site.legal.lastUpdated} /></p>
+  </PageHero>
+
+  <div class="container-site py-14 lg:py-20">
+    <article class="prose-site mx-auto max-w-[46rem] text-[1.02rem]">
+      <p class="lead !mt-0">
+        These terms explain how the Settle in Ireland service works. By paying the first payment, you agree to these terms. If you have a question,
+        please ask before you pay.
+      </p>
+
+      <h2>1. Who I am</h2>
+      <p>
+        Settle in Ireland is run by <Text value={site.legal.ownerLegalName} />, a sole trader based in Ireland ("I", "me"). In these terms, "you" or
+        "the client" means the person receiving the service. A "partner agency" is an agency that refers a client to me.
+      </p>
+
+      <h2>2. The service</h2>
+      <p>
+        I provide practical arrival and settling-in support for international clients moving to Ireland. I act as the client's named local contact and
+        help with the practical steps after arrival. College admissions and visa applications are handled by the partner agency or by the client, not
+        by me.
+      </p>
+
+      <h2>3. What is included</h2>
+      <p>The {site.fee.title} package includes:</p>
+      <ul>
+        {services.map((s) => <li>{s.name}</li>)}
+      </ul>
+      <p>
+        WhatsApp support for practical questions is available {site.supportPeriod}. I confirm the exact support period with you at the start of the
+        service.
+      </p>
+
+      <h2>4. What is not included</h2>
+      <ul>
+        <li>College admissions and visa applications.</li>
+        <li>Legal, immigration, visa, tax, financial or medical advice.</li>
+        <li>Booking, reserving or guaranteeing government appointments of any kind.</li>
+        <li>
+          Government fees, rent, accommodation deposits and booking fees, transport fares, bank charges, phone costs and any other third-party
+          charges. You pay these directly to the provider.
+        </li>
+        <li>Paying any money on your behalf, or signing agreements for you.</li>
+      </ul>
+
+      <h2>5. Fee and payment</h2>
+      <p>The fee is <strong>{packagePrice} {site.fee.perUnit}</strong>, paid in two parts:</p>
+      <ul>
+        {
+          site.fee.payments.map((p) => (
+            <li>
+              <strong>{formatPrice(p.amount)}:</strong> {p.when}
+            </li>
+          ))
+        }
+      </ul>
+      <p>{site.fee.milestoneNote}</p>
+      <p>How to pay: <Text value={site.fee.paymentMethods} /></p>
+      <p>If a partner agency pays on your behalf, we agree this in writing before the service starts.</p>
+
+      <h2 id="cancellations">6. Cancellations and refunds</h2>
+      <p><Text value={site.fee.cancellationPolicy} /></p>
+      <p>
+        Nothing in these terms affects your statutory rights as a consumer under Irish law, including any right you have to cancel a service agreed at a
+        distance.
+      </p>
+
+      <h2>7. An independent service</h2>
+      <p>{governmentDisclaimerText}</p>
+      <p>{adviceDisclaimerText}</p>
+
+      <h2>8. No guarantee of third-party outcomes</h2>
+      <p>
+        Many important outcomes depend on other people and organisations. I will always do my best to help you prepare, but I cannot guarantee, for
+        example:
+      </p>
+      <ul>
+        <li>that accommodation will be found, or that a landlord will accept you;</li>
+        <li>the availability, timing or outcome of any IRP, PPSN or other government appointment or application;</li>
+        <li>that a bank or other provider will approve an account or application;</li>
+        <li>flight times, transport services or the decisions of any college, employer or public body.</li>
+      </ul>
+
+      <h2>9. Your responsibilities</h2>
+      <ul>
+        <li>Give me accurate and up-to-date information, and tell me quickly if your plans change.</li>
+        <li>Check official requirements yourself and keep your own documents safe.</li>
+        <li>Make your own decisions, applications and payments to third parties.</li>
+        <li>Follow the advice of official bodies, and in an emergency call 112 or 999 first.</li>
+      </ul>
+
+      <h2>10. Limitation of liability</h2>
+      <p>
+        I provide the service with reasonable care and skill. I am not responsible for the acts, decisions or charges of third parties, such as
+        landlords, banks, transport providers, colleges or public bodies, or for losses caused by information you did not give me.
+      </p>
+      <p>
+        As far as the law allows, my total liability to you is limited to the amount you have paid me for the service. Nothing in these terms limits
+        liability that cannot be limited under Irish law, such as liability for death or personal injury caused by negligence.
+      </p>
+
+      <h2>11. Privacy</h2>
+      <p>I handle your personal data as explained in the <a href={url('/privacy-policy/')}>Privacy Policy</a>.</p>
+
+      <h2>12. Changes to these terms</h2>
+      <p>
+        I may update these terms from time to time. The version on this page on the date you make the first payment applies to your service.
+      </p>
+
+      <h2>13. Governing law</h2>
+      <p>These terms are governed by the laws of Ireland, and the Irish courts have jurisdiction over any dispute.</p>
+
+      <h2>14. Contact</h2>
+      <p>
+        Email <a href={mailHref('Question about the Terms of Service')}>{site.email}</a> or write to <Text value={site.legal.postalAddress} />.
+      </p>
+    </article>
+
+    <div class="mx-auto mt-14 max-w-[46rem]">
+      <Disclaimer />
+    </div>
+  </div>
+
+  <CTASection title="Questions about these terms?" text={`Ask me before you pay. ${site.responseTime}`} />
+</BaseLayout>

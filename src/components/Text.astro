@@ -1,0 +1,13 @@
+---
+/**
+ * Prints a value from the site settings. Any [PLACEHOLDER] text is highlighted,
+ * so it is easy to spot what still needs to be filled in.
+ */
+interface Props {
+  value: string;
+}
+const { value } = Astro.props;
+const parts = value.split(/(\[[^\]]+\])/g).filter(Boolean);
+---
+
+{parts.map((part) => (/^\[[^\]]+\]$/.test(part) ? <mark class="todo">{part}</mark> : part))}

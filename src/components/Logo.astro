@@ -1,0 +1,39 @@
+---
+import LogoMark from './LogoMark.astro';
+
+interface Props {
+  tone?: 'light' | 'dark';
+  size?: 'md' | 'lg';
+  tagline?: string;
+  class?: string;
+}
+const { tone = 'light', size = 'md', tagline, class: className } = Astro.props;
+const markSize = size === 'lg' ? 46 : 40;
+---
+
+<span class:list={['inline-flex items-center gap-2.5', className]}>
+  <LogoMark size={markSize} tone={tone} class="shrink-0" />
+  <span class="flex flex-col leading-none">
+    <span
+      class:list={[
+        'font-display font-extrabold tracking-[-0.03em] whitespace-nowrap',
+        size === 'lg' ? 'text-[1.4rem]' : 'text-[1.2rem] sm:text-[1.28rem]',
+        tone === 'light' ? 'text-brand-900' : 'text-white',
+      ]}
+    >
+      Settle <span class:list={['font-semibold', tone === 'light' ? 'text-accent-700' : 'text-accent-300']}>in</span> Ireland
+    </span>
+    {
+      tagline && (
+        <span
+          class:list={[
+            'mt-1.5 text-[0.72rem] font-semibold tracking-[0.06em]',
+            tone === 'light' ? 'text-muted' : 'text-brand-200',
+          ]}
+        >
+          {tagline}
+        </span>
+      )
+    }
+  </span>
+</span>

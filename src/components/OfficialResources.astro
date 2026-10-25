@@ -1,0 +1,50 @@
+---
+import Icon from './Icon.astro';
+import type { Resource } from '../data/types';
+
+interface Props {
+  resources: Resource[];
+  title?: string;
+  class?: string;
+}
+
+const { resources, title = 'Official resources', class: className } = Astro.props;
+---
+
+<aside class:list={['card p-6 sm:p-7', className]} aria-labelledby="official-resources-heading">
+  <div class="flex items-center gap-3">
+    <span class="icon-tile !h-10 !w-10 !rounded-xl !bg-brand-50 !text-brand-900">
+      <Icon name="globe" size={20} />
+    </span>
+    <h2 id="official-resources-heading" class="text-[1.25rem]">{title}</h2>
+  </div>
+  <ul class="mt-5 grid gap-3">
+    {
+      resources.map((r) => (
+        <li>
+          <a
+            href={r.url}
+            target="_blank"
+            rel="noopener"
+            class="group flex items-start gap-3 rounded-xl border border-line p-4 transition-colors hover:border-brand-300 hover:bg-brand-50"
+          >
+            <span class="min-w-0 flex-1">
+              <span class="block font-semibold text-ink underline-offset-4 group-hover:underline">{r.label}</span>
+              <span class="mt-1 block text-[0.93rem]">{r.note}</span>
+              <span class="mt-1 block break-all text-[0.82rem] text-muted">{r.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</span>
+            </span>
+            <Icon name="external-link" size={18} class="mt-1 shrink-0 text-brand-600" />
+            <span class="sr-only"> (official website, opens in a new tab)</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="mt-5 flex gap-2.5 text-[0.92rem] text-muted">
+    <Icon name="info" size={18} class="mt-0.5 shrink-0" />
+    <span>
+      These are official external websites and the authoritative source of information. Processes, fees and requirements can change, so
+      always check them directly. Links are for information only and do not mean these organisations endorse Settle in Ireland.
+    </span>
+  </p>
+</aside>

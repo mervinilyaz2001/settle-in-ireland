@@ -1,0 +1,151 @@
+---
+/**
+ * ABOUT PAGE
+ * The owner's name, photo, bio and story come from src/config/site.ts:
+ *   ownerName, ownerPhoto, ownerBio, ownerStory, languages, location
+ * To add a photo, put it in public/images/ (for example public/images/owner.webp, about 800 x 1000 pixels)
+ * and set ownerPhoto: '/images/owner.webp'. Until then, a branded placeholder is shown.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTASection from '../components/CTASection.astro';
+import Disclaimer from '../components/Disclaimer.astro';
+import Icon from '../components/Icon.astro';
+import JsonLd from '../components/JsonLd.astro';
+import LogoMark from '../components/LogoMark.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Text from '../components/Text.astro';
+import { site } from '../config/site';
+import { isPlaceholder } from '../lib/format';
+import { businessSchema } from '../lib/schema';
+import { url } from '../lib/url';
+
+const hasName = !isPlaceholder(site.ownerName);
+const initials = hasName
+  ? site.ownerName
+      .split(/\s+/)
+      .map((p) => p[0])
+      .join('')
+      .slice(0, 2)
+      .toUpperCase()
+  : '';
+
+const values = [
+  { icon: 'user-round', title: 'Personal', text: 'You deal with me directly, from the first message to the first weeks in Ireland.' },
+  { icon: 'shield-check', title: 'Honest', text: 'I explain what I can and cannot do, and I never promise outcomes that depend on others.' },
+  { icon: 'list-checks', title: 'Practical', text: 'Clear steps, simple checklists and links to official sources, in plain English.' },
+  { icon: 'clock', title: 'Responsive', text: `Questions are answered quickly on WhatsApp. ${site.responseTime}` },
+];
+---
+
+<BaseLayout
+  title="About Settle in Ireland | Your Local Contact"
+  description="Settle in Ireland is a one-person, independent arrival and settling-in service. Meet your local contact in Ireland and see how I work."
+>
+  <JsonLd slot="head" data={businessSchema()} />
+
+  <PageHero
+    eyebrow="About"
+    title="A real person in Ireland, on your side"
+    intro="Settle in Ireland is a one-person, independent service. When you work with me, you deal with me directly, from the first WhatsApp message to your first weeks in Ireland."
+    crumbs={[{ label: 'About', href: '/about/' }]}
+  >
+    <div slot="aside" class="mx-auto w-full max-w-[360px] lg:mx-0 lg:ml-auto">
+      <figure class="card overflow-hidden">
+        {
+          site.ownerPhoto ? (
+            <img
+              src={url(site.ownerPhoto)}
+              alt={`${site.ownerName}, founder of Settle in Ireland`}
+              width="800"
+              height="1000"
+              class="aspect-[4/5] w-full object-cover"
+              loading="eager"
+              decoding="async"
+            />
+          ) : (
+            <div class="relative grid aspect-[4/5] place-items-center overflow-hidden bg-gradient-to-br from-brand-900 via-brand-800 to-accent-700">
+              <svg aria-hidden="true" class="absolute inset-0 h-full w-full opacity-50" viewBox="0 0 400 500" fill="none" preserveAspectRatio="xMidYMid slice">
+                <path d="M-20 420C80 360 120 260 220 250S360 200 420 60" stroke="#8FD6C0" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round" />
+              </svg>
+              <span class="relative grid h-36 w-36 place-items-center rounded-full bg-white/95 shadow-xl">
+                {hasName ? (
+                  <span class="font-display text-5xl font-extrabold text-brand-900">{initials}</span>
+                ) : (
+                  <LogoMark size={76} />
+                )}
+              </span>
+            </div>
+          )
+        }
+        <figcaption class="p-5">
+          <p class="font-display text-[1.15rem] font-bold text-ink"><Text value={site.ownerName} /></p>
+          <p class="text-[0.95rem] text-muted">Founder, {site.name}</p>
+          <ul class="mt-4 grid gap-2 text-[0.95rem]">
+            <li class="flex items-center gap-2.5"><Icon name="map-pin" size={18} class="shrink-0 text-accent-600" /> Based in <Text value={site.location} /></li>
+            <li class="flex items-start gap-2.5"><Icon name="message-square-text" size={18} class="mt-0.5 shrink-0 text-accent-600" /> <span>Speaks <Text value={site.languages} /></span></li>
+          </ul>
+        </figcaption>
+      </figure>
+    </div>
+  </PageHero>
+
+  <section class="section" aria-labelledby="who-heading">
+    <div class="container-site grid gap-12 lg:grid-cols-2 lg:gap-16">
+      <div>
+        <SectionHeading id="who-heading" eyebrow="Who I am" title="Hello, and welcome" />
+        <div class="prose-site mt-6 text-[1.05rem]">
+          <p>Hi, I'm <strong><Text value={site.ownerName} /></strong>.</p>
+          <p><Text value={site.ownerBio} /></p>
+          <p>
+            I am the named local contact for every client I support. I work alongside partner agencies abroad, who handle college admissions and
+            visa applications, so that their clients have someone reliable in Ireland once they arrive.
+          </p>
+        </div>
+      </div>
+      <div>
+        <SectionHeading id="why-heading" eyebrow="Why I started" title="Why I started Settle in Ireland" />
+        <div class="prose-site mt-6 text-[1.05rem]">
+          <p><Text value={site.ownerStory} /></p>
+          <p>
+            Arriving in a new country means a long list of practical tasks, often in a second language and while still getting over a long journey.
+            A friendly, organised local contact makes that much easier, for the client and for the family and partner agency back home.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white" aria-labelledby="how-i-work-heading">
+    <div class="container-site">
+      <SectionHeading id="how-i-work-heading" eyebrow="How I work" title="Personal, honest, practical and responsive" align="center" />
+      <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          values.map((v, i) => (
+            <li class="card p-6" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+              <span class="icon-tile">
+                <Icon name={v.icon} size={24} />
+              </span>
+              <h3 class="mt-5 text-[1.15rem]">{v.title}</h3>
+              <p class="mt-2 text-[0.98rem]">{v.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="based-heading">
+    <div class="container-site grid items-start gap-8 lg:grid-cols-2 lg:gap-16">
+      <div>
+        <SectionHeading id="based-heading" eyebrow="Where I am based" title={`Based in ${site.location}`} />
+        <p class="lead mt-5">
+          I support clients arriving across Ireland. {site.airportsCovered} {site.currentMarkets}
+        </p>
+      </div>
+      <Disclaimer />
+    </div>
+  </section>
+
+  <CTASection title="Let's talk about your plans" secondary={{ label: 'How it works', href: '/how-it-works/' }} />
+</BaseLayout>

@@ -1,0 +1,35 @@
+---
+/**
+ * Testimonials. Hidden until showTestimonials is true AND there is at least one real
+ * testimonial in src/config/site.ts. Never add made-up quotes.
+ */
+import SectionHeading from './SectionHeading.astro';
+import { site } from '../config/site';
+
+const show = site.showTestimonials && site.testimonials.length > 0;
+---
+
+{
+  show && (
+    <section class="section bg-white" aria-labelledby="testimonials-heading">
+      <div class="container-site">
+        <SectionHeading id="testimonials-heading" eyebrow="In their words" title="What clients and partner agencies say" align="center" />
+        <ul class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {site.testimonials.map((t) => (
+            <li class="card p-6 sm:p-7" data-reveal>
+              <figure>
+                <blockquote class="text-[1.02rem] text-ink">
+                  <p>"{t.quote}"</p>
+                </blockquote>
+                <figcaption class="mt-4 text-[0.95rem]">
+                  <span class="font-semibold text-ink">{t.name}</span>
+                  {t.context && <span class="block text-muted">{t.context}</span>}
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}

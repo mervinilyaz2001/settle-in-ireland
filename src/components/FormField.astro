@@ -1,0 +1,76 @@
+---
+/**
+ * One labelled form field with its hint and error message.
+ * Used by EnquiryForm.astro. The "summary" label is used in the WhatsApp or email message.
+ */
+interface Props {
+  id: string;
+  name: string;
+  label: string;
+  type?: 'text' | 'email' | 'tel' | 'date' | 'url' | 'select' | 'textarea';
+  required?: boolean;
+  hint?: string;
+  options?: string[];
+  autocomplete?: string;
+  inputmode?: 'text' | 'email' | 'tel' | 'url' | 'numeric';
+  placeholder?: string;
+  /** Message shown when a required field is left empty. */
+  errorRequired?: string;
+  /** Label used in the generated message. Defaults to the field label. */
+  summary?: string;
+  maxlength?: number;
+  class?: string;
+}
+
+const {
+  id,
+  name,
+  label,
+  type = 'text',
+  required = false,
+  hint,
+  options = [],
+  autocomplete,
+  inputmode,
+  placeholder,
+  errorRequired,
+  summary = label,
+  maxlength,
+  class: className,
+} = Astro.props;
+
+const describedBy = [hint && `${id}-hint`, `${id}-error`].filter(Boolean).join(' ');
+const common = {
+  id,
+  name,
+  required,
+  autocomplete,
+  'aria-describedby': describedBy,
+  'data-summary': summary,
+  'data-error-required': errorRequired,
+  class: 'field-input',
+};
+---
+
+<div class={className}>
+  <label for={id} class="field-label">
+    {label}
+    <span class="field-hint">{required ? ' (required)' : ' (optional)'}</span>
+  </label>
+  {hint && <p id={`${id}-hint`} class="field-hint -mt-0.5 mb-2">{hint}</p>}
+  {
+    type === 'select' ? (
+      <select {...common}>
+        <option value="">Please choose</option>
+        {options.map((o) => (
+          <option value={o}>{o}</option>
+        ))}
+      </select>
+    ) : type === 'textarea' ? (
+      <textarea {...common} rows="5" maxlength={maxlength} placeholder={placeholder} />
+    ) : (
+      <input {...common} type={type} inputmode={inputmode} placeholder={placeholder} maxlength={maxlength} />
+    )
+  }
+  <p id={`${id}-error`} class="field-error" hidden data-error></p>
+</div>

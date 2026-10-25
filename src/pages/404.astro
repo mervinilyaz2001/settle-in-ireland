@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import { services, serviceUrl } from '../data/services';
+import { url } from '../lib/url';
+---
+
+<BaseLayout
+  title="Page Not Found | Settle in Ireland"
+  description="Sorry, this page could not be found. Go back to the homepage, see the services or send a message on WhatsApp."
+  noindex
+  canonical={false}
+  backToTop={false}
+>
+  <section class="relative isolate overflow-hidden">
+    <svg aria-hidden="true" class="absolute inset-x-0 top-10 -z-10 mx-auto h-[300px] w-full max-w-5xl" viewBox="0 0 1000 300" fill="none" preserveAspectRatio="xMidYMid meet">
+      <path d="M40 260C220 120 360 260 520 150S820 40 960 90" stroke="#8FB7C2" stroke-width="2.5" stroke-dasharray="2 11" stroke-linecap="round"></path>
+      <circle cx="960" cy="90" r="8" fill="#F2A541"></circle>
+    </svg>
+    <div class="container-site py-20 text-center sm:py-28">
+      <span class="icon-tile !h-16 !w-16 !rounded-2xl"><Icon name="compass" size={32} /></span>
+      <p class="eyebrow mt-6 justify-center">Error 404</p>
+      <h1 class="mt-3 text-[2.2rem] sm:text-5xl">This page took a wrong turn</h1>
+      <p class="lead mx-auto mt-5 max-w-xl">
+        Sorry, I couldn't find the page you were looking for. It may have moved, or the address may be slightly wrong. These links will get you back on
+        track.
+      </p>
+      <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
+        <a href={url('/')} class="btn btn-primary btn-lg"><Icon name="house" size={20} /> Home</a>
+        <a href={url('/services/')} class="btn btn-outline btn-lg">Services <Icon name="arrow-right" size={20} /></a>
+        <WhatsAppButton size="lg" />
+      </div>
+      <nav aria-labelledby="popular-heading" class="mx-auto mt-14 max-w-3xl text-left">
+        <h2 id="popular-heading" class="text-center text-[1.2rem]">Popular pages</h2>
+        <ul class="mt-5 grid gap-2 sm:grid-cols-2">
+          {
+            [
+              ...services.slice(0, 4).map((s) => ({ label: s.navName, href: serviceUrl(s) })),
+              { label: 'Fees', href: '/fees/' },
+              { label: 'Partner Agencies', href: '/partner-agencies/' },
+            ].map((l) => (
+              <li>
+                <a href={url(l.href)} class="card card-hover flex min-h-12 items-center justify-between gap-3 px-4 py-3 font-semibold text-ink">
+                  {l.label} <Icon name="chevron-right" size={18} class="text-brand-300" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+  </section>
+</BaseLayout>

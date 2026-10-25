@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTASection from '../components/CTASection.astro';
+import Disclaimer from '../components/Disclaimer.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import JsonLd from '../components/JsonLd.astro';
+import PageHero from '../components/PageHero.astro';
+import { allFaqs, faqCategories } from '../data/faqs';
+import { withBase } from '../lib/url';
+
+// One FAQPage block for the whole page, built from the same data as the questions below.
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: allFaqs.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: withBase(item.a) },
+  })),
+};
+---
+
+<BaseLayout
+  title="Frequently Asked Questions | Settle in Ireland"
+  description="Answers about arrival support in Ireland: airport pickup, IRP and PPSN guidance, fees, payment, partner agencies and how to get in touch."
+>
+  <JsonLd slot="head" data={faqSchema} />
+
+  <PageHero
+    eyebrow="FAQ"
+    title="Frequently asked questions"
+    intro="Clear answers for clients, families and partner agencies. Can't find what you need? Send me a message on WhatsApp."
+    crumbs={[{ label: 'FAQ', href: '/faq/' }]}
+  >
+    <nav aria-label="Question categories" class="mt-8">
+      <ul class="flex flex-wrap gap-2">
+        {
+          faqCategories.map((c) => (
+            <li>
+              <a href={`#${c.id}`} class="inline-flex min-h-11 items-center rounded-full border border-line-strong bg-white px-4 font-semibold text-ink hover:border-brand-600">
+                {c.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </PageHero>
+
+  <div class="container-site py-14 lg:py-20">
+    <div class="mx-auto grid max-w-4xl gap-14">
+      {
+        faqCategories.map((c) => (
+          <section id={c.id} aria-labelledby={`${c.id}-heading`}>
+            <h2 id={`${c.id}-heading`} class="text-[1.6rem] sm:text-[1.9rem]">
+              {c.title}
+            </h2>
+            <FAQAccordion items={c.items} idPrefix="faq" class="mt-5" />
+          </section>
+        ))
+      }
+      <Disclaimer />
+    </div>
+  </div>
+
+  <CTASection title="Still have a question?" secondary={{ label: 'Contact page', href: '/contact/' }} />
+</BaseLayout>

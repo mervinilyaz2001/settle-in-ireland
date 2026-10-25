@@ -1,0 +1,160 @@
+---
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+import Text from './Text.astro';
+import WhatsAppButton from './WhatsAppButton.astro';
+import { site } from '../config/site';
+import { footerDisclaimer } from '../data/disclaimers';
+import { services, serviceUrl } from '../data/services';
+import { mailHref, telHref } from '../lib/format';
+import { waLink } from '../lib/whatsapp';
+import { url } from '../lib/url';
+
+const quickLinks = [
+  { label: 'Services', href: '/services/' },
+  { label: 'Fees', href: '/fees/' },
+  { label: 'Partner Agencies', href: '/partner-agencies/' },
+  { label: 'How It Works', href: '/how-it-works/' },
+  { label: 'About', href: '/about/' },
+  { label: 'FAQ', href: '/faq/' },
+  { label: 'Contact', href: '/contact/' },
+];
+
+const socials = [
+  { label: 'Facebook', href: site.social.facebook },
+  { label: 'Instagram', href: site.social.instagram },
+  { label: 'LinkedIn', href: site.social.linkedin },
+].filter((s): s is { label: string; href: string } => Boolean(s.href));
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-brand-950 text-brand-100" aria-labelledby="footer-heading">
+  <h2 id="footer-heading" class="sr-only">Site information</h2>
+  <div class="container-site pb-28 pt-14 lg:pb-32 lg:pt-20">
+    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.35fr_0.8fr_1.1fr_1.1fr] lg:gap-12">
+      <div>
+        <a href={url('/')} class="inline-flex rounded-lg" aria-label="Settle in Ireland, home">
+          <Logo tone="dark" size="lg" />
+        </a>
+        <p class="mt-2 text-[0.92rem] font-semibold text-accent-300">{site.tagline}</p>
+        <p class="mt-5 max-w-sm text-[0.97rem]">
+          Independent arrival and settling-in support for international clients moving to Ireland, and the partner agencies that refer
+          them.
+        </p>
+        <div class="mt-6">
+          <WhatsAppButton />
+        </div>
+        {
+          socials.length > 0 && (
+            <ul class="mt-6 flex flex-wrap gap-2" aria-label="Social media">
+              {socials.map((s) => (
+                <li>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener"
+                    class="inline-flex min-h-11 items-center rounded-full border border-white/20 px-4 text-[0.9rem] font-semibold text-white hover:border-white"
+                  >
+                    {s.label}
+                    <span class="sr-only"> (opens in a new tab)</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+
+      <nav aria-labelledby="footer-quick">
+        <h3 id="footer-quick" class="text-[0.85rem] font-bold uppercase tracking-[0.12em] !text-accent-300">Quick links</h3>
+        <ul class="mt-3 grid">
+          {
+            quickLinks.map((l) => (
+              <li>
+                <a href={url(l.href)} class="footer-link">
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <nav aria-labelledby="footer-services">
+        <h3 id="footer-services" class="text-[0.85rem] font-bold uppercase tracking-[0.12em] !text-accent-300">Services</h3>
+        <ul class="mt-3 grid">
+          {
+            services.map((s) => (
+              <li>
+                <a href={serviceUrl(s)} class="footer-link">
+                  {s.navName}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div>
+        <h3 class="text-[0.85rem] font-bold uppercase tracking-[0.12em] !text-accent-300">Contact</h3>
+        <ul class="mt-4 grid gap-1">
+          <li>
+            <a href={waLink()} target="_blank" rel="noopener" class="footer-link gap-3">
+              <Icon name="whatsapp" size={20} class="shrink-0 text-wa" />
+              WhatsApp<span class="sr-only"> (opens in a new tab)</span>
+            </a>
+          </li>
+          <li>
+            <a href={telHref()} class="footer-link gap-3">
+              <Icon name="phone" size={20} class="shrink-0 text-accent-300" />
+              {site.phone}
+            </a>
+          </li>
+          <li>
+            <a href={mailHref()} class="footer-link gap-3 break-all">
+              <Icon name="mail" size={20} class="shrink-0 text-accent-300" />
+              {site.email}
+            </a>
+          </li>
+          <li class="flex min-h-11 items-center gap-3 text-white">
+            <Icon name="map-pin" size={20} class="shrink-0 text-accent-300" />
+            <span>Based in <Text value={site.location} /></span>
+          </li>
+        </ul>
+        <p class="mt-3 text-[0.92rem] text-brand-200">{site.responseTime}</p>
+      </div>
+    </div>
+
+    <div class="mt-12 rounded-2xl border border-white/10 bg-white/[0.04] p-5 sm:p-6">
+      <p class="flex gap-3 text-[0.92rem] leading-relaxed text-brand-100">
+        <Icon name="shield-check" size={20} class="mt-0.5 shrink-0 text-accent-300" />
+        <span>{footerDisclaimer}</span>
+      </p>
+    </div>
+
+    <div class="mt-8 flex flex-col gap-3 border-t border-white/10 pt-6 text-[0.9rem] text-brand-200 sm:flex-row sm:items-center sm:justify-between">
+      <p>&copy; {year} {site.name}. All rights reserved.</p>
+      <ul class="flex flex-wrap gap-x-6 gap-y-1">
+        <li><a href={url('/privacy-policy/')} class="inline-flex min-h-11 items-center text-white underline-offset-4 hover:underline">Privacy Policy</a></li>
+        <li><a href={url('/terms/')} class="inline-flex min-h-11 items-center text-white underline-offset-4 hover:underline">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: #fff;
+    font-size: 0.97rem;
+    text-decoration: none;
+  }
+  .footer-link:hover {
+    color: var(--color-accent-300);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+</style>

@@ -1,0 +1,23 @@
+---
+import Icon from './Icon.astro';
+import { adviceDisclaimerText, governmentDisclaimerText } from '../data/disclaimers';
+
+interface Props {
+  class?: string;
+  title?: string;
+}
+const { class: className, title = 'An independent private service' } = Astro.props;
+---
+
+<aside class:list={['rounded-2xl border border-brand-200 bg-brand-50 p-5 sm:p-6', className]} aria-label="Independence and limits of the service">
+  <div class="flex gap-4">
+    <span class="mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white text-brand-900 shadow-sm">
+      <Icon name="shield-check" size={22} />
+    </span>
+    <div>
+      <p class="font-display font-bold text-ink">{title}</p>
+      <p class="mt-2 text-[0.97rem]">{governmentDisclaimerText}</p>
+      <p class="mt-2 text-[0.97rem]">{adviceDisclaimerText}</p>
+    </div>
+  </div>
+</aside>

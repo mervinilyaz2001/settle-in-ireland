@@ -1,0 +1,89 @@
+---
+import Icon from './Icon.astro';
+import JsonLd from './JsonLd.astro';
+import type { FAQ } from '../data/types';
+import { highlightPlaceholders } from '../lib/format';
+import { withBase } from '../lib/url';
+
+interface Props {
+  items: (FAQ & { id?: string })[];
+  /** Makes the ids unique when there is more than one accordion on a page. */
+  idPrefix: string;
+  /** Adds FAQPage structured data for search engines. */
+  schema?: boolean;
+  class?: string;
+}
+
+const { items, idPrefix, schema = false, class: className } = Astro.props;
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: withBase(item.a) },
+  })),
+};
+---
+
+<div class:list={['card overflow-hidden', className]} data-accordion>
+  {
+    items.map((item, i) => {
+      const id = `${idPrefix}-${item.id ?? i + 1}`;
+      return (
+        <div class="acc-item" id={id}>
+          <h3>
+            <button
+              type="button"
+              class="acc-trigger"
+              aria-expanded="false"
+              aria-controls={`${id}-panel`}
+              id={`${id}-button`}
+              data-accordion-trigger
+            >
+              <span>{item.q}</span>
+              <span class="acc-icon" aria-hidden="true">
+                <Icon name="plus" size={18} />
+              </span>
+            </button>
+          </h3>
+          <div class="acc-panel" id={`${id}-panel`} role="region" aria-labelledby={`${id}-button`}>
+            <div>
+              <div class="acc-panel-inner prose-site" set:html={highlightPlaceholders(withBase(item.a))} />
+            </div>
+          </div>
+        </div>
+      );
+    })
+  }
+</div>
+
+{schema && <JsonLd data={faqSchema} />}
+
+<script>
+  function initAccordions() {
+    document.querySelectorAll<HTMLElement>('[data-accordion]').forEach((accordion) => {
+      if (accordion.dataset.ready) return;
+      accordion.dataset.ready = 'true';
+      accordion.querySelectorAll<HTMLButtonElement>('[data-accordion-trigger]').forEach((trigger) => {
+        const panel = document.getElementById(trigger.getAttribute('aria-controls') ?? '');
+        if (!panel) return;
+        trigger.addEventListener('click', () => {
+          const open = trigger.getAttribute('aria-expanded') === 'true';
+          trigger.setAttribute('aria-expanded', String(!open));
+          panel.classList.toggle('is-open', !open);
+        });
+      });
+    });
+
+    // Open a question when the address points straight at it, for example /faq/#faq-cost
+    const hash = decodeURIComponent(location.hash.slice(1));
+    if (hash) {
+      const item = document.getElementById(hash);
+      const trigger = item?.querySelector<HTMLButtonElement>('[data-accordion-trigger]');
+      if (trigger && trigger.getAttribute('aria-expanded') === 'false') trigger.click();
+    }
+  }
+  initAccordions();
+</script>

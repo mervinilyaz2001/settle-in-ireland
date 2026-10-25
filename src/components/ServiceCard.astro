@@ -1,0 +1,42 @@
+---
+import Icon from './Icon.astro';
+import type { Service } from '../data/types';
+import { serviceUrl } from '../data/services';
+
+interface Props {
+  service: Service;
+  /** 'compact' shows the short summary, 'detailed' shows the longer overview. */
+  variant?: 'compact' | 'detailed';
+  class?: string;
+}
+
+const { service, variant = 'compact', class: className } = Astro.props;
+---
+
+<article class:list={['card card-hover group relative flex h-full flex-col p-6', variant === 'detailed' && 'sm:p-7', className]}>
+  <div class="flex items-start justify-between gap-4">
+    <span class="icon-tile">
+      <Icon name={service.icon} size={24} />
+    </span>
+    <span class="font-display text-[0.85rem] font-bold text-muted" aria-hidden="true">0{service.order}</span>
+  </div>
+  <h3 class:list={['mt-5', variant === 'detailed' ? 'text-[1.3rem]' : 'text-[1.15rem]']}>
+    <a href={serviceUrl(service)} class="after:absolute after:inset-0 after:rounded-[16px] after:content-[''] focus-visible:outline-none">
+      {service.name}
+    </a>
+  </h3>
+  <p class="mt-2.5 text-[0.98rem]">{variant === 'detailed' ? service.overview : service.summary}</p>
+  <p class="mt-auto pt-5 text-[0.98rem] font-bold text-accent-700" aria-hidden="true">
+    <span class="inline-flex items-center gap-1.5">
+      Learn more <Icon name="arrow-right" size={18} class="transition-transform duration-300 group-hover:translate-x-1" />
+    </span>
+  </p>
+</article>
+
+<style>
+  /* Show the keyboard focus ring around the whole card */
+  article:has(a:focus-visible) {
+    outline: 3px solid var(--color-gold-500);
+    outline-offset: 3px;
+  }
+</style>

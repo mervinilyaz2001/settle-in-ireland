@@ -1,0 +1,259 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import CTASection from '../components/CTASection.astro';
+import Disclaimer from '../components/Disclaimer.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import Icon from '../components/Icon.astro';
+import JsonLd from '../components/JsonLd.astro';
+import OfficialResources from '../components/OfficialResources.astro';
+import PageHero from '../components/PageHero.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import { site } from '../config/site';
+import { services } from '../data/services';
+import type { Service } from '../data/types';
+import { packagePrice } from '../lib/format';
+import { serviceSchema } from '../lib/schema';
+import { waMessages } from '../lib/whatsapp';
+import { url } from '../lib/url';
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+const message = waMessages.service(service.name);
+const others = services.filter((s) => s.slug !== service.slug);
+
+const toc = [
+  { id: 'covers', label: 'What this service covers' },
+  { id: 'how-it-works', label: 'How it works' },
+  { id: 'prepare', label: 'What the client needs to prepare' },
+  { id: 'good-to-know', label: 'Good to know' },
+  { id: 'not-included', label: "What's not included" },
+  { id: 'resources', label: 'Official resources' },
+  { id: 'questions', label: 'Questions' },
+];
+---
+
+<BaseLayout title={service.metaTitle} description={service.metaDescription} whatsappMessage={message}>
+  <JsonLd slot="head" data={serviceSchema(service)} />
+
+  <PageHero
+    eyebrow={`Service ${service.order} of ${services.length}`}
+    title={service.name}
+    intro={service.intro}
+    crumbs={[
+      { label: 'Services', href: '/services/' },
+      { label: service.navName, href: `/services/${service.slug}/` },
+    ]}
+  >
+    <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+      <WhatsAppButton message={message} size="lg" />
+      <a href={url('/fees/')} class="inline-flex min-h-11 items-center gap-2 rounded-full bg-gold-100 px-4 py-2 font-semibold text-gold-800 hover:bg-gold-300/60">
+        <Icon name="badge-euro" size={18} />
+        Included in the {packagePrice} package
+      </a>
+    </div>
+    {service.governmentDisclaimer && <Disclaimer class="mt-8" />}
+  </PageHero>
+
+  <div class="container-site py-14 lg:py-20">
+    <div class="grid gap-12 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-14">
+      <div class="grid min-w-0 gap-14 lg:gap-16">
+        <!-- 3. What this service covers -->
+        <section id="covers" aria-labelledby="covers-heading">
+          <h2 id="covers-heading" class="text-[1.7rem] sm:text-[2rem]">What this service covers</h2>
+          <ul class="check-list mt-6 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-4">
+            {service.covers.map((item) => <li>{item}</li>)}
+          </ul>
+          {
+            service.callout && (
+              <div
+                class:list={[
+                  'mt-8 rounded-2xl border-2 p-5 sm:p-7',
+                  service.callout.tone === 'warning' ? 'border-gold-500 bg-gold-50' : 'border-brand-200 bg-brand-50',
+                ]}
+              >
+                <h3 class="flex items-center gap-3 text-[1.25rem]">
+                  <span
+                    class:list={[
+                      'grid h-10 w-10 shrink-0 place-items-center rounded-xl',
+                      service.callout.tone === 'warning' ? 'bg-gold-500 text-brand-950' : 'bg-white text-brand-900',
+                    ]}
+                  >
+                    <Icon name={service.callout.tone === 'warning' ? 'triangle-alert' : 'info'} size={22} />
+                  </span>
+                  {service.callout.title}
+                </h3>
+                {service.callout.intro && <p class="mt-3 text-ink">{service.callout.intro}</p>}
+                <ul class="mt-4 grid gap-2.5">
+                  {service.callout.items.map((item) => (
+                    <li class="flex gap-3 text-ink">
+                      <Icon name="shield-check" size={20} class="mt-0.5 shrink-0 text-brand-700" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
+        </section>
+
+        <!-- 4. How it works -->
+        <section id="how-it-works" class="cv-auto" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-[1.7rem] sm:text-[2rem]">How it works</h2>
+          <ol class="relative mt-7 grid gap-6 before:absolute before:bottom-6 before:left-[19px] before:top-6 before:border-l-2 before:border-dotted before:border-brand-300">
+            {
+              service.steps.map((step, i) => (
+                <li class="relative flex gap-5" data-reveal>
+                  <span class="relative z-10 grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-900 font-display font-extrabold text-white ring-4 ring-canvas">
+                    {i + 1}
+                  </span>
+                  <div class="pt-1.5">
+                    <h3 class="text-[1.12rem]">{step.title}</h3>
+                    <p class="mt-1.5">{step.text}</p>
+                  </div>
+                </li>
+              ))
+            }
+          </ol>
+        </section>
+
+        <!-- 5. What the client needs to prepare -->
+        <section id="prepare" class="cv-auto" aria-labelledby="prepare-heading">
+          <div class="card p-6 sm:p-8">
+            <div class="flex items-center gap-3">
+              <span class="icon-tile"><Icon name="clipboard-list" size={24} /></span>
+              <h2 id="prepare-heading" class="text-[1.5rem] sm:text-[1.75rem]">What the client needs to prepare</h2>
+            </div>
+            <ul class="check-list mt-6">
+              {service.prepare.map((item) => <li>{item}</li>)}
+            </ul>
+            {
+              service.prepareNote && (
+                <p class="mt-6 flex gap-2.5 rounded-xl bg-canvas p-4 text-[0.95rem]">
+                  <Icon name="info" size={20} class="mt-0.5 shrink-0 text-brand-600" />
+                  <span>{service.prepareNote}</span>
+                </p>
+              )
+            }
+          </div>
+        </section>
+
+        <!-- 6. Good to know -->
+        <section id="good-to-know" class="cv-auto" aria-labelledby="tips-heading">
+          <h2 id="tips-heading" class="text-[1.7rem] sm:text-[2rem]">Good to know</h2>
+          <p class="mt-2">Practical tips for new arrivals in Ireland.</p>
+          <div class="mt-6 grid gap-4 sm:grid-cols-2">
+            {
+              service.goodToKnow.map((tip, i) => (
+                <div class="card p-5 sm:p-6" data-reveal style={`--reveal-delay:${(i % 2) * 80}ms`}>
+                  <h3 class="flex items-center gap-2.5 text-[1.05rem]">
+                    <span aria-hidden="true" class="h-2.5 w-2.5 shrink-0 rounded-full bg-gold-500" />
+                    {tip.title}
+                  </h3>
+                  <p class="mt-2 text-[0.98rem]">{tip.text}</p>
+                </div>
+              ))
+            }
+          </div>
+        </section>
+
+        <!-- 7. What's not included -->
+        <section id="not-included" class="cv-auto" aria-labelledby="not-included-heading">
+          <h2 id="not-included-heading" class="text-[1.7rem] sm:text-[2rem]">What's not included</h2>
+          <ul class="cross-list mt-6">
+            {service.notIncluded.map((item) => <li>{item}</li>)}
+          </ul>
+        </section>
+
+        <!-- 8. Official resources -->
+        <div id="resources" class="cv-auto">
+          <OfficialResources resources={service.resources} />
+        </div>
+
+        <!-- 9. Questions -->
+        <section id="questions" class="cv-auto" aria-labelledby="questions-heading">
+          <h2 id="questions-heading" class="text-[1.7rem] sm:text-[2rem]">Questions about {service.navName}</h2>
+          <FAQAccordion items={service.faqs} idPrefix={`q-${service.slug}`} schema class="mt-6" />
+          <p class="mt-4">
+            More answers on the <a href={url('/faq/')} class="font-semibold text-accent-700 underline">FAQ page</a>.
+          </p>
+        </section>
+
+        <!-- 10. Package callout -->
+        <section aria-labelledby="package-heading" class="relative overflow-hidden rounded-2xl border border-gold-300 bg-gold-50 p-6 sm:p-8">
+          <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p class="text-[0.82rem] font-bold uppercase tracking-[0.1em] text-gold-800">Included in the package</p>
+              <h2 id="package-heading" class="mt-2 text-[1.35rem] sm:text-[1.55rem]">
+                Included in the {packagePrice} {site.fee.title} package
+              </h2>
+              <p class="mt-2">All seven services for one fixed fee, {site.fee.perUnit}. {site.fee.exclusions}</p>
+            </div>
+            <a href={url('/fees/')} class="btn btn-primary shrink-0">
+              See fees <Icon name="arrow-right" size={18} />
+            </a>
+          </div>
+        </section>
+      </div>
+
+      <!-- Sidebar on large screens -->
+      <aside class="hidden lg:block" aria-label="On this page">
+        <div class="sticky top-24 grid gap-5">
+          <nav class="card p-5" aria-labelledby="toc-heading">
+            <p id="toc-heading" class="font-display text-[0.82rem] font-bold uppercase tracking-[0.1em] text-muted">On this page</p>
+            <ul class="mt-3 grid">
+              {
+                toc.map((t) => (
+                  <li>
+                    <a href={`#${t.id}`} class="flex min-h-10 items-center rounded-lg px-2 text-[0.95rem] font-medium text-ink hover:bg-brand-50 hover:text-brand-900">
+                      {t.label}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
+          <div class="card overflow-hidden">
+            <div aria-hidden="true" class="h-1.5 bg-gold-500"></div>
+            <div class="p-5">
+              <p class="text-[0.92rem] font-semibold text-muted">{site.fee.title}</p>
+              <p class="mt-1 flex items-end gap-1.5">
+                <span class="font-display text-[2.2rem] leading-none font-extrabold text-brand-900">{packagePrice}</span>
+                <span class="pb-1 text-[0.95rem] font-semibold text-muted">{site.fee.perUnit}</span>
+              </p>
+              <p class="mt-2 text-[0.92rem]">All seven services included.</p>
+              <WhatsAppButton message={message} label="Ask about this service" block class="mt-4" />
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- 11. WhatsApp call to action -->
+  <CTASection
+    title={`Questions about ${service.navName}?`}
+    text={`Send me a message on WhatsApp and I will explain how I can help. ${site.responseTime}`}
+    message={message}
+    secondary={{ label: 'See all fees', href: '/fees/' }}
+  />
+
+  <!-- 12. Other services -->
+  <section class="section bg-white" aria-labelledby="others-heading">
+    <div class="container-site">
+      <h2 id="others-heading" class="text-[1.7rem] sm:text-[2rem]">Other services</h2>
+      <ul class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          others.map((s) => (
+            <li>
+              <ServiceCard service={s} />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

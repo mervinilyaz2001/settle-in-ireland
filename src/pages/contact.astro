@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTASection from '../components/CTASection.astro';
+import ContactOptions from '../components/ContactOptions.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import Icon from '../components/Icon.astro';
+import JsonLd from '../components/JsonLd.astro';
+import PageHero from '../components/PageHero.astro';
+import Text from '../components/Text.astro';
+import { site } from '../config/site';
+import { businessSchema } from '../lib/schema';
+import { waMessages } from '../lib/whatsapp';
+import { url } from '../lib/url';
+---
+
+<BaseLayout
+  title="Contact | Settle in Ireland"
+  description="Message Settle in Ireland on WhatsApp, call or email, or send an enquiry about arrival and settling-in support in Ireland."
+  whatsappMessage={waMessages.client}
+>
+  <JsonLd slot="head" data={businessSchema()} />
+
+  <PageHero
+    eyebrow="Contact"
+    title="Get in touch"
+    intro={`WhatsApp is the quickest way to reach me. You can also call, email or send the enquiry form below. ${site.responseTime}`}
+    crumbs={[{ label: 'Contact', href: '/contact/' }]}
+  />
+
+  <section class="section" aria-label="Contact options and enquiry form">
+    <div class="container-site grid items-start gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
+      <div class="grid gap-5 lg:sticky lg:top-28">
+        <ContactOptions message={waMessages.client} />
+
+        <div class="card flex gap-4 p-5 sm:p-6">
+          <span class="icon-tile"><Icon name="map-pin" size={22} /></span>
+          <div>
+            <h2 class="text-[1.1rem]">Based in Ireland</h2>
+            <p class="mt-1"><Text value={site.location} /></p>
+            <p class="mt-1 text-[0.95rem] text-muted">{site.airportsCovered}</p>
+          </div>
+        </div>
+
+        <a href={url('/partner-agencies/')} class="card card-hover flex items-center gap-4 border-brand-200 bg-brand-50 p-5 sm:p-6">
+          <span class="icon-tile !bg-brand-900 !text-white !shadow-none"><Icon name="building" size={22} /></span>
+          <span class="min-w-0 flex-1">
+            <span class="block font-display font-bold text-ink">Are you an agency?</span>
+            <span class="mt-0.5 block text-[0.95rem]">See how the partnership works and send a partner agency enquiry.</span>
+          </span>
+          <Icon name="arrow-right" size={20} class="shrink-0 text-brand-700" />
+        </a>
+
+        {
+          site.showMap && site.mapEmbedUrl && (
+            <iframe
+              title="Map showing where Settle in Ireland is based"
+              src={site.mapEmbedUrl}
+              class="aspect-[4/3] w-full rounded-2xl border border-line"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            />
+          )
+        }
+      </div>
+
+      <EnquiryForm
+        variant="client"
+        title="Client enquiry"
+        intro="Tell me a little about your plans and I will reply with the next steps."
+      />
+    </div>
+  </section>
+
+  <CTASection
+    title="Prefer to just send a message?"
+    text={`That works too. Say hello on WhatsApp and tell me when you are arriving. ${site.responseTime}`}
+    message={waMessages.client}
+    secondary={{ label: 'How it works', href: '/how-it-works/' }}
+  />
+</BaseLayout>

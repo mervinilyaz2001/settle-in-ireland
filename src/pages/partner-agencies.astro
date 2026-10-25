@@ -1,0 +1,258 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTASection from '../components/CTASection.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import HandoverChain from '../components/HandoverChain.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import PaymentTimeline from '../components/PaymentTimeline.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import { site } from '../config/site';
+import { services } from '../data/services';
+import { packagePrice } from '../lib/format';
+import { waMessages } from '../lib/whatsapp';
+import { url } from '../lib/url';
+
+const benefits = [
+  {
+    icon: 'user-check',
+    title: 'A named, reliable local contact',
+    text: 'Your clients have one real person in Ireland to turn to, and so does your team.',
+  },
+  {
+    icon: 'heart-handshake',
+    title: 'Your clients are met and supported',
+    text: 'From the airport to their first weeks, your clients are not left to work everything out alone.',
+  },
+  {
+    icon: 'phone',
+    title: 'Fewer worried calls',
+    text: 'When clients and their families know someone is there, your team receives fewer anxious calls after departure.',
+  },
+  {
+    icon: 'shield-check',
+    title: "A handover that protects your reputation",
+    text: 'A smooth arrival reflects well on your agency and the families who trusted you.',
+  },
+  {
+    icon: 'badge-euro',
+    title: 'Clear, fixed per-client pricing',
+    text: `${packagePrice} ${site.fee.perUnit}, paid in two parts, with no hidden extras from me.`,
+  },
+  {
+    icon: 'refresh-cw',
+    title: "Updates on your client's progress",
+    text: 'I keep your agency informed at the milestones we agree together.',
+  },
+  {
+    icon: 'whatsapp',
+    title: 'WhatsApp-first communication',
+    text: 'Quick, simple contact that fits how your team already works.',
+  },
+];
+
+const steps = [
+  { title: 'Your agency gets in touch', text: 'Send me a message on WhatsApp or fill in the enquiry form below.' },
+  { title: 'A short introduction', text: 'We have a short call or WhatsApp chat about your clients, your intakes and how we will work together.' },
+  { title: 'You share client details', text: 'Once the client consents, you share their details and arrival plans with me.' },
+  { title: 'I contact the client before departure', text: 'I introduce myself, check their plans and start arrival planning.' },
+  { title: 'I meet and support the client in Ireland', text: 'From the airport to their first weeks, I support them with the practical steps.' },
+  { title: 'I keep your agency updated', text: 'You receive updates at the milestones we agreed.' },
+];
+
+const agencyHandles = ['College admission', 'Visa application', 'Pre-departure documents', 'Fees to the college'];
+---
+
+<BaseLayout
+  title="Become a Partner Agency | Settle in Ireland"
+  description="Partner with a reliable local contact in Ireland. Your agency handles admission and visa, I support your clients after arrival. Clear pricing per client."
+  whatsappMessage={waMessages.partnerAgency}
+>
+  <PageHero
+    eyebrow="For partner agencies"
+    title="Become a Partner Agency"
+    intro="Your agency handles admission and visa. I take care of your clients once they are in Ireland: meeting them, guiding them through the practical steps and keeping your agency informed."
+    crumbs={[{ label: 'Partner Agencies', href: '/partner-agencies/' }]}
+  >
+    <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+      <WhatsAppButton message={waMessages.partnerAgency} size="lg" />
+      <a href="#partner-form" class="btn btn-outline btn-lg">
+        Send an enquiry <Icon name="arrow-right" size={20} class="rotate-90" />
+      </a>
+    </div>
+    <div slot="aside" class="card p-6 sm:p-7">
+      <p class="font-display text-[0.82rem] font-bold uppercase tracking-[0.1em] text-muted">At a glance</p>
+      <ul class="mt-4 grid gap-4">
+        <li class="flex gap-3">
+          <span class="icon-tile !h-10 !w-10 !rounded-xl"><Icon name="badge-euro" size={20} /></span>
+          <span><strong class="block text-ink">{packagePrice} {site.fee.perUnit}</strong> One fixed fee for all seven services.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="icon-tile !h-10 !w-10 !rounded-xl"><Icon name="user-check" size={20} /></span>
+          <span><strong class="block text-ink">One named contact</strong> For your clients and your team.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="icon-tile !h-10 !w-10 !rounded-xl"><Icon name="globe" size={20} /></span>
+          <span><strong class="block text-ink">Partner agencies from any country</strong> Already working with partner agencies in Bangladesh.</span>
+        </li>
+      </ul>
+    </div>
+  </PageHero>
+
+  <!-- Why partner -->
+  <section class="section" aria-labelledby="why-partner-heading">
+    <div class="container-site">
+      <SectionHeading
+        id="why-partner-heading"
+        eyebrow="Why partner with Settle in Ireland"
+        title="Your clients looked after. Your reputation protected."
+        intro="Your relationship with a client does not end when the visa is granted. A reliable handover in Ireland makes the whole journey better for everyone."
+      />
+      <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          benefits.map((b, i) => (
+            <li class:list={['card p-6 sm:p-7', i === benefits.length - 1 && 'lg:col-start-2']} data-reveal style={`--reveal-delay:${(i % 3) * 80}ms`}>
+              <span class:list={['icon-tile', b.icon === 'whatsapp' && '!bg-wa/15 !text-[#0e7a3a]']}>
+                <Icon name={b.icon} size={24} />
+              </span>
+              <h3 class="mt-5 text-[1.15rem]">{b.title}</h3>
+              <p class="mt-2 text-[0.98rem]">{b.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- How the partnership works -->
+  <section class="section bg-white" aria-labelledby="partnership-steps-heading">
+    <div class="container-site">
+      <SectionHeading id="partnership-steps-heading" eyebrow="How it works" title="How the partnership works" />
+      <ol class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          steps.map((step, i) => (
+            <li class="relative rounded-2xl border border-line bg-canvas p-6" data-reveal style={`--reveal-delay:${(i % 3) * 80}ms`}>
+              <span class="font-display text-[2.6rem] leading-none font-extrabold text-brand-600">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="mt-3 text-[1.12rem]">{step.title}</h3>
+              <p class="mt-2 text-[0.98rem]">{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Who handles what -->
+  <section class="section" aria-labelledby="split-heading">
+    <div class="container-site">
+      <SectionHeading
+        id="split-heading"
+        eyebrow="Clear roles"
+        title="What your agency handles, and what I handle"
+        intro="A clean split of responsibilities, so your client always knows who to ask."
+      />
+      <div class="mt-10 grid overflow-hidden rounded-2xl border border-line bg-white shadow-[var(--shadow-soft)] md:grid-cols-2">
+        <div>
+          <h3 class="flex items-center gap-3 bg-brand-50 px-6 py-4 text-[1.15rem]">
+            <Icon name="building" size={22} class="text-brand-700" /> Your agency
+          </h3>
+          <ul class="divide-y divide-line">
+            {
+              agencyHandles.map((item) => (
+                <li class="flex items-center gap-3 px-6 py-3.5 text-ink">
+                  <Icon name="check" size={18} class="shrink-0 text-brand-600" />
+                  {item}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class="border-t border-line md:border-l md:border-t-0">
+          <h3 class="flex items-center gap-3 bg-accent-50 px-6 py-4 text-[1.15rem]">
+            <Icon name="heart-handshake" size={22} class="text-accent-600" /> Settle in Ireland
+          </h3>
+          <ul class="divide-y divide-line">
+            {
+              services.map((s) => (
+                <li class="flex items-center gap-3 px-6 py-3.5 text-ink">
+                  <Icon name="check" size={18} class="shrink-0 text-accent-600" />
+                  {s.navName}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+      <HandoverChain class="mt-10" />
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="section bg-white" aria-labelledby="agency-pricing-heading">
+    <div class="container-site grid items-start gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <div>
+        <SectionHeading
+          id="agency-pricing-heading"
+          eyebrow="Pricing for partner agencies"
+          title={`${packagePrice} ${site.fee.perUnit}`}
+          intro={`The ${site.fee.title} package covers all seven services. ${site.fee.exclusions}`}
+        />
+        <p class="mt-6">I am happy to discuss how payment and referrals work for your agency and your clients.</p>
+        <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+          <WhatsAppButton message={waMessages.partnerAgency} label="Discuss payment and referrals" />
+          <a href={url('/fees/')} class="text-link">Full fee details <Icon name="arrow-right" size={18} /></a>
+        </div>
+      </div>
+      <PaymentTimeline />
+    </div>
+  </section>
+
+  <!-- Data and consent, and current experience -->
+  <section class="section" aria-label="Data, consent and experience">
+    <div class="container-site grid gap-5 lg:grid-cols-2">
+      <div class="card p-6 sm:p-8" data-reveal>
+        <span class="icon-tile"><Icon name="lock" size={24} /></span>
+        <h2 class="mt-5 text-[1.4rem]">Data and consent</h2>
+        <p class="mt-3">
+          Client details are only used to provide the service, and only with the client's consent. I keep only the information I need, for as long
+          as I need it, in line with GDPR.
+        </p>
+        <a href={url('/privacy-policy/')} class="text-link mt-2">Read the Privacy Policy <Icon name="arrow-right" size={18} /></a>
+      </div>
+      <div class="card p-6 sm:p-8" data-reveal style="--reveal-delay:100ms">
+        <span class="icon-tile"><Icon name="globe" size={24} /></span>
+        <h2 class="mt-5 text-[1.4rem]">Current experience</h2>
+        <p class="mt-3">{site.currentMarkets}</p>
+        <p class="mt-3">Wherever your agency is based, the process is the same: a clear handover, a named contact and regular updates.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enquiry form -->
+  <section id="partner-form" class="section bg-white" aria-label="Partner agency enquiry">
+    <div class="container-site grid items-start gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-14">
+      <div class="lg:sticky lg:top-28">
+        <SectionHeading
+          eyebrow="Get in touch"
+          title="Start the conversation"
+          intro="Tell me about your agency and I will reply to arrange a short introduction. Prefer WhatsApp? Send me a message directly."
+        />
+        <div class="mt-6">
+          <WhatsAppButton message={waMessages.partnerAgency} />
+        </div>
+        <p class="mt-4 text-[0.95rem] text-muted">{site.responseTime}</p>
+      </div>
+      <EnquiryForm variant="agency" />
+    </div>
+  </section>
+
+  <div class="pt-16 lg:pt-24">
+    <CTASection
+      title="Let's look after your clients together"
+      text={`Send me a message on WhatsApp to start a partnership. ${site.responseTime}`}
+      message={waMessages.partnerAgency}
+      buttonLabel="Message on WhatsApp"
+    />
+  </div>
+</BaseLayout>

@@ -1,0 +1,381 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTASection from '../components/CTASection.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import HandoverChain from '../components/HandoverChain.astro';
+import Icon from '../components/Icon.astro';
+import JsonLd from '../components/JsonLd.astro';
+import LogoMark from '../components/LogoMark.astro';
+import PriceCard from '../components/PriceCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import Testimonials from '../components/Testimonials.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import { site } from '../config/site';
+import { faqsById, homeFaqIds } from '../data/faqs';
+import { services } from '../data/services';
+import { packagePrice } from '../lib/format';
+import { businessSchema } from '../lib/schema';
+import { waMessages } from '../lib/whatsapp';
+import { absoluteUrl, url } from '../lib/url';
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: site.name,
+  url: absoluteUrl('/'),
+  inLanguage: 'en-IE',
+};
+
+const plan = [
+  { label: 'Flight details checked', done: true },
+  { label: 'Met at the airport', done: true },
+  { label: 'Accommodation reached', done: true },
+  { label: 'IRP guidance', done: false, next: true },
+  { label: 'PPS Number', done: false },
+  { label: 'Bank account', done: false },
+  { label: 'TFI Leap Card', done: false },
+];
+
+const reasons = [
+  {
+    icon: 'user-check',
+    title: 'One named local contact',
+    text: 'Your client deals with one real person in Ireland, not a call centre or a ticket system.',
+  },
+  {
+    icon: 'badge-euro',
+    title: 'Clear, fixed pricing',
+    text: `${packagePrice} ${site.fee.perUnit}, paid in two parts. Third-party costs are always separate and explained up front.`,
+  },
+  {
+    icon: 'heart-handshake',
+    title: 'I understand new arrivals',
+    text: 'A new country, new systems and a long list of things to sort out. I know how much there is to do in the first weeks.',
+  },
+  {
+    icon: 'refresh-cw',
+    title: 'Partner agencies kept updated',
+    text: 'I update partner agencies at agreed milestones, so you know how your client is doing.',
+  },
+  {
+    icon: 'shield-check',
+    title: 'Practical, honest guidance',
+    text: 'I explain official processes clearly and point to official sources. I never promise what I cannot deliver.',
+  },
+  {
+    icon: 'whatsapp',
+    title: 'Available on WhatsApp',
+    text: 'Quick, simple communication on the app your clients and your team already use every day.',
+  },
+];
+---
+
+<BaseLayout
+  title="Arrival Support in Ireland | Settle in Ireland"
+  description={`Your local contact in Ireland. Airport pickup, accommodation help, IRP and PPSN guidance for international clients and partner agencies. ${packagePrice} per client.`}
+>
+  <JsonLd slot="head" data={[businessSchema(), websiteSchema]} />
+
+  <!-- 1. Hero -->
+  <section class="relative isolate overflow-hidden bg-brand-900 text-white" aria-labelledby="hero-heading">
+    <div aria-hidden="true" class="absolute inset-0 -z-10">
+      <div class="absolute -left-56 -top-56 h-[640px] w-[640px] rounded-full bg-[radial-gradient(closest-side,rgb(31_138_112/0.35),transparent)]"></div>
+      <div class="absolute -bottom-64 right-[-15%] h-[680px] w-[680px] rounded-full bg-[radial-gradient(closest-side,rgb(42_113_134/0.55),transparent)]"></div>
+      <svg class="absolute right-0 top-0 h-full w-full opacity-70 lg:w-[62%]" viewBox="0 0 800 700" preserveAspectRatio="xMaxYMid slice" fill="none">
+        <path d="M-20 640C140 560 210 380 380 360S640 300 760 90" stroke="#2BA585" stroke-opacity=".55" stroke-width="2.5" stroke-dasharray="2 12" stroke-linecap="round"></path>
+        <path d="M60 720C230 640 330 520 520 500S760 420 840 300" stroke="#8FB7C2" stroke-opacity=".25" stroke-width="2" stroke-dasharray="2 12" stroke-linecap="round"></path>
+      </svg>
+    </div>
+
+    <div class="container-site grid items-center gap-12 pb-16 pt-12 sm:pb-20 sm:pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:pb-28 lg:pt-24">
+      <div>
+        <p class="eyebrow eyebrow-light">{site.tagline}</p>
+        <h1 id="hero-heading" class="mt-4 text-[2.5rem] leading-[1.06] !text-white sm:text-6xl lg:text-[4.2rem]">
+          A Local Contact for <span class="text-gold-300">Your Clients</span>
+        </h1>
+        <p class="lead mt-6 max-w-[38rem] text-brand-100">
+          I provide personal arrival and settling-in support for clients referred by partner education agencies. Your agency continues to
+          manage college admissions and visa applications, while I support your clients with the practical steps that follow, giving them a
+          named local contact in Ireland and your agency a reliable handover.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+          <WhatsAppButton size="lg" />
+          <a href={url('/partner-agencies/')} class="btn btn-outline-light btn-lg">
+            Become a Partner Agency <Icon name="arrow-right" size={20} />
+          </a>
+        </div>
+        <a href={url('/contact/')} class="mt-4 inline-flex min-h-11 items-center gap-2 font-semibold text-white underline decoration-accent-300 decoration-2 underline-offset-4 hover:decoration-white">
+          I'm a client arriving in Ireland <Icon name="arrow-right" size={18} />
+        </a>
+        <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-3 border-t border-white/15 pt-6 text-[0.97rem] font-medium text-brand-100" aria-label="Why choose Settle in Ireland">
+          <li class="flex items-center gap-2"><Icon name="user-check" size={20} class="text-accent-300" /> Named local contact</li>
+          <li class="flex items-center gap-2"><Icon name="badge-euro" size={20} class="text-gold-300" /> Clear fixed fee</li>
+          <li class="flex items-center gap-2"><Icon name="shield-check" size={20} class="text-accent-300" /> Independent service</li>
+        </ul>
+      </div>
+
+      <!-- Illustration: an example arrival plan, drawn in code -->
+      <div class="relative mx-auto hidden w-full max-w-[440px] sm:block lg:mr-0" aria-hidden="true">
+        <div class="relative rotate-[1.5deg] rounded-[22px] bg-white p-5 text-body shadow-[0_40px_80px_-30px_rgba(0,0,0,0.6)] sm:p-6">
+          <div class="flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <span class="icon-tile !h-11 !w-11"><Icon name="plane-landing" size={22} /></span>
+              <div>
+                <p class="font-display text-[1.05rem] font-bold text-ink">Arrival plan</p>
+                <p class="text-[0.85rem] text-muted">From arrival day to the first weeks</p>
+              </div>
+            </div>
+            <span class="rounded-full bg-brand-50 px-2.5 py-1 text-[0.72rem] font-bold uppercase tracking-[0.08em] text-brand-700">Example</span>
+          </div>
+          <ul class="mt-5 grid gap-2">
+            {
+              plan.map((item) => (
+                <li
+                  class:list={[
+                    'flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-[0.95rem]',
+                    item.next ? 'bg-gold-50 ring-1 ring-gold-300' : 'bg-canvas',
+                  ]}
+                >
+                  <span class="flex items-center gap-3">
+                    <span
+                      class:list={[
+                        'grid h-6 w-6 place-items-center rounded-full',
+                        item.done ? 'bg-accent-600 text-white' : item.next ? 'border-2 border-gold-500 bg-white' : 'border-2 border-line-strong bg-white',
+                      ]}
+                    >
+                      {item.done && <Icon name="check" size={14} strokeWidth={3} />}
+                    </span>
+                    <span class:list={['font-medium', item.done ? 'text-ink' : 'text-body']}>{item.label}</span>
+                  </span>
+                  {item.next && <span class="text-[0.78rem] font-bold text-gold-800">Next</span>}
+                </li>
+              ))
+            }
+          </ul>
+          <div class="mt-5 flex items-center gap-3 border-t border-line pt-4">
+            <span class="grid h-10 w-10 place-items-center rounded-full bg-brand-900"><LogoMark size={26} tone="dark" /></span>
+            <div class="min-w-0 flex-1">
+              <p class="text-[0.92rem] font-semibold text-ink">Your local contact in Ireland</p>
+              <p class="text-[0.82rem] text-muted">Available on WhatsApp</p>
+            </div>
+            <span class="grid h-9 w-9 place-items-center rounded-full bg-wa text-wa-ink"><Icon name="whatsapp" size={20} /></span>
+          </div>
+        </div>
+        <div class="absolute -left-3 -top-5 flex items-center gap-2 rounded-full bg-white px-3.5 py-2 text-[0.85rem] font-semibold text-ink shadow-lg sm:-left-8">
+          <span class="grid h-6 w-6 place-items-center rounded-full bg-accent-100 text-accent-700"><Icon name="map-pin" size={14} /></span>
+          Based in Ireland
+        </div>
+        <div class="absolute -bottom-5 -right-2 flex items-center gap-2 rounded-full bg-white px-3.5 py-2 text-[0.85rem] font-semibold text-ink shadow-lg sm:-right-6">
+          <span class="grid h-6 w-6 place-items-center rounded-full bg-gold-100 text-gold-800"><Icon name="building" size={14} /></span>
+          Partner agency kept updated
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Two audience paths -->
+  <section class="section" aria-labelledby="paths-heading">
+    <div class="container-site">
+      <SectionHeading
+        id="paths-heading"
+        eyebrow="Who I help"
+        title="Support on both sides of the journey"
+        intro="Partner agencies get a reliable handover in Ireland. Their clients get a real person to meet them, guide them and answer their questions."
+        align="center"
+      />
+      <div class="mt-12 grid gap-5 md:grid-cols-2 lg:gap-6">
+        <article class="card relative overflow-hidden p-7 sm:p-9" data-reveal>
+          <div aria-hidden="true" class="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-brand-50"></div>
+          <span class="icon-tile relative !bg-brand-900 !text-white !shadow-none"><Icon name="building" size={24} /></span>
+          <h3 class="relative mt-5 text-[1.5rem]">For Partner Agencies</h3>
+          <p class="relative mt-2">A reliable, professional handover partner on the ground in Ireland, so your clients are looked after and your reputation is protected.</p>
+          <ul class="check-list mt-6">
+            <li>A reliable handover once your client is ready to travel</li>
+            <li>Your clients are met and looked after</li>
+            <li>Clear, fixed pricing: {packagePrice} {site.fee.perUnit}</li>
+            <li>Regular updates at agreed milestones</li>
+          </ul>
+          <a href={url('/partner-agencies/')} class="btn btn-primary mt-8">
+            Become a Partner Agency <Icon name="arrow-right" size={20} />
+          </a>
+        </article>
+        <article class="card relative overflow-hidden p-7 sm:p-9" data-reveal style="--reveal-delay:120ms">
+          <div aria-hidden="true" class="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-accent-50"></div>
+          <span class="icon-tile relative !bg-accent-600 !text-white !shadow-none"><Icon name="luggage" size={24} /></span>
+          <h3 class="relative mt-5 text-[1.5rem]">For Clients</h3>
+          <p class="relative mt-2">Moving to Ireland is a big step. You will not be alone when you arrive, and your family will know someone reliable is there.</p>
+          <ul class="check-list mt-6">
+            <li>Someone to meet you at the airport</li>
+            <li>Help with IRP, PPSN, your bank account and transport</li>
+            <li>A real person to message on WhatsApp</li>
+            <li>Practical tips for your first weeks in Ireland</li>
+          </ul>
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <a href={url('/contact/')} class="btn btn-outline">
+              Plan my arrival <Icon name="arrow-right" size={20} />
+            </a>
+            <a href={url('/how-it-works/')} class="text-link">How it works <Icon name="arrow-right" size={18} /></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. The handover explained -->
+  <section class="section bg-white" aria-labelledby="handover-heading">
+    <div class="container-site">
+      <SectionHeading
+        id="handover-heading"
+        eyebrow="The handover"
+        title="Your agency handles the visa. I take it from there."
+        intro="A simple, clear split of responsibilities, so nothing falls between the cracks when your client lands."
+      />
+      <HandoverChain class="mt-10" />
+    </div>
+  </section>
+
+  <!-- 4. Services -->
+  <section class="section" aria-labelledby="services-heading">
+    <div class="container-site">
+      <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <SectionHeading
+          id="services-heading"
+          eyebrow="Services"
+          title="Practical help with the first weeks in Ireland"
+          intro="Seven services that cover the practical steps after arrival, starting before the client travels."
+        />
+        <a href={url('/services/')} class="text-link shrink-0">All services <Icon name="arrow-right" size={18} /></a>
+      </div>
+      <ul class="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        {
+          services.map((s, i) => (
+            <li data-reveal style={`--reveal-delay:${(i % 4) * 70}ms`}>
+              <ServiceCard service={s} />
+            </li>
+          ))
+        }
+        <li data-reveal style="--reveal-delay:210ms">
+          <a href={url('/fees/')} class="group relative flex h-full flex-col overflow-hidden rounded-[16px] bg-brand-900 p-6 text-white shadow-[var(--shadow-soft)] transition-transform duration-300 hover:-translate-y-1">
+            <span aria-hidden="true" class="absolute -bottom-14 -right-14 h-44 w-44 rounded-full bg-[radial-gradient(closest-side,rgb(242_165_65/0.3),transparent)]"></span>
+            <span class="icon-tile !bg-gold-500 !text-brand-950 !shadow-none"><Icon name="badge-euro" size={24} /></span>
+            <span class="mt-5 font-display text-[1.15rem] font-bold">All seven, one fixed fee</span>
+            <span class="mt-2.5 text-brand-100">{site.fee.title}, {packagePrice} {site.fee.perUnit}.</span>
+            <span class="mt-auto inline-flex items-center gap-1.5 pt-5 font-bold text-gold-300">
+              See fees <Icon name="arrow-right" size={18} class="transition-transform group-hover:translate-x-1" />
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 5. The package and price -->
+  <section class="section bg-white" aria-labelledby="package-heading">
+    <div class="container-site grid items-start gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+      <div class="lg:sticky lg:top-28">
+        <SectionHeading
+          id="package-heading"
+          eyebrow="The package"
+          title="One package. One clear price."
+          intro={`Everything in one ${site.fee.title} package for ${packagePrice} ${site.fee.perUnit}. No hidden extras from me, and no surprises for your client.`}
+        />
+        <ul class="mt-8 grid gap-4">
+          <li class="flex gap-4">
+            <span class="icon-tile"><Icon name="list-checks" size={22} /></span>
+            <div>
+              <p class="font-display font-bold text-ink">All seven services included</p>
+              <p class="mt-1 text-[0.97rem]">From arrival planning and airport pickup to local orientation.</p>
+            </div>
+          </li>
+          <li class="flex gap-4">
+            <span class="icon-tile"><Icon name="calendar-check" size={22} /></span>
+            <div>
+              <p class="font-display font-bold text-ink">Paid in two parts</p>
+              <p class="mt-1 text-[0.97rem]">Part at the start of the service and the rest at a later service milestone.</p>
+            </div>
+          </li>
+          <li class="flex gap-4">
+            <span class="icon-tile"><Icon name="receipt" size={22} /></span>
+            <div>
+              <p class="font-display font-bold text-ink">Third-party costs stay separate</p>
+              <p class="mt-1 text-[0.97rem]">{site.fee.exclusions} The client pays these directly.</p>
+            </div>
+          </li>
+        </ul>
+        <a href={url('/fees/')} class="text-link mt-6">Full fee details <Icon name="arrow-right" size={18} /></a>
+      </div>
+      <div data-reveal>
+        <PriceCard />
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Why work with me -->
+  <section class="section" aria-labelledby="why-heading">
+    <div class="container-site">
+      <SectionHeading
+        id="why-heading"
+        eyebrow="Why work with me"
+        title="A personal service you can rely on"
+        intro="Settle in Ireland is a one-person, independent service. That means your clients always know who they are dealing with."
+        align="center"
+      />
+      <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          reasons.map((r, i) => (
+            <li class="card p-6 sm:p-7" data-reveal style={`--reveal-delay:${(i % 3) * 80}ms`}>
+              <span class:list={['icon-tile', r.icon === 'whatsapp' && '!bg-wa/15 !text-[#0e7a3a]']}>
+                <Icon name={r.icon} size={24} />
+              </span>
+              <h3 class="mt-5 text-[1.15rem]">{r.title}</h3>
+              <p class="mt-2 text-[0.98rem]">{r.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7. Current experience -->
+  <section class="pb-16 lg:pb-24" aria-label="Current experience">
+    <div class="container-site">
+      <div class="flex flex-col items-start gap-5 rounded-2xl border border-accent-300 bg-accent-50 p-6 sm:flex-row sm:items-center sm:p-8" data-reveal>
+        <span class="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-white text-accent-600 shadow-sm"><Icon name="globe" size={28} /></span>
+        <p class="font-display text-[1.15rem] font-semibold leading-snug text-ink sm:text-[1.3rem]">{site.currentMarkets}</p>
+        <a href={url('/partner-agencies/')} class="btn btn-primary shrink-0 sm:ml-auto">Partner with me</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Testimonials (hidden until real ones are added in src/config/site.ts) -->
+  <Testimonials />
+
+  <!-- 9. FAQ preview -->
+  <section class="section bg-white" aria-labelledby="faq-preview-heading">
+    <div class="container-site grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <div>
+        <SectionHeading
+          id="faq-preview-heading"
+          eyebrow="FAQ"
+          title="Common questions"
+          intro="Straight answers to the questions partner agencies and clients ask most."
+        />
+        <a href={url('/faq/')} class="btn btn-outline mt-8">
+          See all questions <Icon name="arrow-right" size={20} />
+        </a>
+      </div>
+      <FAQAccordion items={faqsById(homeFaqIds)} idPrefix="home-faq" />
+    </div>
+  </section>
+
+  <!-- 10. Final call to action -->
+  <div class="pt-16 lg:pt-24">
+    <CTASection
+      title="Have a client arriving in Ireland soon?"
+      text={`Send me a message on WhatsApp and I will explain how I can support them from arrival day onwards. ${site.responseTime}`}
+      message={waMessages.partnerAgency}
+      secondary={{ label: 'Become a Partner Agency', href: '/partner-agencies/' }}
+    />
+  </div>
+</BaseLayout>
