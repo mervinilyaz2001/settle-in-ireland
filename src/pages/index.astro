@@ -40,6 +40,32 @@ const plan = [
   { label: 'Bank account', done: false },
   { label: 'TFI Leap Card', done: false },
 ];
+
+const soloHelp = [
+  { icon: 'house', title: 'Somewhere safe to live', text: 'Help checking listings and landlords, so you avoid rental scams.' },
+  { icon: 'id-card', title: 'IRP and PPS Number', text: 'What to prepare and what to expect, step by step, with the official links.' },
+  { icon: 'wallet', title: 'Bank account and transport', text: 'Opening an Irish bank account and getting a TFI Leap Card.' },
+  { icon: 'message-square-text', title: 'One person to message', text: 'Ask questions on WhatsApp or by phone, wherever you are.' },
+];
+
+const soloPath = [
+  { icon: 'plane', title: 'Before you fly', steps: ['Arrival checklist', 'Accommodation checks', 'Airport to your room'] },
+  { icon: 'plane-landing', title: 'Arrival week', steps: ['Phone and SIM', 'Getting around', 'Your local area'] },
+  { icon: 'calendar-check', title: 'First weeks', steps: ['IRP registration', 'PPS Number', 'Bank account', 'Leap Card'] },
+];
+
+const agencyGets = [
+  { icon: 'user-check', title: 'One named contact', text: 'Each student has one person in Ireland to message.' },
+  { icon: 'list-checks', title: 'The same seven services', text: 'Every student gets the same defined package.' },
+  { icon: 'clipboard-list', title: 'Updates for your team', text: 'At the milestones we agree before the first referral.' },
+  { icon: 'badge-euro', title: `${packagePrice} per student`, text: 'Paid in two parts. Third-party costs are separate.' },
+];
+
+const referral = [
+  { title: 'You handle admission and the visa', text: 'Your agency looks after the college place and the application, as now.' },
+  { title: 'You refer the student, with their consent', text: 'You share their details and arrival plans with me.' },
+  { title: 'I help them get set up in Ireland', text: 'From before they fly to their first weeks, and you hear at the agreed milestones.' },
+];
 ---
 
 <BaseLayout
@@ -166,6 +192,171 @@ const plan = [
     </div>
   </section>
 
+  <!-- Who it is for: two paths, so each visitor can jump to the part written for them -->
+  <nav aria-label="Who Settle in Ireland helps" class="hero-in relative z-10 -mt-8 sm:-mt-10" style="--d:760ms">
+    <div class="container-site">
+      <ul class="grid overflow-hidden rounded-[20px] bg-white shadow-[0_24px_50px_-28px_rgba(9,42,53,0.55)] ring-1 ring-line sm:grid-cols-2">
+        <li>
+          <a href="#on-your-own" class="path-link flex items-center gap-4 p-5 sm:p-6">
+            <span class="icon-tile"><Icon name="graduation-cap" size={22} /></span>
+            <span class="min-w-0 flex-1">
+              <span class="block font-display text-[1.05rem] font-bold text-ink">Moving on your own</span>
+              <span class="block text-[0.93rem] text-muted">Students and anyone who applied without an agency</span>
+            </span>
+            <Icon name="chevron-down" size={22} class="path-arrow shrink-0 text-accent-700" />
+          </a>
+        </li>
+        <li class="border-t border-line sm:border-l sm:border-t-0">
+          <a href="#for-agencies" class="path-link flex items-center gap-4 p-5 sm:p-6">
+            <span class="icon-tile"><Icon name="building" size={22} /></span>
+            <span class="min-w-0 flex-1">
+              <span class="block font-display text-[1.05rem] font-bold text-ink">Education agencies</span>
+              <span class="block text-[0.93rem] text-muted">Sending students to Ireland and want them supported</span>
+            </span>
+            <Icon name="chevron-down" size={22} class="path-arrow shrink-0 text-accent-700" />
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- For people moving on their own, such as students who applied directly to a college -->
+  <section id="on-your-own" class="section" aria-labelledby="solo-heading">
+    <div class="container-site grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+      <div>
+        <SectionHeading
+          id="solo-heading"
+          eyebrow="Moving on your own"
+          title="Applied on your own? You don't have to settle in alone."
+          intro="Lots of people move to Ireland without an agency, like students who apply straight to a college or English language school. You arrange your place and your visa. I help with everything after that, before you fly and in your first weeks."
+        />
+        <ul class="mt-8 grid gap-5 sm:grid-cols-2">
+          {
+            soloHelp.map((item, i) => (
+              <li class="flex gap-4" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+                <span class="icon-tile shrink-0">
+                  <Icon name={item.icon} size={22} />
+                </span>
+                <span>
+                  <strong class="block font-display text-ink">{item.title}</strong>
+                  <span class="text-[0.96rem]">{item.text}</span>
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center" data-reveal>
+          <a href={url('/contact/#enquiry')} class="btn btn-primary btn-lg">
+            Plan My Arrival <Icon name="arrow-right" size={20} />
+          </a>
+          <WhatsAppButton message={waMessages.direct} label="Message me on WhatsApp" size="lg" track="home_solo" lead="individual" />
+        </div>
+        <a href={url('/individual-support/')} class="text-link mt-6" data-reveal>See everything included <Icon name="arrow-right" size={18} /></a>
+      </div>
+
+      <!-- Your path, from before you fly to your first weeks -->
+      <div class="card p-6 sm:p-8" data-reveal="zoom">
+        <p class="font-display text-[0.82rem] font-bold uppercase tracking-[0.1em] text-muted">Your path</p>
+        <h3 class="mt-2 text-[1.35rem]">From before you fly to your first weeks</h3>
+        <ol class="mt-6 grid gap-6">
+          {
+            soloPath.map((stage, i) => (
+              <li
+                class="relative flex gap-4 before:absolute before:-bottom-6 before:left-[21px] before:top-12 before:border-l-2 before:border-dashed before:border-brand-200 last:before:hidden"
+                data-reveal="right"
+                style={`--reveal-delay:${150 + i * 140}ms`}
+              >
+                <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-brand-900 text-gold-300">
+                  <Icon name={stage.icon} size={20} />
+                </span>
+                <div class="min-w-0 pt-1.5">
+                  <p class="font-display font-bold text-ink">{stage.title}</p>
+                  <ul class="mt-2.5 flex flex-wrap gap-2">
+                    {stage.steps.map((s) => (
+                      <li class="rounded-full bg-brand-50 px-3 py-1 text-[0.86rem] font-medium text-brand-800">{s}</li>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+        <p class="mt-7 flex flex-wrap items-baseline gap-x-2 gap-y-1 border-t border-line pt-5 text-[0.95rem]">
+          <span class="font-display text-[1.35rem] font-bold text-ink">{packagePrice}</span>
+          <span>{site.fee.perUnit}, all seven services, paid in two parts.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- For education agencies that send students to Ireland -->
+  <section id="for-agencies" class="section on-dark relative isolate overflow-hidden bg-brand-900 text-white" aria-labelledby="agency-heading">
+    <div aria-hidden="true" class="absolute inset-0 -z-10">
+      <div class="hero-glow absolute -right-40 -top-40 h-[560px] w-[560px] rounded-full bg-[radial-gradient(closest-side,rgb(31_138_112/0.32),transparent)]"></div>
+      <svg class="absolute bottom-0 left-0 h-[300px] w-full opacity-60" viewBox="0 0 1200 300" preserveAspectRatio="none" fill="none">
+        <path class="route-dots route-dots-slow" d="M-20 280C220 200 420 260 640 170S1000 60 1220 90" stroke="#2BA585" stroke-opacity=".5" stroke-width="2.5" stroke-dasharray="2 12" stroke-linecap="round"></path>
+      </svg>
+    </div>
+    <div class="container-site grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+      <div>
+        <SectionHeading
+          id="agency-heading"
+          tone="dark"
+          eyebrow="For education agencies"
+          title="Sending students to Ireland? I'll help them get set up once they land."
+          intro="Your agency handles admission and the visa. I give every student you refer a local contact for the practical steps in Ireland, with an agreed scope and updates for your team."
+        />
+        <ul class="mt-8 grid gap-3 sm:grid-cols-2">
+          {
+            agencyGets.map((item, i) => (
+              <li class="lift-dark flex gap-3.5 rounded-2xl border border-white/10 bg-white/[0.05] p-4" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+                <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/10 text-gold-300">
+                  <Icon name={item.icon} size={20} />
+                </span>
+                <span>
+                  <strong class="block font-display text-white">{item.title}</strong>
+                  <span class="text-[0.94rem] text-brand-100">{item.text}</span>
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap" data-reveal>
+          <a href={url('/agency-partnerships/')} class="btn btn-lg bg-white text-brand-950 hover:bg-brand-50">
+            Agency Partnerships <Icon name="arrow-right" size={20} />
+          </a>
+          <WhatsAppButton message={waMessages.partnerAgency} label="Message as an agency" size="lg" track="home_agency" lead="agency" />
+        </div>
+      </div>
+
+      <!-- How a referral works -->
+      <div class="rounded-[22px] border border-white/10 bg-white/[0.04] p-6 sm:p-8" data-reveal="zoom">
+        <p class="font-display text-[0.82rem] font-bold uppercase tracking-[0.1em] text-gold-300">How a referral works</p>
+        <ol class="mt-6 grid gap-6">
+          {
+            referral.map((step, i) => (
+              <li
+                class="relative flex gap-4 before:absolute before:-bottom-6 before:left-[21px] before:top-12 before:border-l-2 before:border-dashed before:border-white/20 last:before:hidden"
+                data-reveal="right"
+                style={`--reveal-delay:${150 + i * 140}ms`}
+              >
+                <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gold-500 font-display font-bold text-brand-950">{i + 1}</span>
+                <span class="min-w-0 pt-1.5">
+                  <strong class="block font-display text-white">{step.title}</strong>
+                  <span class="text-[0.94rem] text-brand-100">{step.text}</span>
+                </span>
+              </li>
+            ))
+          }
+        </ol>
+        <p class="mt-7 flex items-start gap-3 border-t border-white/10 pt-5 text-[0.94rem] text-brand-100">
+          <Icon name="message-square-text" size={20} class="mt-0.5 shrink-0 text-accent-300" />
+          Support is by WhatsApp and phone, wherever the student is in Ireland.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- Services -->
   <section class="section" aria-labelledby="services-heading">
     <div class="container-site">
@@ -259,45 +450,6 @@ const plan = [
 
   <!-- Testimonials, only when real ones are added; otherwise a transparent "What to expect" -->
   {showTestimonials ? <Testimonials /> : <WhatToExpect />}
-
-  <!-- Agencies -->
-  <section class="section" aria-labelledby="agency-teaser-heading">
-    <div class="container-site">
-      <div class="on-dark relative isolate grid items-center gap-8 overflow-hidden rounded-[24px] bg-brand-950 text-white lg:grid-cols-[1.1fr_0.9fr]" data-reveal="zoom">
-        <div aria-hidden="true" class="absolute -right-24 -top-24 -z-10 h-80 w-80 rounded-full bg-[radial-gradient(closest-side,rgb(31_138_112/0.35),transparent)]"></div>
-        <div class="p-7 sm:p-10 lg:p-12">
-          <p class="eyebrow eyebrow-light">For education agencies</p>
-          <h2 id="agency-teaser-heading" class="mt-3 text-[1.8rem] !text-white sm:text-[2.2rem]">A local point of contact for the students you refer</h2>
-          <p class="lead mt-4 text-brand-100">
-            Your agency manages admissions and visas. I support your students with the practical steps once they are in Ireland, with an agreed
-            scope, process and way of keeping you informed.
-          </p>
-          <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <a href={url('/agency-partnerships/')} class="btn btn-lg bg-white text-brand-950 hover:bg-brand-50">
-              Agency Partnerships <Icon name="arrow-right" size={20} />
-            </a>
-            <WhatsAppButton message={waMessages.partnerAgency} label="Message as an agency" size="lg" track="home_agency" lead="agency" />
-          </div>
-        </div>
-        <ol class="grid gap-3 px-7 pb-8 sm:px-10 lg:py-12 lg:pl-0 lg:pr-12" aria-label="How a referral works">
-          {
-            [
-              { icon: 'building', title: 'Your agency handles admission and visa' },
-              { icon: 'send', title: 'You refer the student, with their consent' },
-              { icon: 'heart-handshake', title: 'I support them in Ireland and keep you updated' },
-            ].map((step, i) => (
-              <li class="lift-dark flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.05] p-4" data-reveal="right" style={`--reveal-delay:${i * 120}ms`}>
-                <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white/10 text-gold-300">
-                  <Icon name={step.icon} size={22} />
-                </span>
-                <span class="font-display font-semibold">{step.title}</span>
-              </li>
-            ))
-          }
-        </ol>
-      </div>
-    </div>
-  </section>
 
   <!-- FAQ preview -->
   <section class="section bg-white" aria-labelledby="faq-preview-heading">

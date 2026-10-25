@@ -805,7 +805,8 @@
       border-color: rgb(255 255 255 / 0.25);
     }
     .lift:hover .icon-tile,
-    .card-hover:hover .icon-tile {
+    .card-hover:hover .icon-tile,
+    .path-link:hover .icon-tile {
       transform: rotate(-8deg) scale(1.08);
       background: var(--color-accent-100);
     }
@@ -818,6 +819,25 @@
   .lift:active,
   .card-hover:active {
     transform: scale(0.99);
+  }
+
+  /* The two 'who is this for' links under the homepage hero */
+  .path-link {
+    min-height: 44px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+  }
+  .path-link:hover {
+    background: var(--color-brand-50);
+  }
+  .path-link .path-arrow {
+    transition: transform 0.35s var(--ease-out-soft);
+  }
+  .path-link:hover .path-arrow {
+    transform: translateY(4px);
+  }
+  .path-link:active {
+    background: var(--color-brand-100);
   }
 }
 
