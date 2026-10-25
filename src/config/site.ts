@@ -35,7 +35,7 @@ export const site = {
   domain: 'https://settleinireland.com',
   /** Default description used when a page does not set its own. */
   description:
-    'Practical arrival and settling-in support in Ireland: airport pickup, accommodation help, IRP and PPS Number guidance, with one local point of contact.',
+    'Practical help getting set up in Ireland: accommodation, IRP and PPS Number guidance, a bank account and transport, with one local point of contact.',
 
   /**
    * PRE-LAUNCH SWITCH
@@ -71,14 +71,9 @@ export const site = {
   responseTime: null as string | null,
 
   /* ---------- Service details ---------- */
-  airportsCovered: 'Dublin Airport. Other Irish airports by arrangement.',
-  /** Where you can help in person. Shown in the FAQs and on the pricing page. */
-  inPersonArea: '[OWNER TO CONFIRM: where you can meet clients in person, for example Dublin and nearby areas]',
-  /** Any limits on travel for pickups and in-person help, and any extra cost outside that area. */
-  travelLimits: '[OWNER TO CONFIRM: travel limits for airport pickup and in-person help, and any extra cost outside that area]',
-  /** Shown on the Arrival Planning and Airport Pickup page and in the pricing exclusions. */
-  pickupTransportNote:
-    'Taxi or transport costs for the journey from the airport to the accommodation may be separate. I confirm this with the client before they travel.',
+  /** How support is given. Shown on the pricing, agency, About and FAQ pages. */
+  supportMode:
+    'All support is given remotely, by WhatsApp and phone. There is no airport pickup and no in-person meeting.',
   /** How long WhatsApp support lasts. Reads as part of a sentence: "WhatsApp support during the first weeks after arrival." */
   supportPeriod: 'during the first weeks after arrival',
 

@@ -12,7 +12,7 @@ const service: Service = {
     'I help the client understand the official process for registering their immigration permission and getting an Irish Residence Permit.',
   overview:
     'Most non-EEA nationals staying in Ireland for more than 90 days need to register their immigration permission and receive an Irish Residence Permit. I explain the official process, help the client organise their documents and explain what to expect on the day. I do not sell, reserve or guarantee appointments.',
-  feeLine: 'Explaining the official registration process, organising documents and knowing what to expect on the day.',
+  feeLine: 'Explaining the official registration process, organising documents and knowing what to expect at your appointment.',
   costs: `Included in the ${packagePrice} package. The official registration fee is paid by you directly to the official body. Check the current amount on irishimmigration.ie.`,
   metaTitle: 'IRP Registration Guidance | Settle in Ireland',
   metaDescription:
@@ -85,7 +85,7 @@ const service: Service = {
     },
     {
       title: 'Keep everything together',
-      text: 'Bring originals and copies of your documents in one folder. It saves time and stress on the day.',
+      text: 'Bring originals and copies of your documents in one folder. It saves time and stress at your appointment.',
     },
     {
       title: 'Arrive early',

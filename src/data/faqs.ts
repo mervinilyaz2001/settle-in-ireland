@@ -41,17 +41,22 @@ export const faqCategories: FAQCategory[] = [
       {
         id: 'areas',
         q: 'Which areas in Ireland are covered?',
-        a: `<p>Airport pickup: ${site.airportsCovered}</p><p>In-person help: ${site.inPersonArea}</p><p>Guidance by WhatsApp and phone works wherever you are.</p>`,
+        a: `<p>${site.supportMode} So the support works wherever you are moving to in Ireland.</p>`,
+      },
+      {
+        id: 'pickup',
+        q: 'Do you pick me up from the airport or meet in person?',
+        a: '<p>No. I do not provide airport pickups or meet clients in person. I help you plan the journey from the airport to your accommodation before you fly, and I support you by WhatsApp and phone with everything you need to set up.</p>',
       },
       {
         id: 'where',
         q: 'Where do you provide support?',
-        a: `<p>Before you travel, I support you by WhatsApp and phone, wherever you are in the world. After you arrive, I meet you at the airport and help in person where possible. I am based in ${site.location}.</p>`,
+        a: `<p>Before you travel and after you arrive, I support you by WhatsApp and phone, wherever you are. I am based in ${site.location}.</p>`,
       },
       {
         id: 'accommodation',
         q: 'Can you help me find accommodation?',
-        a: '<p>Yes, I help you search safely: understanding the rental market, checking listings, spotting scams and, where possible, checking a property locally by arrangement. I cannot guarantee that accommodation will be found, as availability in Ireland, especially Dublin, can be very limited. You always pay rent and deposits directly to the landlord or provider. See <a href="/services/accommodation-assistance/">Accommodation Assistance</a>.</p>',
+        a: '<p>Yes, I help you search safely: understanding the rental market, checking listings and landlords, spotting scams and preparing for live video viewings. I cannot guarantee that accommodation will be found, as availability in Ireland, especially Dublin, can be very limited. You always pay rent and deposits directly to the landlord or provider. See <a href="/services/accommodation-assistance/">Accommodation Assistance</a>.</p>',
       },
       {
         id: 'guarantee',
@@ -98,7 +103,7 @@ export const faqCategories: FAQCategory[] = [
       {
         id: 'documents',
         q: 'What documents should I prepare?',
-        a: '<p>It depends on your situation, and the official websites have the current lists. Most people need a valid passport, a letter from their college or course provider, proof of their accommodation address, and anything the immigration authorities ask for. Each service page has a "What you need to provide" section, for example <a href="/services/arrival-planning-airport-pickup/">Arrival Planning</a> and <a href="/services/irp-guidance/">IRP Guidance</a>.</p><p>Please do not send copies of documents through the website form.</p>',
+        a: '<p>It depends on your situation, and the official websites have the current lists. Most people need a valid passport, a letter from their college or course provider, proof of their accommodation address, and anything the immigration authorities ask for. Each service page has a "What you need to provide" section, for example <a href="/services/arrival-planning/">Arrival Planning</a> and <a href="/services/irp-guidance/">IRP Guidance</a>.</p><p>Please do not send copies of documents through the website form.</p>',
       },
       {
         id: 'contact-first',

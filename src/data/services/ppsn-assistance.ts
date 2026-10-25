@@ -18,7 +18,7 @@ const service: Service = {
   metaDescription:
     'Practical help applying for a Personal Public Service (PPS) Number in Ireland: understanding the process, preparing documents and knowing what to expect.',
   intro:
-    'A Personal Public Service Number (PPS Number or PPSN) is a personal reference number used for access to social welfare benefits, public services and information in Ireland. Many new arrivals need one, for example to work and pay the right tax. It is applied for through the Department of Social Protection, usually through MyWelfare.ie. I help the client understand the process, prepare their documents and attend if asked.',
+    'A Personal Public Service Number (PPS Number or PPSN) is a personal reference number used for access to social welfare benefits, public services and information in Ireland. Many new arrivals need one, for example to work and pay the right tax. It is applied for through the Department of Social Protection, usually through MyWelfare.ie. I help the client understand the process, prepare their documents and know what to expect if they are asked to attend in person.',
   governmentDisclaimer: true,
   covers: [
     'Explaining what a PPS Number is used for and when the client may need one.',
@@ -42,7 +42,7 @@ const service: Service = {
       text: 'I explain how to apply, usually online through MyWelfare.ie. The client completes the application themselves.',
     },
     {
-      title: 'Attend if asked',
+      title: 'If you are asked to attend',
       text: 'If the client is asked to attend in person, I explain what to bring and what to expect.',
     },
     {

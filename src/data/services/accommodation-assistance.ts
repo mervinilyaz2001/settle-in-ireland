@@ -11,8 +11,8 @@ const service: Service = {
   summary:
     'I help the client understand the Irish rental market, check listings and avoid rental scams before they arrive.',
   overview:
-    'Finding somewhere to live is one of the hardest parts of moving to Ireland. I explain the typical options, help the client check listings and spot scams, and where possible view or check properties locally by arrangement. The client pays rent and deposits directly.',
-  feeLine: 'Guidance on the rental market, help checking listings, scam warnings and local viewings by arrangement.',
+    'Finding somewhere to live is one of the hardest parts of moving to Ireland. I explain the typical options and help the client check listings, landlords and agreements and spot scams, all remotely. The client pays rent and deposits directly.',
+  feeLine: 'Guidance on the rental market, help checking listings and landlords, and scam warnings.',
   costs: `Included in the ${packagePrice} package. Rent, deposits, booking fees and bills are paid by you directly to the landlord or provider.`,
   metaTitle: 'Accommodation Help Before Arriving in Ireland',
   metaDescription:
@@ -24,7 +24,7 @@ const service: Service = {
     'Helping the client set a realistic budget and choose areas with good transport to their college or workplace.',
     'Showing the client what to look for in a listing and which questions to ask.',
     'Helping the client check whether a listing and a landlord look genuine.',
-    'Viewing or checking a property locally, where possible and by arrangement.',
+    'Helping the client prepare questions for a live video viewing with the landlord.',
     'Explaining deposits, written agreements and basic tenant rights in plain English, with links to official information.',
     'Helping the client plan a short-term stay for the first weeks if long-term housing is not ready yet.',
   ],
@@ -57,7 +57,7 @@ const service: Service = {
     },
     {
       title: 'Check before paying',
-      text: 'Where possible and by arrangement, I view or check a property locally, or join a video viewing.',
+      text: 'I help the client check the listing, the landlord and the agreement, and prepare questions for a live video viewing.',
     },
     {
       title: 'Decide and book',
@@ -127,7 +127,7 @@ const service: Service = {
     },
     {
       q: 'Can you view a property for me?',
-      a: '<p>Where possible, yes, by arrangement. I can check a property locally or join a video viewing. This depends on the location and timing, so please contact me early.</p>',
+      a: '<p>No. I do not view properties in person. I help you check listings and landlords remotely, and prepare questions for a live video viewing with the landlord, which is one of the best ways to spot a scam.</p>',
     },
     {
       q: 'Do I pay the deposit to you?',

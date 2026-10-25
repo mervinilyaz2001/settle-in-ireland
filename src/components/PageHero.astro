@@ -14,14 +14,24 @@ const { eyebrow, title, intro, crumbs, wide = false } = Astro.props;
 const hasAside = Astro.slots.has('aside');
 ---
 
-<section class="border-b border-line bg-sand">
+<section class="relative isolate overflow-hidden border-b border-line bg-gradient-to-b from-brand-50 to-canvas">
+  <svg
+    aria-hidden="true"
+    class="pointer-events-none absolute -right-24 top-6 -z-10 hidden h-[320px] w-[620px] md:block"
+    viewBox="0 0 620 320"
+    fill="none"
+  >
+    <path class="route-dots route-dots-slow" d="M10 300C140 250 210 120 330 130S520 210 600 40" stroke="#8FB7C2" stroke-width="2.5" stroke-dasharray="2 11" stroke-linecap="round"></path>
+    <circle cx="600" cy="40" r="7" fill="#1F8A70"></circle>
+    <circle class="pin-pulse" cx="600" cy="40" r="18" stroke="#1F8A70" stroke-opacity=".25" stroke-width="2"></circle>
+  </svg>
   <div class="container-site pb-12 pt-6 sm:pb-16 sm:pt-8 lg:pb-20">
     <Breadcrumbs items={crumbs} />
-    <div class:list={['mt-8 sm:mt-10', hasAside && 'grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16']}>
+    <div class:list={['mt-8 sm:mt-10', hasAside && 'grid items-start gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16']}>
       <div class:list={[wide ? 'max-w-4xl' : 'max-w-3xl']}>
-        {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
-        <h1 class="text-[2.2rem] leading-[1.1] sm:text-5xl lg:text-[3.2rem]">{title}</h1>
-        {intro && <p class="lead mt-5">{intro}</p>}
+        {eyebrow && <p class="eyebrow hero-in mb-4">{eyebrow}</p>}
+        <h1 class="hero-in text-[2.2rem] leading-[1.1] sm:text-5xl lg:text-[3.4rem]" style="--d:90ms">{title}</h1>
+        {intro && <p class="lead hero-in mt-5" style="--d:180ms">{intro}</p>}
         <slot />
       </div>
       {hasAside && <slot name="aside" />}

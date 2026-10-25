@@ -31,10 +31,20 @@ const {
 
 <section class="section pt-0" aria-labelledby="cta-heading">
   <div class="container-site">
-    <div class="on-dark relative overflow-hidden rounded-xl bg-brand-900 px-6 py-12 text-white sm:px-12 sm:py-14 lg:px-16" data-reveal>
-      <div aria-hidden="true" class="absolute inset-x-0 top-0 h-1 bg-gold-500"></div>
+    <div class="on-dark relative isolate overflow-hidden rounded-[24px] bg-brand-900 px-6 py-12 text-white sm:px-12 sm:py-14 lg:px-16" data-reveal="zoom">
+      <svg
+        aria-hidden="true"
+        class="route-svg pointer-events-none absolute -right-10 -top-6 -z-10 h-[260px] w-[420px] opacity-60 sm:h-[340px] sm:w-[560px]"
+        viewBox="0 0 560 340"
+        fill="none"
+      >
+        <path class="route-dots" d="M20 320C120 210 230 260 300 170S430 40 520 60" stroke="#2BA585" stroke-width="2.5" stroke-dasharray="2 10" stroke-linecap="round"></path>
+        <circle cx="520" cy="60" r="9" fill="#F2A541"></circle>
+        <circle class="pin-pulse" cx="520" cy="60" r="22" stroke="#F2A541" stroke-opacity=".35" stroke-width="2"></circle>
+      </svg>
+      <div aria-hidden="true" class="absolute -bottom-40 -left-32 -z-10 h-96 w-96 rounded-full bg-[radial-gradient(closest-side,rgb(31_138_112/0.3),transparent)]"></div>
       <div class="max-w-2xl">
-        <h2 id="cta-heading" class="text-[1.85rem] !text-white sm:text-[2.3rem]">{title}</h2>
+        <h2 id="cta-heading" class="text-[1.85rem] !text-white sm:text-[2.4rem]">{title}</h2>
         <p class="lead mt-4 text-brand-100">
           {text}
           {site.responseTime && ` ${site.responseTime}`}
@@ -54,12 +64,12 @@ const {
           showContactLinks && (
             <p class="mt-6 flex flex-wrap gap-x-6 gap-y-1 text-brand-100">
               <a href={telHref()} class="inline-flex min-h-11 items-center gap-2 font-semibold text-white underline-offset-4 hover:underline">
-                <Icon name="phone" size={18} class="text-gold-300" />
+                <Icon name="phone" size={18} class="text-accent-300" />
                 Call {site.phone}
               </a>
               {site.emailActive && (
                 <a href={mailHref()} class="inline-flex min-h-11 items-center gap-2 font-semibold text-white underline-offset-4 hover:underline">
-                  <Icon name="mail" size={18} class="text-gold-300" />
+                  <Icon name="mail" size={18} class="text-accent-300" />
                   {site.email}
                 </a>
               )}

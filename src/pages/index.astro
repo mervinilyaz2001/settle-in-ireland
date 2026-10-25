@@ -6,7 +6,7 @@ import FounderIntro from '../components/FounderIntro.astro';
 import HowItWorksSteps from '../components/HowItWorksSteps.astro';
 import Icon from '../components/Icon.astro';
 import JsonLd from '../components/JsonLd.astro';
-import Photo from '../components/Photo.astro';
+import LogoMark from '../components/LogoMark.astro';
 import PriceCard from '../components/PriceCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import ServiceCard from '../components/ServiceCard.astro';
@@ -30,58 +30,139 @@ const websiteSchema = {
 };
 const [first, second] = site.fee.payments;
 const showTestimonials = site.showTestimonials && site.testimonials.length > 0;
+
+const plan = [
+  { label: 'Arrival checklist ready', done: true },
+  { label: 'Accommodation checked', done: true },
+  { label: 'Phone and SIM sorted', done: true },
+  { label: 'IRP guidance', done: false, next: true },
+  { label: 'PPS Number', done: false },
+  { label: 'Bank account', done: false },
+  { label: 'TFI Leap Card', done: false },
+];
 ---
 
 <BaseLayout
   title="Arrival Support in Ireland | Settle in Ireland"
-  description={`Moving to Ireland? Practical arrival and settling-in support with one local contact: airport pickup, accommodation, IRP and PPSN guidance. ${packagePrice} per client.`}
+  description={`Moving to Ireland? Practical help getting set up, with one local contact: accommodation, IRP and PPS Number guidance, banking and transport. ${packagePrice} per client.`}
 >
   <JsonLd slot="head" data={[businessSchema(), websiteSchema]} />
 
   <!-- Hero -->
-  <section class="border-b border-line bg-canvas" aria-labelledby="hero-heading">
-    <div class="container-site grid items-center gap-10 pb-14 pt-10 sm:pb-16 sm:pt-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14 lg:pb-20 lg:pt-16">
+  <section class="on-dark relative isolate overflow-hidden bg-brand-900 text-white" aria-labelledby="hero-heading">
+    <div aria-hidden="true" class="absolute inset-0 -z-10">
+      <div class="hero-glow absolute -left-56 -top-56 h-[640px] w-[640px] rounded-full bg-[radial-gradient(closest-side,rgb(31_138_112/0.35),transparent)]"></div>
+      <div class="hero-glow hero-glow-slow absolute -bottom-64 right-[-15%] h-[680px] w-[680px] rounded-full bg-[radial-gradient(closest-side,rgb(42_113_134/0.55),transparent)]"></div>
+      <svg class="absolute right-0 top-0 h-full w-full opacity-70 lg:w-[62%]" viewBox="0 0 800 700" preserveAspectRatio="xMaxYMid slice" fill="none">
+        <path class="route-dots" d="M-20 640C140 560 210 380 380 360S640 300 760 90" stroke="#2BA585" stroke-opacity=".55" stroke-width="2.5" stroke-dasharray="2 12" stroke-linecap="round"></path>
+        <path class="route-dots route-dots-slow" d="M60 720C230 640 330 520 520 500S760 420 840 300" stroke="#8FB7C2" stroke-opacity=".25" stroke-width="2" stroke-dasharray="2 12" stroke-linecap="round"></path>
+      </svg>
+    </div>
+
+    <div class="container-site grid items-center gap-12 pb-16 pt-12 sm:pb-20 sm:pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:pb-28 lg:pt-24">
       <div>
-        <p class="eyebrow">{site.tagline}</p>
-        <h1 id="hero-heading" class="mt-4 text-[2.4rem] leading-[1.08] sm:text-[3.3rem] lg:text-[3.6rem]">
-          Moving to Ireland? Have someone here from day one.
+        <p class="eyebrow eyebrow-light hero-in">{site.tagline}</p>
+        <h1 id="hero-heading" class="hero-in mt-4 text-[2.5rem] leading-[1.06] !text-white sm:text-6xl lg:text-[4rem]" style="--d:120ms">
+          Moving to Ireland? Have someone here <span class="text-gold-300">from day one.</span>
         </h1>
-        <p class="lead mt-5 max-w-[36rem]">
+        <p class="lead hero-in mt-6 max-w-[38rem] text-brand-100" style="--d:240ms">
           Practical, personalised support to help you prepare for arrival and settle into life in Ireland, with a local point of contact to help
           you understand the next steps.
         </p>
-        <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-          <a href={url('/contact/#enquiry')} class="btn btn-primary btn-lg">Plan My Arrival</a>
-          <a href={url('/individual-support/')} class="btn btn-outline btn-lg">Explore Our Services</a>
+        <div class="hero-in mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center" style="--d:360ms">
+          <a href={url('/contact/#enquiry')} class="btn btn-gold btn-lg">
+            Plan My Arrival <Icon name="arrow-right" size={20} />
+          </a>
+          <a href={url('/individual-support/')} class="btn btn-outline-light btn-lg">Explore Our Services</a>
         </div>
-        <p class="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.97rem]">
-          <span class="rounded-md bg-gold-100 px-2.5 py-1 font-display font-bold text-gold-800">{packagePrice} {site.fee.perUnit}</span>
-          <span class="text-ink">
+        <p class="hero-in mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.97rem] text-brand-100" style="--d:460ms">
+          <span class="rounded-md bg-white/10 px-2.5 py-1 font-display font-bold text-gold-300">{packagePrice} {site.fee.perUnit}</span>
+          <span>
             {site.fee.title}, paid in two parts. Third-party costs are separate.
-            <a href={url('/pricing/')} class="font-semibold text-accent-700 underline underline-offset-4">See pricing</a>
+            <a href={url('/pricing/')} class="font-semibold text-white underline decoration-accent-300 decoration-2 underline-offset-4 hover:decoration-white">See pricing</a>
           </span>
         </p>
-        <p class="mt-4 text-[0.97rem]">
+        <p class="hero-in mt-4 text-[0.97rem] text-brand-100" style="--d:540ms">
           Prefer WhatsApp?
           <a
             href={waLink(waMessages.client)}
             target="_blank"
             rel="noopener"
-            class="font-semibold text-accent-700 underline underline-offset-4"
+            class="font-semibold text-white underline decoration-wa decoration-2 underline-offset-4 hover:decoration-white"
             data-track-location="hero_text"
             data-lead="individual"
           >
             Message me directly<span class="sr-only"> (opens WhatsApp in a new tab)</span>
           </a>
         </p>
+        <ul class="hero-in mt-8 flex flex-wrap gap-x-6 gap-y-3 border-t border-white/15 pt-6 text-[0.97rem] font-medium text-brand-100" style="--d:620ms" aria-label="Why choose Settle in Ireland">
+          <li class="flex items-center gap-2"><Icon name="message-square-text" size={20} class="text-accent-300" /> Support on WhatsApp</li>
+          <li class="flex items-center gap-2"><Icon name="badge-euro" size={20} class="text-gold-300" /> {packagePrice}, one clear fee</li>
+          <li class="flex items-center gap-2"><Icon name="user-check" size={20} class="text-accent-300" /> One named contact</li>
+          <li class="flex items-center gap-2"><Icon name="shield-check" size={20} class="text-accent-300" /> Independent service</li>
+        </ul>
       </div>
-      <Photo
-        photo="liffey"
-        priority
-        showCaption
-        sizes="(min-width: 1024px) 46vw, 100vw"
-        class="aspect-[16/11] w-full rounded-xl lg:aspect-[4/5]"
-      />
+
+      <!-- Illustration: an example settling-in plan, drawn in code -->
+      <div class="hero-card-in relative mx-auto hidden w-full max-w-[440px] sm:block lg:mr-0" aria-hidden="true">
+        <div class="float-slow">
+          <div class="relative rotate-[1.5deg] rounded-[22px] bg-white p-5 text-body shadow-[0_40px_80px_-30px_rgba(0,0,0,0.6)] sm:p-6">
+            <div class="flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <span class="icon-tile !h-11 !w-11"><Icon name="list-checks" size={22} /></span>
+                <div>
+                  <p class="font-display text-[1.05rem] font-bold text-ink">Settling-in plan</p>
+                  <p class="text-[0.85rem] text-muted">From before you fly to your first weeks</p>
+                </div>
+              </div>
+              <span class="rounded-full bg-brand-50 px-2.5 py-1 text-[0.72rem] font-bold uppercase tracking-[0.08em] text-brand-700">Example</span>
+            </div>
+            <ul class="mt-5 grid gap-2">
+              {
+                plan.map((item, i) => (
+                  <li
+                    class:list={[
+                      'plan-item flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-[0.95rem]',
+                      item.next ? 'next-pulse bg-gold-50 ring-1 ring-gold-300' : 'bg-canvas',
+                    ]}
+                    style={`--d:${700 + i * 110}ms`}
+                  >
+                    <span class="flex items-center gap-3">
+                      <span
+                        class:list={[
+                          'grid h-6 w-6 place-items-center rounded-full',
+                          item.done ? 'check-pop bg-accent-600 text-white' : item.next ? 'border-2 border-gold-500 bg-white' : 'border-2 border-line-strong bg-white',
+                        ]}
+                        style={`--d:${950 + i * 110}ms`}
+                      >
+                        {item.done && <Icon name="check" size={14} strokeWidth={3} />}
+                      </span>
+                      <span class:list={['font-medium', item.done ? 'text-ink' : 'text-body']}>{item.label}</span>
+                    </span>
+                    {item.next && <span class="text-[0.78rem] font-bold text-gold-800">Next</span>}
+                  </li>
+                ))
+              }
+            </ul>
+            <div class="mt-5 flex items-center gap-3 border-t border-line pt-4">
+              <span class="grid h-10 w-10 place-items-center rounded-full bg-brand-900"><LogoMark size={26} tone="dark" /></span>
+              <div class="min-w-0 flex-1">
+                <p class="text-[0.92rem] font-semibold text-ink">Your local contact in Ireland</p>
+                <p class="text-[0.82rem] text-muted">Available on WhatsApp</p>
+              </div>
+              <span class="grid h-9 w-9 place-items-center rounded-full bg-wa text-wa-ink"><Icon name="whatsapp" size={20} /></span>
+            </div>
+          </div>
+        </div>
+        <div class="chip-in absolute -left-3 -top-5 flex items-center gap-2 rounded-full bg-white px-3.5 py-2 text-[0.85rem] font-semibold text-ink shadow-lg sm:-left-8" style="--d:1500ms">
+          <span class="grid h-6 w-6 place-items-center rounded-full bg-accent-100 text-accent-700"><Icon name="map-pin" size={14} /></span>
+          Based in Ireland
+        </div>
+        <div class="chip-in absolute -bottom-5 -right-2 flex items-center gap-2 rounded-full bg-white px-3.5 py-2 text-[0.85rem] font-semibold text-ink shadow-lg sm:-right-6" style="--d:1700ms">
+          <span class="grid h-6 w-6 place-items-center rounded-full bg-gold-100 text-gold-800"><Icon name="users" size={14} /></span>
+          Family kept updated
+        </div>
+      </div>
     </div>
   </section>
 
@@ -182,7 +263,8 @@ const showTestimonials = site.showTestimonials && site.testimonials.length > 0;
   <!-- Agencies -->
   <section class="section" aria-labelledby="agency-teaser-heading">
     <div class="container-site">
-      <div class="on-dark grid items-center gap-8 overflow-hidden rounded-xl bg-brand-950 text-white lg:grid-cols-[1.1fr_0.9fr]">
+      <div class="on-dark relative isolate grid items-center gap-8 overflow-hidden rounded-[24px] bg-brand-950 text-white lg:grid-cols-[1.1fr_0.9fr]" data-reveal="zoom">
+        <div aria-hidden="true" class="absolute -right-24 -top-24 -z-10 h-80 w-80 rounded-full bg-[radial-gradient(closest-side,rgb(31_138_112/0.35),transparent)]"></div>
         <div class="p-7 sm:p-10 lg:p-12">
           <p class="eyebrow eyebrow-light">For education agencies</p>
           <h2 id="agency-teaser-heading" class="mt-3 text-[1.8rem] !text-white sm:text-[2.2rem]">A local point of contact for the students you refer</h2>
@@ -191,13 +273,28 @@ const showTestimonials = site.showTestimonials && site.testimonials.length > 0;
             scope, process and way of keeping you informed.
           </p>
           <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <a href={url('/agency-partnerships/')} class="btn btn-lg bg-white text-brand-950 hover:bg-gold-100">
+            <a href={url('/agency-partnerships/')} class="btn btn-lg bg-white text-brand-950 hover:bg-brand-50">
               Agency Partnerships <Icon name="arrow-right" size={20} />
             </a>
             <WhatsAppButton message={waMessages.partnerAgency} label="Message as an agency" size="lg" track="home_agency" lead="agency" />
           </div>
         </div>
-        <Photo photo="hapenny" sizes="(min-width: 1024px) 40vw, 100vw" class="h-full min-h-[240px] w-full" />
+        <ol class="grid gap-3 px-7 pb-8 sm:px-10 lg:py-12 lg:pl-0 lg:pr-12" aria-label="How a referral works">
+          {
+            [
+              { icon: 'building', title: 'Your agency handles admission and visa' },
+              { icon: 'send', title: 'You refer the student, with their consent' },
+              { icon: 'heart-handshake', title: 'I support them in Ireland and keep you updated' },
+            ].map((step, i) => (
+              <li class="lift-dark flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.05] p-4" data-reveal="right" style={`--reveal-delay:${i * 120}ms`}>
+                <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white/10 text-gold-300">
+                  <Icon name={step.icon} size={22} />
+                </span>
+                <span class="font-display font-semibold">{step.title}</span>
+              </li>
+            ))
+          }
+        </ol>
       </div>
     </div>
   </section>

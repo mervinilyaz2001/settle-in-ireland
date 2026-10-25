@@ -17,14 +17,14 @@ const fontFile = (weight) =>
   path.join(root, 'node_modules/@fontsource/plus-jakarta-sans/files', `plus-jakarta-sans-latin-${weight}-normal.woff`);
 
 const C = {
-  brand900: '#173B2D',
-  brand950: '#0F2A20',
-  brand600: '#336F58',
-  brand100: '#E3ECE6',
-  accent600: '#4E9472',
-  accent700: '#2D6A4F',
-  accent300: '#A9CDB9',
-  gold500: '#C9A35A',
+  brand900: '#0F3D4C',
+  brand950: '#092A35',
+  brand600: '#2A7186',
+  brand100: '#E2EEF0',
+  accent600: '#1F8A70',
+  accent700: '#14705A',
+  accent300: '#8FD6C0',
+  gold500: '#F2A541',
   white: '#FFFFFF',
 };
 
@@ -158,7 +158,7 @@ await writeFile(
       description: 'Your Local Contact in Ireland.',
       start_url: './',
       display: 'browser',
-      background_color: '#FAF8F3',
+      background_color: '#F8FAF9',
       theme_color: C.brand900,
       icons: [
         { src: 'icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any maskable' },

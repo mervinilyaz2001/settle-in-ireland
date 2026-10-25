@@ -11,7 +11,6 @@ import Disclaimer from '../components/Disclaimer.astro';
 import Icon from '../components/Icon.astro';
 import OfficialResources from '../components/OfficialResources.astro';
 import PageHero from '../components/PageHero.astro';
-import Photo from '../components/Photo.astro';
 import PriceCard from '../components/PriceCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
@@ -41,7 +40,7 @@ const checklist = [
 
 <BaseLayout
   title="Individual Arrival Support in Ireland | Settle in Ireland"
-  description={`Practical help moving to Ireland: airport pickup, accommodation, IRP and PPS Number guidance, banking, transport and orientation. ${packagePrice} per client.`}
+  description={`Practical help getting set up in Ireland: arrival planning, accommodation, IRP and PPS Number guidance, banking, transport and orientation. ${packagePrice} per client.`}
   whatsappMessage={waMessages.client}
 >
   <PageHero
@@ -54,7 +53,23 @@ const checklist = [
       <a href={url('/contact/#enquiry')} class="btn btn-primary btn-lg">Plan My Arrival</a>
       <WhatsAppButton message={waMessages.client} size="lg" track="individual_hero" />
     </div>
-    <Photo slot="aside" photo="airport" sizes="(min-width: 1024px) 42vw, 100vw" priority class="aspect-[16/11] w-full rounded-xl" />
+    <div slot="aside" class="card hero-card-in p-6 sm:p-7">
+      <p class="font-display text-[0.82rem] font-bold uppercase tracking-[0.1em] text-muted">Good to know</p>
+      <ul class="mt-4 grid gap-4">
+        <li class="flex gap-3">
+          <span class="icon-tile !h-10 !w-10 !rounded-xl"><Icon name="globe" size={20} /></span>
+          <span><strong class="block text-ink">No agency needed</strong> Contact me directly, from any country.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="icon-tile !h-10 !w-10 !rounded-xl"><Icon name="badge-euro" size={20} /></span>
+          <span><strong class="block text-ink">{packagePrice} {site.fee.perUnit}</strong> One fixed fee, paid in two parts.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="icon-tile !h-10 !w-10 !rounded-xl"><Icon name="message-square-text" size={20} /></span>
+          <span><strong class="block text-ink">Help on WhatsApp</strong> Practical support by WhatsApp and phone, wherever you are.</span>
+        </li>
+      </ul>
+    </div>
   </PageHero>
 
   <!-- Services in detail -->
@@ -177,7 +192,7 @@ const checklist = [
       <ol class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {
           checklist.map((item, i) => (
-            <li class="rounded-xl border border-line bg-white p-6" data-reveal style={`--reveal-delay:${(i % 3) * 70}ms`}>
+            <li class="lift rounded-xl border border-line bg-white p-6" data-reveal style={`--reveal-delay:${(i % 3) * 70}ms`}>
               <span class="icon-tile">
                 <Icon name={item.icon} size={22} />
               </span>

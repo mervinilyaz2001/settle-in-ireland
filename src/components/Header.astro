@@ -124,7 +124,8 @@ const isCurrent = (l: { href: string; also?: string[] }) =>
   .nav-link.is-current {
     color: var(--color-brand-900);
   }
-  .nav-link.is-current::after {
+  /* Gold underline: drawn in from the left on hover, always shown for the current page */
+  .nav-link::after {
     content: '';
     position: absolute;
     left: 12px;
@@ -133,6 +134,13 @@ const isCurrent = (l: { href: string; also?: string[] }) =>
     height: 2px;
     border-radius: 2px;
     background: var(--color-gold-500);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease-out-soft);
+  }
+  .nav-link:hover::after,
+  .nav-link.is-current::after {
+    transform: scaleX(1);
   }
 
   .mobile-menu {

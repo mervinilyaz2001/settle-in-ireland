@@ -17,7 +17,7 @@ const prepare = [
   'Your expected arrival date, even if it is only approximate.',
   'Where in Ireland you are going, and your college or course if you have one.',
   'Whether an agency is helping you, or you are arranging everything yourself.',
-  'Which kinds of help you want, for example airport pickup or accommodation.',
+  'Which kinds of help you want, for example accommodation or IRP registration.',
   'Any deadlines you already know about.',
 ];
 
@@ -37,7 +37,7 @@ const phases: { id: string; icon: string; title: string; items: { text: string; 
     title: 'Before you travel',
     items: [
       { text: `First payment of ${formatPrice(first.amount)}: ${first.when.charAt(0).toLowerCase()}${first.when.slice(1)}`, payment: true },
-      { text: 'Arrival planning: your flight details, the meeting point and an arrival checklist.' },
+      { text: 'Arrival planning: your flight details, an arrival checklist and how to get from the airport to your accommodation.' },
       { text: 'Accommodation help: understanding your options, checking listings and avoiding scams.' },
     ],
   },
@@ -46,8 +46,8 @@ const phases: { id: string; icon: string; title: string; items: { text: string; 
     icon: 'plane-landing',
     title: 'When you arrive',
     items: [
-      { text: `Airport pickup. ${site.airportsCovered}` },
-      { text: 'Help getting to your accommodation and getting your phone working.' },
+      { text: 'WhatsApp support as you travel and land.' },
+      { text: 'Getting your phone working and settling into your accommodation.' },
       { text: 'Finding the essentials near you: shops, pharmacy and transport.' },
     ],
   },
@@ -129,7 +129,7 @@ const phases: { id: string; icon: string; title: string; items: { text: string; 
       <ol class="mt-10 grid gap-5 lg:grid-cols-3">
         {
           phases.map((phase, i) => (
-            <li id={phase.id} class="rounded-xl border border-line bg-white p-6 sm:p-7" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+            <li id={phase.id} class="lift rounded-xl border border-line bg-white p-6 sm:p-7" data-reveal style={`--reveal-delay:${i * 80}ms`}>
               <div class="flex items-center gap-3">
                 <span class="icon-tile">
                   <Icon name={phase.icon} size={22} />

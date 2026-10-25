@@ -85,6 +85,7 @@ const service: Service = {
     },
   ],
   notIncluded: [
+    'Accompanying you in person. All support is given remotely, by WhatsApp and phone.',
     'Medical, legal or financial advice.',
     'Phone plans, shopping, GP fees and other personal costs.',
     'Emergency support. In an emergency, always call 112 or 999 first.',

@@ -63,7 +63,7 @@ const robots = site.noindex || noindex ? 'noindex, nofollow' : 'index, follow';
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <meta name="theme-color" content="#173B2D" />
+    <meta name="theme-color" content="#0F3D4C" />
     {site.analytics.googleSiteVerification && <meta name="google-site-verification" content={site.analytics.googleSiteVerification} />}
     <meta name="format-detection" content="telephone=no" />
     <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
@@ -92,10 +92,9 @@ const robots = site.noindex || noindex ? 'noindex, nofollow' : 'index, follow';
       import { trackWhatsAppClicks } from '../scripts/analytics';
       trackWhatsAppClicks();
 
-      // Gentle fade-in for sections as they scroll into view. Skipped when the visitor prefers reduced motion.
+      // Sections and cards animate in as they scroll into view. With reduced motion the CSS turns this into a plain fade.
       const items = document.querySelectorAll<HTMLElement>('[data-reveal]');
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduce || !('IntersectionObserver' in window)) {
+      if (!('IntersectionObserver' in window)) {
         items.forEach((el) => el.classList.add('is-visible'));
       } else {
         const io = new IntersectionObserver(

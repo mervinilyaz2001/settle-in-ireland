@@ -11,7 +11,6 @@ import EnquiryForm from '../components/EnquiryForm.astro';
 import Icon from '../components/Icon.astro';
 import PageHero from '../components/PageHero.astro';
 import PaymentTimeline from '../components/PaymentTimeline.astro';
-import Photo from '../components/Photo.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import Text from '../components/Text.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
@@ -22,7 +21,7 @@ import { url } from '../lib/url';
 import { waMessages } from '../lib/whatsapp';
 
 const value = [
-  { icon: 'user-check', title: 'A local contact for referred students', text: 'Each student has one named person in Ireland to message and meet.' },
+  { icon: 'user-check', title: 'A local contact for referred students', text: 'Each student has one named person in Ireland to message for help.' },
   { icon: 'list-checks', title: 'A defined support package', text: 'The same seven services for every student, so you know what they receive.' },
   { icon: 'clipboard-list', title: 'Transparent scope', text: 'What is included, what is not and which costs are separate are written down from the start.' },
   { icon: 'route', title: 'A consistent referral process', text: 'The same steps for every referral, from consent to arrival.' },
@@ -43,7 +42,7 @@ const agencyHandles = ['College admission', 'Visa application', 'Pre-departure d
 const details = [
   { term: 'Services delivered', value: 'The seven services in the package, listed above.' },
   { term: 'Pricing', value: `${packagePrice} per student, paid in two parts. Third-party costs are separate.` },
-  { term: 'Coverage', value: `${site.airportsCovered} In-person help: ${site.inPersonArea}` },
+  { term: 'How support is given', value: `${site.supportMode} It works wherever the student is in Ireland.` },
   { term: 'Capacity and availability', value: site.agency.capacity },
   { term: 'Payment arrangements', value: site.agency.payment },
   { term: 'Reporting', value: site.agency.reporting },
@@ -66,7 +65,23 @@ const details = [
       <a href="#agency-enquiry" class="btn btn-primary btn-lg">Start a partnership enquiry</a>
       <WhatsAppButton message={waMessages.partnerAgency} label="Message on WhatsApp" size="lg" track="agency_hero" lead="agency" />
     </div>
-    <Photo slot="aside" photo="hapenny" sizes="(min-width: 1024px) 42vw, 100vw" priority class="aspect-[16/11] w-full rounded-xl" />
+    <div slot="aside" class="card hero-card-in p-6 sm:p-7">
+      <p class="font-display text-[0.82rem] font-bold uppercase tracking-[0.1em] text-muted">At a glance</p>
+      <ul class="mt-4 grid gap-4">
+        <li class="flex gap-3">
+          <span class="icon-tile !h-10 !w-10 !rounded-xl"><Icon name="badge-euro" size={20} /></span>
+          <span><strong class="block text-ink">{packagePrice} per student</strong> One fixed fee for all seven services.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="icon-tile !h-10 !w-10 !rounded-xl"><Icon name="user-check" size={20} /></span>
+          <span><strong class="block text-ink">One named contact</strong> For your students and your team.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="icon-tile !h-10 !w-10 !rounded-xl"><Icon name="globe" size={20} /></span>
+          <span><strong class="block text-ink">Agencies from any country</strong> Already working with partner agencies in Bangladesh.</span>
+        </li>
+      </ul>
+    </div>
   </PageHero>
 
   <!-- Value -->
@@ -81,7 +96,7 @@ const details = [
       <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {
           value.map((v, i) => (
-            <li class="rounded-xl border border-line bg-white p-6" data-reveal style={`--reveal-delay:${(i % 3) * 70}ms`}>
+            <li class="lift rounded-xl border border-line bg-white p-6" data-reveal style={`--reveal-delay:${(i % 3) * 70}ms`}>
               <span class="icon-tile">
                 <Icon name={v.icon} size={22} />
               </span>
@@ -104,7 +119,7 @@ const details = [
       <ol class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {
           process.map((step, i) => (
-            <li class="rounded-xl border border-line bg-canvas p-6" data-reveal style={`--reveal-delay:${(i % 3) * 70}ms`}>
+            <li class="lift rounded-xl border border-line bg-canvas p-6" data-reveal style={`--reveal-delay:${(i % 3) * 70}ms`}>
               <span class="font-display text-[2.2rem] leading-none font-bold text-brand-600">{String(i + 1).padStart(2, '0')}</span>
               <h3 class="mt-3 text-[1.1rem]">{step.title}</h3>
               <p class="mt-2 text-[0.97rem]">{step.text}</p>

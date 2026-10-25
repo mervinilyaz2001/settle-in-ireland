@@ -51,7 +51,7 @@ const values = [
       <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {
           values.map((v, i) => (
-            <li class="rounded-xl border border-line bg-canvas p-6" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+            <li class="lift rounded-xl border border-line bg-canvas p-6" data-reveal style={`--reveal-delay:${i * 70}ms`}>
               <span class="icon-tile">
                 <Icon name={v.icon} size={22} />
               </span>
@@ -68,8 +68,7 @@ const values = [
     <div class="container-site grid items-start gap-8 lg:grid-cols-2 lg:gap-16">
       <div>
         <SectionHeading id="based-heading" eyebrow="Where I am based" title="Based in Ireland" />
-        <p class="lead mt-5">I am based in <Text value={site.location} />. Airport pickup: {site.airportsCovered}</p>
-        <p class="mt-3">In-person help: <Text value={site.inPersonArea} /></p>
+        <p class="lead mt-5">I am based in <Text value={site.location} />. {site.supportMode}</p>
       </div>
       <Disclaimer />
     </div>

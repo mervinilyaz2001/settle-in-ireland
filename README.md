@@ -50,9 +50,9 @@ until it is done.
 - [ ] `location`: confirm "Dublin, Ireland" is how you want it shown.
 
 **Service and pricing**
-- [ ] `inPersonArea`: where you can meet clients in person.
-- [ ] `travelLimits`: limits for airport pickups and in-person help, and any extra cost outside them.
-- [ ] `airportsCovered`, `supportPeriod`, `pickupTransportNote`: confirm each is accurate.
+- [ ] `supportMode`: how support is given. It currently says all support is remote, by WhatsApp and phone, with no
+  airport pickup and no in-person meeting. Change it here if that ever changes, and the whole site follows.
+- [ ] `supportPeriod`: confirm how long WhatsApp support lasts.
 - [ ] `fee.payments[1].when`: confirm the second payment is due once the IRP appointment is confirmed.
 - [ ] `fee.appointmentDelayPolicy`: what happens to the second payment if the IRP appointment is delayed, unavailable, rescheduled or cancelled.
 - [ ] `fee.paymentMethods`: how clients pay, and that receipts are given.
@@ -183,19 +183,17 @@ register `form` and `lead_type` as custom dimensions (Admin > Custom definitions
 | FAQs | `src/data/faqs.ts` |
 | Disclaimer wording | `src/data/disclaimers.ts` |
 | Official website links | `src/data/official.ts` (checked 25 Oct 2026) |
-| Photos and their credits | `src/data/photos.ts` and `src/assets/photos/` |
 | Colours, fonts, spacing | the `@theme` block in `src/styles/global.css` |
 
-## 8. Photos
+## 8. Photos and animation
 
 - **Your photo:** save a portrait as `public/images/owner.webp` (about 800 x 1000 pixels, under 200 KB) and set
   `ownerPhoto: '/images/owner.webp'`. Until then a tasteful initials placeholder is shown.
-- **Other photos** are free-licence photos from Unsplash (Unsplash License, commercial use allowed, no credit
-  required): the River Liffey by NIR HIMI, the Ha'penny Bridge by Sophie Popplewell, and an airport walkway by
-  Briana Tozour. They show Dublin and travel in general, never your clients or your service, and are not
-  captioned as such. Credits and links are in `src/data/photos.ts`. To add more, put the image in
-  `src/assets/photos/`, add it to `photos.ts`, and use `<Photo photo="name" ... />`. Images are converted to
-  AVIF and WebP automatically.
+- **No stock photos.** The site uses drawn elements instead (the settling-in plan card, dotted routes and
+  icons), so nothing suggests a client or a meeting that did not happen.
+- **Animation** lives in the MOTION section near the end of `src/styles/global.css`: the hero entrance, the
+  scroll-in effect (`data-reveal`, with `left`, `right` and `zoom` variants), card hover lifts (`lift`) and
+  button presses. Visitors whose device asks for reduced motion get simple fades with no movement.
 
 ## 9. Testimonials
 
@@ -207,13 +205,13 @@ Never add made-up quotes, review scores or client numbers.
 
 These older pages redirect to the new ones, so old links keep working: `/fees/` → `/pricing/`,
 `/partner-agencies/` → `/agency-partnerships/`, `/services/` and `/moving-to-ireland-on-your-own/` →
-`/individual-support/`.
+`/individual-support/`, `/services/arrival-planning-airport-pickup/` → `/services/arrival-planning/`.
 
 ## 11. Project structure
 
 ```
 src/config/site.ts            All settings
-src/data/                     Services, FAQs, photos, official links, disclaimers
+src/data/                     Services, FAQs, official links, disclaimers
 src/components/               Header, Footer, forms, price card, FAQ accordion, analytics and more
 src/layouts/                  BaseLayout (every page), ServicePageLayout (7 service pages), Redirect
 src/pages/                    One file per page; services/[slug].astro builds the service pages
