@@ -19,7 +19,7 @@ export function businessSchema() {
     logo: absoluteUrl('/logo-light.png'),
     image: absoluteUrl('/og-default.png'),
     ...(isPlaceholder(site.phone) ? {} : { telephone: site.phone.replace(/[^\d+]/g, '') }),
-    email: site.email,
+    ...(site.emailActive ? { email: site.email } : {}),
     areaServed: { '@type': 'Country', name: 'Ireland' },
     address: { '@type': 'PostalAddress', addressLocality: site.location.split(',')[0].trim(), addressCountry: 'IE' },
     priceRange: `€${site.fee.amount}`,

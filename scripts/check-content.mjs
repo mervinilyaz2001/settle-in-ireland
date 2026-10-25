@@ -108,7 +108,7 @@ for (const [route, html] of htmlByRoute) {
   const body = html.slice(html.indexOf('<body'));
   const visible = body.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<style[\s\S]*?<\/style>/g, '');
   if (/>[^<]*(null|undefined)[^<]*</.test(visible)) problems.push(`${route}: "null" or "undefined" shown on the page`);
-  if (!site.emailActive && visible.includes(site.email)) problems.push(`${route}: email address shown while emailActive is false`);
+  if (!site.emailActive && html.includes(site.email)) problems.push(`${route}: email address in the page while emailActive is false`);
 
   for (const m of html.matchAll(/href="(https:\/\/wa\.me\/[^"]*)"/g)) {
     const url = decode(m[1]);
