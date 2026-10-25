@@ -51,7 +51,7 @@ const faqSchema = {
     <div class="mx-auto grid max-w-4xl gap-14">
       {
         faqCategories.map((c) => (
-          <section id={c.id} aria-labelledby={`${c.id}-heading`}>
+          <section id={c.id} class="cv-auto" aria-labelledby={`${c.id}-heading`}>
             <h2 id={`${c.id}-heading`} class="text-[1.6rem] sm:text-[1.9rem]">
               {c.title}
             </h2>
