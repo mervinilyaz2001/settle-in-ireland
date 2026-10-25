@@ -3,8 +3,8 @@
  * ============================================================================
  * OWNER: PLEASE HAVE THESE TERMS OF SERVICE REVIEWED BEFORE LAUNCH.
  * This is a plain English template for a small Irish sole trader. It is not legal advice.
- * Ask a solicitor to check it, in particular the cancellation and refund section and the
- * limitation of liability. Fee, payment and cancellation wording comes from src/config/site.ts.
+ * Ask a solicitor to check it, in particular the cancellation and refund section, the IRP
+ * appointment delay wording and the limitation of liability, against Irish consumer law. Fee, payment and cancellation wording comes from src/config/site.ts.
  * ============================================================================
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -81,6 +81,8 @@ import { url } from '../lib/url';
         }
       </ul>
       <p>{site.fee.milestoneNote}</p>
+      <p>If the IRP registration appointment is delayed, unavailable, rescheduled or cancelled: <Text value={site.fee.appointmentDelayPolicy} /></p>
+      <p>Travel limits: <Text value={site.travelLimits} /></p>
       <p>How to pay: <Text value={site.fee.paymentMethods} /></p>
       <p>If a partner agency pays on your behalf, we agree this in writing before the service starts.</p>
 
@@ -138,7 +140,8 @@ import { url } from '../lib/url';
 
       <h2>14. Contact</h2>
       <p>
-        Email <a href={mailHref('Question about the Terms of Service')}>{site.email}</a> or write to <Text value={site.legal.postalAddress} />.
+        Message me on WhatsApp or call {site.phone}, or write to <Text value={site.legal.postalAddress} />.
+        {site.emailActive && <span>You can also email <a href={mailHref('Question about the Terms of Service')}>{site.email}</a>.</span>}
       </p>
     </article>
 
@@ -147,5 +150,5 @@ import { url } from '../lib/url';
     </div>
   </div>
 
-  <CTASection title="Questions about these terms?" text={`Ask me before you pay. ${site.responseTime}`} />
+  <CTASection title="Questions about these terms?" text="Ask me before you pay." />
 </BaseLayout>

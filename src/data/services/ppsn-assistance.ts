@@ -1,4 +1,5 @@
 import { official } from '../official';
+import { packagePrice } from '../../lib/format';
 import type { Service } from '../types';
 
 const service: Service = {
@@ -12,6 +13,7 @@ const service: Service = {
   overview:
     'A PPS Number is a personal reference number used for social welfare, public services and information in Ireland, and is needed for things like working and tax. I explain the official application process, help the client prepare their documents and support them through each step.',
   feeLine: 'Explaining the official PPS Number process, preparing documents and support through each step.',
+  costs: `Included in the ${packagePrice} package. Any official costs are set by the Department of Social Protection and paid by you directly.`,
   metaTitle: 'PPS Number Help for New Arrivals | Settle in Ireland',
   metaDescription:
     'Practical help applying for a Personal Public Service (PPS) Number in Ireland: understanding the process, preparing documents and knowing what to expect.',

@@ -1,0 +1,42 @@
+---
+/** The four-step process, used on the homepage and the How It Works page. */
+import { site } from '../config/site';
+import { formatPrice } from '../lib/format';
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+const [first] = site.fee.payments;
+
+const steps = [
+  {
+    title: 'Tell me about your move',
+    text: 'Send a message on WhatsApp or fill in the short enquiry form: when you plan to arrive, where you are going and what help you need.',
+  },
+  {
+    title: 'Discuss your needs and confirm what is included',
+    text: 'We talk through your plans. I explain what I can help with, what I cannot, and which costs are separate.',
+  },
+  {
+    title: 'Agree on the service and payment terms',
+    text: `If you decide to go ahead, we agree the plan and the payment schedule. The service starts with the first payment of ${formatPrice(first.amount)}. You pay nothing before that.`,
+  },
+  {
+    title: 'Receive practical support according to the agreed plan',
+    text: 'I help you prepare before you travel, meet you when you arrive and guide you through your first weeks, as agreed.',
+  },
+];
+---
+
+<ol class:list={['grid gap-5 sm:grid-cols-2 lg:grid-cols-4', className]}>
+  {
+    steps.map((step, i) => (
+      <li class="relative rounded-xl border border-line bg-white p-6" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+        <span class="grid h-10 w-10 place-items-center rounded-full bg-brand-900 font-display font-bold text-white">{i + 1}</span>
+        <h3 class="mt-5 text-[1.1rem] leading-snug">{step.title}</h3>
+        <p class="mt-2 text-[0.97rem]">{step.text}</p>
+      </li>
+    ))
+  }
+</ol>

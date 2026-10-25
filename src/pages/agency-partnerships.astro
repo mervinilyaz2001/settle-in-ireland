@@ -1,0 +1,232 @@
+---
+/**
+ * AGENCY PARTNERSHIPS
+ * The B2B page for education agencies. Partnership details the owner has not confirmed yet
+ * (capacity, payment, reporting, escalation, coverage) come from src/config/site.ts and show as
+ * highlighted placeholders. No named partners are shown.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTASection from '../components/CTASection.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import PaymentTimeline from '../components/PaymentTimeline.astro';
+import Photo from '../components/Photo.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Text from '../components/Text.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import { site } from '../config/site';
+import { services, serviceUrl } from '../data/services';
+import { packagePrice } from '../lib/format';
+import { url } from '../lib/url';
+import { waMessages } from '../lib/whatsapp';
+
+const value = [
+  { icon: 'user-check', title: 'A local contact for referred students', text: 'Each student has one named person in Ireland to message and meet.' },
+  { icon: 'list-checks', title: 'A defined support package', text: 'The same seven services for every student, so you know what they receive.' },
+  { icon: 'clipboard-list', title: 'Transparent scope', text: 'What is included, what is not and which costs are separate are written down from the start.' },
+  { icon: 'route', title: 'A consistent referral process', text: 'The same steps for every referral, from consent to arrival.' },
+  { icon: 'message-square-text', title: 'Agreed communication', text: 'We agree which milestones you hear about, and how, before the first referral.' },
+];
+
+const process = [
+  { title: 'Agency enquiry', text: 'Send the form below or a WhatsApp message with a little about your agency.' },
+  { title: 'Introductory discussion', text: 'A short call or WhatsApp conversation about your students, intakes and expectations.' },
+  { title: 'Scope and pricing agreement', text: 'We agree the services, the price, how payment works and how we keep in touch.' },
+  { title: 'Student consent and referral', text: "With the student's consent, you share their details and arrival plans with me." },
+  { title: 'Service delivery', text: 'I contact the student before departure and support them through arrival and their first weeks.' },
+  { title: 'Agreed follow-up', text: 'You receive updates at the milestones we agreed.' },
+];
+
+const agencyHandles = ['College admission', 'Visa application', 'Pre-departure documents', 'Fees to the college'];
+
+const details = [
+  { term: 'Services delivered', value: 'The seven services in the package, listed above.' },
+  { term: 'Pricing', value: `${packagePrice} ${site.fee.perUnit} (per student), paid in two parts. Third-party costs are separate.` },
+  { term: 'Coverage', value: `${site.airportsCovered} In-person help: ${site.inPersonArea}` },
+  { term: 'Capacity and availability', value: site.agency.capacity },
+  { term: 'Payment arrangements', value: site.agency.payment },
+  { term: 'Reporting', value: site.agency.reporting },
+  { term: 'Escalation', value: site.agency.escalation },
+];
+---
+
+<BaseLayout
+  title="Education Agency Partnerships | Settle in Ireland"
+  description="Give the students you refer a local point of contact in Ireland, with a defined support package, transparent scope and an agreed referral process."
+  whatsappMessage={waMessages.partnerAgency}
+>
+  <PageHero
+    eyebrow="Agency partnerships"
+    title="Your students have arrived. We've got them from here."
+    intro="Give your students a local point of contact in Ireland for practical arrival and settling-in support, with a clearly defined process and agreed responsibilities."
+    crumbs={[{ label: 'Agency Partnerships', href: '/agency-partnerships/' }]}
+  >
+    <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+      <a href="#agency-enquiry" class="btn btn-primary btn-lg">Start a partnership enquiry</a>
+      <WhatsAppButton message={waMessages.partnerAgency} label="Message on WhatsApp" size="lg" track="agency_hero" lead="agency" />
+    </div>
+    <Photo slot="aside" photo="hapenny" sizes="(min-width: 1024px) 42vw, 100vw" priority class="aspect-[16/11] w-full rounded-xl" />
+  </PageHero>
+
+  <!-- Value -->
+  <section class="section" aria-labelledby="value-heading">
+    <div class="container-site">
+      <SectionHeading
+        id="value-heading"
+        eyebrow="What your agency gets"
+        title="A reliable handover in Ireland"
+        intro="I provide personal arrival and settling-in support for clients referred by partner education agencies. Your agency continues to manage college admissions and visa applications, while I support your students with the practical steps that follow."
+      />
+      <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          value.map((v, i) => (
+            <li class="rounded-xl border border-line bg-white p-6" data-reveal style={`--reveal-delay:${(i % 3) * 70}ms`}>
+              <span class="icon-tile">
+                <Icon name={v.icon} size={22} />
+              </span>
+              <h3 class="mt-4 text-[1.1rem]">{v.title}</h3>
+              <p class="mt-2 text-[0.97rem]">{v.text}</p>
+            </li>
+          ))
+        }
+        <li class="on-dark flex flex-col justify-center rounded-xl bg-brand-900 p-6 text-white" data-reveal>
+          <p class="font-display text-[1.1rem] font-bold">{site.currentMarkets}</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section bg-white" aria-labelledby="process-heading">
+    <div class="container-site">
+      <SectionHeading id="process-heading" eyebrow="The process" title="How the partnership works" />
+      <ol class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          process.map((step, i) => (
+            <li class="rounded-xl border border-line bg-canvas p-6" data-reveal style={`--reveal-delay:${(i % 3) * 70}ms`}>
+              <span class="font-display text-[2.2rem] leading-none font-bold text-brand-600">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="mt-3 text-[1.1rem]">{step.title}</h3>
+              <p class="mt-2 text-[0.97rem]">{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Scope -->
+  <section class="section" aria-labelledby="scope-heading">
+    <div class="container-site">
+      <SectionHeading
+        id="scope-heading"
+        eyebrow="Clear responsibilities"
+        title="What your agency handles, and what I handle"
+        intro="A clean split, so your students always know who to ask."
+      />
+      <div class="mt-10 grid overflow-hidden rounded-xl border border-line bg-white md:grid-cols-2">
+        <div>
+          <h3 class="flex items-center gap-3 bg-sand px-6 py-4 text-[1.1rem]">
+            <Icon name="building" size={22} class="text-brand-700" /> Your agency
+          </h3>
+          <ul class="divide-y divide-line">
+            {
+              agencyHandles.map((item) => (
+                <li class="flex items-center gap-3 px-6 py-3.5 text-ink">
+                  <Icon name="check" size={18} class="shrink-0 text-brand-600" />
+                  {item}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class="border-t border-line md:border-l md:border-t-0">
+          <h3 class="flex items-center gap-3 bg-accent-50 px-6 py-4 text-[1.1rem]">
+            <Icon name="heart-handshake" size={22} class="text-accent-700" /> Settle in Ireland
+          </h3>
+          <ul class="divide-y divide-line">
+            {
+              services.map((s) => (
+                <li>
+                  <a href={serviceUrl(s)} class="flex items-center gap-3 px-6 py-3.5 text-ink hover:bg-accent-50">
+                    <Icon name="check" size={18} class="shrink-0 text-accent-700" />
+                    <span class="flex-1">{s.navName}</span>
+                    <Icon name="chevron-right" size={18} class="shrink-0 text-muted" />
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+      <p class="mt-6 max-w-3xl text-[0.97rem]">
+        I provide practical guidance and support only. I do not give legal, immigration or visa advice, and I do not guarantee student outcomes,
+        appointments or approvals, which stay with the relevant authorities.
+      </p>
+    </div>
+  </section>
+
+  <!-- Partnership details -->
+  <section class="section bg-white" aria-labelledby="details-heading">
+    <div class="container-site grid items-start gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
+      <div>
+        <SectionHeading
+          id="details-heading"
+          eyebrow="Partnership details"
+          title="Scope, pricing and communication"
+          intro="These are agreed with each agency during the introductory discussion."
+        />
+        <dl class="mt-8 grid overflow-hidden rounded-xl border border-line">
+          {
+            details.map((d) => (
+              <div class="grid gap-1 border-b border-line p-5 last:border-b-0 sm:grid-cols-[0.4fr_0.6fr] sm:gap-6">
+                <dt class="font-display font-bold text-ink">{d.term}</dt>
+                <dd>
+                  <Text value={d.value} />
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+      <div>
+        <h3 class="text-[1.2rem]">Payment schedule per student</h3>
+        <PaymentTimeline class="mt-5" />
+        <div class="mt-8 rounded-xl border border-line bg-canvas p-6">
+          <h3 class="flex items-center gap-3 text-[1.1rem]">
+            <Icon name="lock" size={20} class="text-brand-700" /> Data and consent
+          </h3>
+          <p class="mt-3 text-[0.97rem]">
+            Student details are shared with me only with the student's consent, and used only to provide the service.
+            <a href={url('/privacy-policy/')} class="font-semibold text-accent-700 underline">Privacy Policy</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enquiry form -->
+  <section id="agency-enquiry" class="section" aria-label="Agency partnership enquiry">
+    <div class="container-site grid items-start gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-14">
+      <div class="lg:sticky lg:top-24">
+        <SectionHeading
+          eyebrow="Get in touch"
+          title="Start a partnership enquiry"
+          intro="Tell me about your agency and I will reply to arrange an introductory discussion. Prefer WhatsApp? Message me directly."
+        />
+        <div class="mt-6">
+          <WhatsAppButton message={waMessages.partnerAgency} track="agency_form_side" lead="agency" />
+        </div>
+      </div>
+      <EnquiryForm variant="agency" />
+    </div>
+  </section>
+
+  <CTASection
+    title="Have students moving to Ireland?"
+    text="Send me a message on WhatsApp and we can arrange an introductory discussion."
+    message={waMessages.partnerAgency}
+    secondary={{ label: 'See the services', href: '/individual-support/' }}
+    lead="agency"
+  />
+</BaseLayout>

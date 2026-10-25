@@ -28,9 +28,9 @@ const others = services.filter((s) => s.slug !== service.slug);
 const toc = [
   { id: 'covers', label: 'What this service covers' },
   { id: 'how-it-works', label: 'How it works' },
-  { id: 'prepare', label: 'What the client needs to prepare' },
+  { id: 'prepare', label: 'What you need to provide' },
   { id: 'good-to-know', label: 'Good to know' },
-  { id: 'not-included', label: "What's not included" },
+  { id: 'not-included', label: 'Limits and costs' },
   { id: 'resources', label: 'Official resources' },
   { id: 'questions', label: 'Questions' },
 ];
@@ -44,13 +44,13 @@ const toc = [
     title={service.name}
     intro={service.intro}
     crumbs={[
-      { label: 'Services', href: '/services/' },
+      { label: 'Individual Support', href: '/individual-support/' },
       { label: service.navName, href: `/services/${service.slug}/` },
     ]}
   >
     <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-      <WhatsAppButton message={message} size="lg" />
-      <a href={url('/fees/')} class="inline-flex min-h-11 items-center gap-2 rounded-full bg-gold-100 px-4 py-2 font-semibold text-gold-800 hover:bg-gold-300/60">
+      <WhatsAppButton message={message} size="lg" track="service_hero" />
+      <a href={url('/pricing/')} class="inline-flex min-h-11 items-center gap-2 rounded-full bg-gold-100 px-4 py-2 font-semibold text-gold-800 hover:bg-gold-300/60">
         <Icon name="badge-euro" size={18} />
         Included in the {packagePrice} package
       </a>
@@ -71,7 +71,7 @@ const toc = [
             service.callout && (
               <div
                 class:list={[
-                  'mt-8 rounded-2xl border-2 p-5 sm:p-7',
+                  'mt-8 rounded-xl border-2 p-5 sm:p-7',
                   service.callout.tone === 'warning' ? 'border-gold-500 bg-gold-50' : 'border-brand-200 bg-brand-50',
                 ]}
               >
@@ -120,12 +120,12 @@ const toc = [
           </ol>
         </section>
 
-        <!-- 5. What the client needs to prepare -->
+        <!-- 5. What you need to provide -->
         <section id="prepare" class="cv-auto" aria-labelledby="prepare-heading">
           <div class="card p-6 sm:p-8">
             <div class="flex items-center gap-3">
               <span class="icon-tile"><Icon name="clipboard-list" size={24} /></span>
-              <h2 id="prepare-heading" class="text-[1.5rem] sm:text-[1.75rem]">What the client needs to prepare</h2>
+              <h2 id="prepare-heading" class="text-[1.5rem] sm:text-[1.75rem]">What you need to provide</h2>
             </div>
             <ul class="check-list mt-6">
               {service.prepare.map((item) => <li>{item}</li>)}
@@ -160,10 +160,12 @@ const toc = [
           </div>
         </section>
 
-        <!-- 7. What's not included -->
+        <!-- 7. Limits and costs -->
         <section id="not-included" class="cv-auto" aria-labelledby="not-included-heading">
-          <h2 id="not-included-heading" class="text-[1.7rem] sm:text-[2rem]">What's not included</h2>
-          <ul class="cross-list mt-6">
+          <h2 id="not-included-heading" class="text-[1.7rem] sm:text-[2rem]">Limits and costs</h2>
+          <p class="mt-4 flex gap-3 rounded-lg bg-gold-50 p-4 text-ink"><Icon name="badge-euro" size={20} class="mt-0.5 shrink-0 text-gold-800" /><span>{service.costs}</span></p>
+          <p class="mt-6 font-semibold text-ink">Not included:</p>
+          <ul class="cross-list mt-3">
             {service.notIncluded.map((item) => <li>{item}</li>)}
           </ul>
         </section>
@@ -183,7 +185,7 @@ const toc = [
         </section>
 
         <!-- 10. Package callout -->
-        <section aria-labelledby="package-heading" class="relative overflow-hidden rounded-2xl border border-gold-300 bg-gold-50 p-6 sm:p-8">
+        <section aria-labelledby="package-heading" class="relative overflow-hidden rounded-xl border border-gold-300 bg-gold-50 p-6 sm:p-8">
           <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p class="text-[0.82rem] font-bold uppercase tracking-[0.1em] text-gold-800">Included in the package</p>
@@ -192,8 +194,8 @@ const toc = [
               </h2>
               <p class="mt-2">All seven services for one fixed fee, {site.fee.perUnit}. {site.fee.exclusions}</p>
             </div>
-            <a href={url('/fees/')} class="btn btn-primary shrink-0">
-              See fees <Icon name="arrow-right" size={18} />
+            <a href={url('/pricing/')} class="btn btn-primary shrink-0">
+              See pricing <Icon name="arrow-right" size={18} />
             </a>
           </div>
         </section>
@@ -225,7 +227,7 @@ const toc = [
                 <span class="pb-1 text-[0.95rem] font-semibold text-muted">{site.fee.perUnit}</span>
               </p>
               <p class="mt-2 text-[0.92rem]">All seven services included.</p>
-              <WhatsAppButton message={message} label="Ask about this service" block class="mt-4" />
+              <WhatsAppButton message={message} label="Ask about this service" block class="mt-4" track="service_sidebar" />
             </div>
           </div>
         </div>
@@ -236,9 +238,9 @@ const toc = [
   <!-- 11. WhatsApp call to action -->
   <CTASection
     title={`Questions about ${service.navName}?`}
-    text={`Send me a message on WhatsApp and I will explain how I can help. ${site.responseTime}`}
+    text="Send me a message on WhatsApp and I will explain how I can help."
     message={message}
-    secondary={{ label: 'See all fees', href: '/fees/' }}
+    secondary={{ label: 'Plan My Arrival', href: '/contact/#enquiry' }}
   />
 
   <!-- 12. Other services -->

@@ -11,6 +11,10 @@ interface Props {
   class?: string;
   /** Extra classes for the visible label, for example to hide it on smaller screens. */
   labelClass?: string;
+  /** Where the button is, for analytics, for example 'hero'. No personal data is sent. */
+  track?: string;
+  /** Whether the click comes from an individual or an education agency, for analytics. */
+  lead?: 'individual' | 'agency';
 }
 
 const {
@@ -20,6 +24,8 @@ const {
   block = false,
   class: className,
   labelClass,
+  track = 'page',
+  lead = 'individual',
 } = Astro.props;
 ---
 
@@ -28,6 +34,8 @@ const {
   target="_blank"
   rel="noopener"
   class:list={['btn btn-wa', size === 'lg' && 'btn-lg', size === 'sm' && 'btn-sm', block && 'btn-block', className]}
+  data-track-location={track}
+  data-lead={lead}
 >
   <Icon name="whatsapp" size={size === 'lg' ? 24 : 22} />
   <span class={labelClass}>{label}</span>

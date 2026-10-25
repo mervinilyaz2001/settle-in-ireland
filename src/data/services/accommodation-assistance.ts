@@ -1,4 +1,5 @@
 import { official } from '../official';
+import { packagePrice } from '../../lib/format';
 import type { Service } from '../types';
 
 const service: Service = {
@@ -12,6 +13,7 @@ const service: Service = {
   overview:
     'Finding somewhere to live is one of the hardest parts of moving to Ireland. I explain the typical options, help the client check listings and spot scams, and where possible view or check properties locally by arrangement. The client pays rent and deposits directly.',
   feeLine: 'Guidance on the rental market, help checking listings, scam warnings and local viewings by arrangement.',
+  costs: `Included in the ${packagePrice} package. Rent, deposits, booking fees and bills are paid by you directly to the landlord or provider.`,
   metaTitle: 'Accommodation Help Before Arriving in Ireland',
   metaDescription:
     'Help understanding the Irish rental market, checking listings and avoiding rental scams before you arrive in Ireland. Practical support from a local contact.',

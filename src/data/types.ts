@@ -27,8 +27,10 @@ export interface Service {
   summary: string;
   /** Two or three sentences for the Services page. */
   overview: string;
-  /** One line for the list on the Fees page. */
+  /** One line for the list on the pricing page. */
   feeLine: string;
+  /** What it costs: whether it is in the package, and which costs are separate. */
+  costs: string;
   metaTitle: string;
   metaDescription: string;
   intro: string;

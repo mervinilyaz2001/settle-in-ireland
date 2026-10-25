@@ -1,5 +1,6 @@
 import { site } from '../../config/site';
 import { official } from '../official';
+import { packagePrice } from '../../lib/format';
 import type { Service } from '../types';
 
 const service: Service = {
@@ -12,6 +13,7 @@ const service: Service = {
     'I help the client find their way around, get a local SIM, register with a GP and settle into daily life, with ongoing WhatsApp support.',
   overview: `The first weeks in a new country raise lots of small questions. I help the client get to know their area, from shops and transport to doctors and community groups, and I am available on WhatsApp ${site.supportPeriod} for practical questions.`,
   feeLine: `Getting to know the local area, daily life tips and WhatsApp support ${site.supportPeriod}.`,
+  costs: `Included in the ${packagePrice} package. Phone plans, GP visits, shopping and other personal costs are your own.`,
   metaTitle: 'Local Orientation for New Arrivals | Settle in Ireland',
   metaDescription:
     'Practical help settling into daily life in Ireland: SIM cards, grocery shops, GPs, emergencies, recycling, tenant rights and ongoing WhatsApp support.',

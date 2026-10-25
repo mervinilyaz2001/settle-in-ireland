@@ -1,4 +1,5 @@
 import { official } from '../official';
+import { packagePrice } from '../../lib/format';
 import type { Service } from '../types';
 
 const service: Service = {
@@ -12,6 +13,7 @@ const service: Service = {
   overview:
     'Most non-EEA nationals staying in Ireland for more than 90 days need to register their immigration permission and receive an Irish Residence Permit. I explain the official process, help the client organise their documents and explain what to expect on the day. I do not sell, reserve or guarantee appointments.',
   feeLine: 'Explaining the official registration process, organising documents and knowing what to expect on the day.',
+  costs: `Included in the ${packagePrice} package. The official registration fee is paid by you directly to the official body. Check the current amount on irishimmigration.ie.`,
   metaTitle: 'IRP Registration Guidance | Settle in Ireland',
   metaDescription:
     'Practical guidance on registering your immigration permission and getting an Irish Residence Permit (IRP). Independent support, not a government service.',

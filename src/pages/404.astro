@@ -14,10 +14,6 @@ import { url } from '../lib/url';
   backToTop={false}
 >
   <section class="relative isolate overflow-hidden">
-    <svg aria-hidden="true" class="absolute inset-x-0 top-10 -z-10 mx-auto h-[300px] w-full max-w-5xl" viewBox="0 0 1000 300" fill="none" preserveAspectRatio="xMidYMid meet">
-      <path d="M40 260C220 120 360 260 520 150S820 40 960 90" stroke="#8FB7C2" stroke-width="2.5" stroke-dasharray="2 11" stroke-linecap="round"></path>
-      <circle cx="960" cy="90" r="8" fill="#F2A541"></circle>
-    </svg>
     <div class="container-site py-20 text-center sm:py-28">
       <span class="icon-tile !h-16 !w-16 !rounded-2xl"><Icon name="compass" size={32} /></span>
       <p class="eyebrow mt-6 justify-center">Error 404</p>
@@ -28,7 +24,7 @@ import { url } from '../lib/url';
       </p>
       <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
         <a href={url('/')} class="btn btn-primary btn-lg"><Icon name="house" size={20} /> Home</a>
-        <a href={url('/services/')} class="btn btn-outline btn-lg">Services <Icon name="arrow-right" size={20} /></a>
+        <a href={url('/individual-support/')} class="btn btn-outline btn-lg">Individual Support <Icon name="arrow-right" size={20} /></a>
         <WhatsAppButton size="lg" />
       </div>
       <nav aria-labelledby="popular-heading" class="mx-auto mt-14 max-w-3xl text-left">
@@ -37,12 +33,12 @@ import { url } from '../lib/url';
           {
             [
               ...services.slice(0, 4).map((s) => ({ label: s.navName, href: serviceUrl(s) })),
-              { label: 'Fees', href: '/fees/' },
-              { label: 'Partner Agencies', href: '/partner-agencies/' },
+              { label: 'Pricing', href: '/pricing/' },
+              { label: 'Agency Partnerships', href: '/agency-partnerships/' },
             ].map((l) => (
               <li>
                 <a href={url(l.href)} class="card card-hover flex min-h-12 items-center justify-between gap-3 px-4 py-3 font-semibold text-ink">
-                  {l.label} <Icon name="chevron-right" size={18} class="text-brand-300" />
+                  {l.label} <Icon name="chevron-right" size={18} class="text-muted" />
                 </a>
               </li>
             ))

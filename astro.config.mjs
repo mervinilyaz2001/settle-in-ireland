@@ -14,7 +14,8 @@ export default defineConfig({
   build: { format: 'directory' },
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/404'),
+      // Leave out the 404 page and the old addresses that now redirect
+      filter: (page) => !/\/(404|fees|partner-agencies|moving-to-ireland-on-your-own|services)\/$/.test(page),
     }),
   ],
   vite: {

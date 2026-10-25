@@ -2,6 +2,7 @@ import { site } from '../config/site';
 import { formatPrice, packagePrice } from '../lib/format';
 import { adviceDisclaimerText, governmentDisclaimerText } from './disclaimers';
 import { official } from './official';
+import { services } from './services';
 import type { FAQ } from './types';
 
 export interface FAQItem extends FAQ {
@@ -18,108 +19,70 @@ const paymentList = `<ul>${site.fee.payments
   .map((p) => `<li><strong>${formatPrice(p.amount)}:</strong> ${p.when}</li>`)
   .join('')}</ul>`;
 
-// The answers are simple HTML. Internal links use the page address, for example /fees/.
+const serviceList = `<ul>${services.map((s) => `<li><a href="/services/${s.slug}/">${s.name}</a></li>`).join('')}</ul>`;
+
+// Answers are simple HTML. Internal links use the page address, for example /pricing/.
+// Anything in [SQUARE BRACKETS] still needs the owner's confirmation and is highlighted on the site.
 export const faqCategories: FAQCategory[] = [
   {
-    id: 'general',
-    title: 'General',
+    id: 'service',
+    title: 'The service',
     items: [
       {
-        id: 'what-is',
-        q: 'What is Settle in Ireland?',
-        a: `<p>Settle in Ireland is an independent arrival and settling-in support service. I am a named local contact for international clients moving to Ireland, and I help with the practical steps after they land: airport pickup, accommodation, IRP guidance, the PPS Number, a bank account, transport and getting to know the local area.</p><p>Partner agencies abroad handle college admissions and visa applications. I take over once the client is on their way to Ireland.</p>`,
+        id: 'included',
+        q: 'What is included in the package?',
+        a: `<p>The ${site.fee.title} package (${packagePrice} ${site.fee.perUnit}) includes all seven services:</p>${serviceList}<p>${site.fee.exclusions} See <a href="/pricing/">Pricing</a> for the full details.</p>`,
       },
       {
-        id: 'who-for',
-        q: 'Who is this service for?',
-        a: '<p>It is for international clients arriving in Ireland from any country, mostly for study but not only, and for the partner agencies that refer them. Families back home also find it reassuring to know a real person is there to help.</p>',
+        id: 'eligible',
+        q: 'Who is eligible?',
+        a: '<p>Anyone moving to Ireland who wants practical help with arriving and settling in, whether you are arranging your move yourself or an education agency is helping you. Some steps, such as registering for an Irish Residence Permit (IRP), only apply to people from outside the European Economic Area (EEA).</p><p>[OWNER TO CONFIRM: any limits on who you can support, for example minimum age]</p>',
       },
       {
-        id: 'need-agency',
-        q: 'Do I need to be referred by an agency?',
-        a: '<p>No. Many clients are referred by a partner agency, but you are welcome to contact me directly. See <a href="/moving-to-ireland-on-your-own/">Moving to Ireland on your own</a> for how it works, or send me a message on WhatsApp.</p>',
+        id: 'areas',
+        q: 'Which areas in Ireland are covered?',
+        a: `<p>Airport pickup: ${site.airportsCovered}</p><p>In-person help: ${site.inPersonArea}</p><p>Guidance by WhatsApp and phone works wherever you are.</p>`,
       },
       {
-        id: 'countries',
-        q: 'Which countries do your clients come from?',
-        a: `<p>${site.currentMarkets} Clients from any country are welcome to contact me directly too.</p>`,
-      },
-      {
-        id: 'government',
-        q: 'Are you connected to the Irish government or my college?',
-        a: `<p>No. ${governmentDisclaimerText}</p><p>${adviceDisclaimerText}</p>`,
-      },
-    ],
-  },
-  {
-    id: 'services',
-    title: 'Services',
-    items: [
-      {
-        id: 'visa-admissions',
-        q: 'Do you help with visa applications or college admissions?',
-        a: '<p>No. College admissions and visa applications are handled by the partner agency in the client\'s home country, or by the client directly if they are arranging their own move. I support the client with the practical steps once they are travelling to Ireland and after they arrive.</p>',
-      },
-      {
-        id: 'legal-advice',
-        q: 'Do you give legal or immigration advice?',
-        a: '<p>No. I provide practical guidance and support only. I do not provide legal, immigration or visa advice. For that, please speak to a solicitor or another qualified adviser.</p>',
-      },
-      {
-        id: 'airports',
-        q: 'Which airports do you cover?',
-        a: `<p>${site.airportsCovered} Please contact me before booking if the client is landing outside Dublin, so we can plan together. See <a href="/services/arrival-planning-airport-pickup/">Arrival Planning and Airport Pickup</a>.</p>`,
+        id: 'where',
+        q: 'Where do you provide support?',
+        a: `<p>Before you travel, I support you by WhatsApp and phone, wherever you are in the world. After you arrive, I meet you at the airport and help in person where possible. I am based in ${site.location}.</p>`,
       },
       {
         id: 'accommodation',
-        q: 'Can you guarantee accommodation?',
-        a: '<p>No. Rental availability in Ireland can be very limited, so nobody can honestly promise a property. I help the client understand the market, check listings, avoid scams and, where possible, view properties locally by arrangement. See <a href="/services/accommodation-assistance/">Accommodation Assistance</a>.</p>',
+        q: 'Can you help me find accommodation?',
+        a: '<p>Yes, I help you search safely: understanding the rental market, checking listings, spotting scams and, where possible, checking a property locally by arrangement. I cannot guarantee that accommodation will be found, as availability in Ireland, especially Dublin, can be very limited. You always pay rent and deposits directly to the landlord or provider. See <a href="/services/accommodation-assistance/">Accommodation Assistance</a>.</p>',
       },
       {
-        id: 'irp-appointment',
-        q: 'Can you get me an IRP appointment?',
-        a: '<p>No. I never sell, reserve or guarantee appointments. I explain the official process, help the client prepare their documents and explain what to expect. The client requests their own appointment through the official Immigration Service Delivery channels. See <a href="/services/irp-guidance/">IRP Guidance</a>.</p>',
+        id: 'guarantee',
+        q: 'Do you guarantee an IRP appointment or PPSN outcome?',
+        a: `<p>No. I never sell, reserve or guarantee appointments, and official decisions always remain with the relevant authorities: Immigration Service Delivery for IRP registration and the Department of Social Protection for PPS Numbers. I explain the official process and help you prepare. See the <a href="${official.isd.url}" target="_blank" rel="noopener">Immigration Service Delivery website</a> and <a href="${official.govPps.url}" target="_blank" rel="noopener">gov.ie</a> for the current rules.</p>`,
       },
       {
-        id: 'pps',
-        q: 'Can you help with my PPS Number?',
-        a: '<p>Yes. I explain the official process, which is usually online through MyWelfare.ie, help you prepare your documents and explain what to expect. You complete the application yourself, and the Department of Social Protection makes the decision. See <a href="/services/ppsn-assistance/">PPSN Assistance</a>.</p>',
+        id: 'advice',
+        q: 'Do you give legal or immigration advice?',
+        a: `<p>No. ${adviceDisclaimerText} For legal or immigration advice, please speak to a solicitor or another qualified adviser.</p>`,
       },
       {
-        id: 'bank',
-        q: 'Which bank should I choose?',
-        a: `<p>I cannot recommend a specific bank or provider, and I am not a financial advisor. I explain what to compare, such as fees, branch access and app features, and which documents banks usually ask for. The <a href="${official.ccpcAccounts.url}" target="_blank" rel="noopener">CCPC</a> publishes neutral information on current accounts.</p>`,
-      },
-      {
-        id: 'support-length',
-        q: 'How long does support last after arrival?',
-        a: `<p>I am available on WhatsApp ${site.supportPeriod} for practical questions. I confirm the exact support period with the client at the start of the service.</p>`,
+        id: 'government',
+        q: 'Are you connected to the Irish government or a college?',
+        a: `<p>No. ${governmentDisclaimerText}</p>`,
       },
     ],
   },
   {
-    id: 'fees',
-    title: 'Fees and payment',
+    id: 'pricing',
+    title: 'Pricing and payment',
     items: [
       {
-        id: 'cost',
-        q: 'How much does it cost?',
-        a: `<p>The ${site.fee.title} package is <strong>${packagePrice} ${site.fee.perUnit}</strong>. It includes all seven services. See the <a href="/fees/">Fees page</a> for everything that is included.</p>`,
+        id: 'official-fees',
+        q: 'Are official application fees included?',
+        a: `<p>No. Official fees, such as the IRP registration fee, are paid by you directly to the official body. They change from time to time, so please check the current amount on the <a href="${official.isd.url}" target="_blank" rel="noopener">official website</a>. Rent, deposits, transport fares and other third-party costs are also separate.</p>`,
       },
       {
-        id: 'when-pay',
-        q: 'When do I pay?',
-        a: `<p>The fee is paid in two parts:</p>${paymentList}<p>${site.fee.milestoneNote}</p>`,
-      },
-      {
-        id: 'not-included',
-        q: `What is not included in the ${packagePrice}?`,
-        a: `<p>${site.fee.exclusions} This includes, for example, the official IRP registration fee, rent, accommodation deposits and booking fees, transport fares, bank charges and phone costs. The client pays these directly.</p>`,
-      },
-      {
-        id: 'how-pay',
-        q: 'How can I pay?',
-        a: `<p>${site.fee.paymentMethods}</p>`,
+        id: 'payment',
+        q: 'How does payment work?',
+        a: `<p>The fee is ${packagePrice} ${site.fee.perUnit}, paid in two parts:</p>${paymentList}<p>${site.fee.milestoneNote}</p><p>If the IRP registration appointment is delayed, unavailable, rescheduled or cancelled: ${site.fee.appointmentDelayPolicy}</p><p>How to pay: ${site.fee.paymentMethods}</p>`,
       },
       {
         id: 'plans-change',
@@ -129,28 +92,39 @@ export const faqCategories: FAQCategory[] = [
     ],
   },
   {
-    id: 'partner-agencies',
-    title: 'Partner agencies',
+    id: 'move',
+    title: 'Your move',
     items: [
       {
-        id: 'become-partner',
-        q: 'How do we become a partner agency?',
-        a: '<p>Send me a message on WhatsApp or fill in the form on the <a href="/partner-agencies/">Partner Agencies page</a>. We then have a short introductory call or WhatsApp chat about your clients, your intakes and how referrals and payment will work.</p>',
+        id: 'documents',
+        q: 'What documents should I prepare?',
+        a: '<p>It depends on your situation, and the official websites have the current lists. Most people need a valid passport, a letter from their college or course provider, proof of their accommodation address, and anything the immigration authorities ask for. Each service page has a "What you need to provide" section, for example <a href="/services/arrival-planning-airport-pickup/">Arrival Planning</a> and <a href="/services/irp-guidance/">IRP Guidance</a>.</p><p>Please do not send copies of documents through the website form.</p>',
+      },
+      {
+        id: 'contact-first',
+        q: 'Can I contact you before booking?',
+        a: '<p>Yes. Send me your questions on WhatsApp or through the <a href="/contact/">enquiry form</a>. You pay nothing until you decide to start the service.</p>',
+      },
+      {
+        id: 'personal-info',
+        q: 'What personal information do you need?',
+        a: '<p>To reply to an enquiry, only your name and an email address or WhatsApp number. If you go ahead, I also need your arrival details, your accommodation address once you have one, and which services you need. I only ask to see documents when that is needed to help you prepare, and never through the website form. The <a href="/privacy-policy/">Privacy Policy</a> explains how this information is handled.</p>',
+      },
+    ],
+  },
+  {
+    id: 'agencies',
+    title: 'Education agencies',
+    items: [
+      {
+        id: 'agencies',
+        q: 'Do you work with education agencies?',
+        a: `<p>Yes. Agencies can refer students who are moving to Ireland, so they have a local point of contact after they arrive. ${site.currentMarkets} See <a href="/agency-partnerships/">Agency Partnerships</a>.</p>`,
       },
       {
         id: 'agency-updates',
-        q: 'How will you keep our agency updated?',
-        a: '<p>We agree the milestones together, for example when the client has arrived and when key steps such as IRP registration are under way. I send updates on WhatsApp or by email, whichever suits your team, with the client\'s consent.</p>',
-      },
-      {
-        id: 'client-data',
-        q: 'How do you handle client data?',
-        a: '<p>I only use client details to provide the service, and only with the client\'s consent. I keep only what I need, for as long as I need it, in line with GDPR. The <a href="/privacy-policy/">Privacy Policy</a> explains this in full.</p>',
-      },
-      {
-        id: 'outside-bangladesh',
-        q: 'Can agencies from outside Bangladesh partner with you?',
-        a: '<p>Yes. I already work with partner agencies in Bangladesh and I welcome partner agencies from any country.</p>',
+        q: 'How do you keep an agency updated?',
+        a: `<p>We agree the milestones and the way of reporting during the introductory discussion, and I only share updates with the student's consent. ${site.agency.reporting}</p>`,
       },
     ],
   },
@@ -161,7 +135,7 @@ export const faqCategories: FAQCategory[] = [
       {
         id: 'best-contact',
         q: 'What is the best way to contact you?',
-        a: `<p>WhatsApp is the quickest way to reach me. You can also call or email. ${site.responseTime} See the <a href="/contact/">Contact page</a>.</p>`,
+        a: `<p>WhatsApp is the quickest way to reach me. You can also call or use the <a href="/contact/">enquiry form</a>.${site.responseTime ? ` ${site.responseTime}` : ''}</p>`,
       },
       {
         id: 'languages',
@@ -175,7 +149,7 @@ export const faqCategories: FAQCategory[] = [
 export const allFaqs: FAQItem[] = faqCategories.flatMap((c) => c.items);
 
 /** The questions shown on the homepage, in this order. */
-export const homeFaqIds = ['what-is', 'visa-admissions', 'irp-appointment', 'cost', 'become-partner'];
+export const homeFaqIds = ['included', 'eligible', 'accommodation', 'guarantee', 'plans-change', 'contact-first'];
 
 export function faqsById(ids: string[]): FAQItem[] {
   return ids.map((id) => {

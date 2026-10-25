@@ -1,13 +1,15 @@
 /**
  * Pre-launch content checks. Run after a build with: npm run build && npm run check:content
  *
- * 1. "student" only appears in allowed official names (Student Leap Card).
+ * 1. Reports how often "student" is used (the agency copy uses it on purpose).
  * 2. No em dashes or en dashes anywhere in the source or the built site.
  * 3. Every page has one H1, a title under 60 characters and a description under 160.
  * 4. The footer disclaimer is on every page, and the full disclaimer is on the pages that need it.
  * 5. Every WhatsApp link uses the configured number and has a pre-filled message.
  * 6. The floating WhatsApp button is on every page.
  * 7. Every internal link and #anchor points to something that exists.
+ * 8. No "null" or "undefined" text leaked into a page, and the email address stays hidden
+ *    while emailActive is false. Redirect pages for old addresses are skipped.
  */
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -43,7 +45,6 @@ const textFiles = [
   path.join(root, 'README.md'),
   path.join(root, 'astro.config.mjs'),
 ];
-const allowedStudent = /Student Leap Card/g;
 const studentHits = new Map();
 for (const file of textFiles) {
   let text;
@@ -53,15 +54,10 @@ for (const file of textFiles) {
     continue;
   }
   if (/[\u2014\u2013]/.test(text)) problems.push(`Dash character (em or en dash) found in ${rel(file)}`);
-  const stripped = text.replace(allowedStudent, '');
-  // This script itself describes the rule, so it is skipped here.
-  if (!file.endsWith('check-content.mjs') && /student/i.test(stripped)) problems.push(`"student" found outside an allowed name in ${rel(file)}`);
-  const allowed = text.match(allowedStudent);
-  if (allowed && !file.includes(`${path.sep}dist${path.sep}`)) studentHits.set(rel(file), allowed.length);
+  const hits = text.match(/students?/gi);
+  if (hits && file.includes(`${path.sep}src${path.sep}`)) studentHits.set(rel(file), hits.length);
 }
-notes.push(
-  `Allowed "Student Leap Card" mentions in source: ${[...studentHits].map(([f, n]) => `${f} (${n})`).join(', ') || 'none'}`,
-);
+notes.push(`"student" used in: ${[...studentHits].map(([f, n]) => `${f} (${n})`).join(', ') || 'none'}`);
 
 /* ---------- 3 to 7: built pages ---------- */
 const pages = (await walk(dist, ['.html'])).filter((f) => !f.includes('_astro'));
@@ -69,18 +65,19 @@ const routeOf = (file) => {
   const r = '/' + rel(file).replace(/^dist\//, '').replace(/index\.html$/, '').replace(/\.html$/, '');
   return r;
 };
-const fullDisclaimerRoutes = [
-  '/services/irp-guidance/',
-  '/services/ppsn-assistance/',
-  '/fees/',
-  '/faq/',
-  '/terms/',
-];
+const fullDisclaimerRoutes = ['/services/irp-guidance/', '/services/ppsn-assistance/', '/pricing/', '/faq/', '/terms/'];
 const idsByRoute = new Map();
 const htmlByRoute = new Map();
+let redirects = 0;
 for (const file of pages) {
   const html = await readFile(file, 'utf8');
   const route = routeOf(file);
+  if (html.includes('http-equiv="refresh"')) {
+    redirects++;
+    const target = html.match(/http-equiv="refresh" content="0; url=([^"]+)"/)?.[1];
+    if (!target) problems.push(`${route}: redirect page without a target`);
+    continue;
+  }
   htmlByRoute.set(route, html);
   idsByRoute.set(route, new Set([...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1])));
 }
@@ -107,6 +104,11 @@ for (const [route, html] of htmlByRoute) {
     problems.push(`${route}: full government disclaimer missing`);
   }
   if (!html.includes('data-floating-wa')) problems.push(`${route}: floating WhatsApp button missing`);
+
+  const body = html.slice(html.indexOf('<body'));
+  const visible = body.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<style[\s\S]*?<\/style>/g, '');
+  if (/>[^<]*(null|undefined)[^<]*</.test(visible)) problems.push(`${route}: "null" or "undefined" shown on the page`);
+  if (!site.emailActive && visible.includes(site.email)) problems.push(`${route}: email address shown while emailActive is false`);
 
   for (const m of html.matchAll(/href="(https:\/\/wa\.me\/[^"]*)"/g)) {
     const url = decode(m[1]);
@@ -137,7 +139,7 @@ for (const [route, html] of htmlByRoute) {
 
 /* ---------- Fee consistency ---------- */
 const price = `€${site.fee.amount}`;
-for (const route of ['/', '/fees/', '/partner-agencies/', '/terms/']) {
+for (const route of ['/', '/pricing/', '/agency-partnerships/', '/terms/']) {
   const html = htmlByRoute.get(route) ?? '';
   if (!html.includes(price)) problems.push(`${route}: ${price} not shown`);
   for (const p of site.fee.payments) {
@@ -145,7 +147,7 @@ for (const route of ['/', '/fees/', '/partner-agencies/', '/terms/']) {
   }
 }
 
-notes.push(`Pages checked: ${htmlByRoute.size}`);
+notes.push(`Pages checked: ${htmlByRoute.size}, redirect pages: ${redirects}`);
 console.log(notes.map((n) => `- ${n}`).join('\n'));
 if (problems.length) {
   console.log(`\n${problems.length} problem(s):\n${problems.map((p) => `  x ${p}`).join('\n')}`);

@@ -1,0 +1,178 @@
+---
+/**
+ * PRICING
+ * Everything here comes from the fee settings in src/config/site.ts, so prices stay the same on
+ * every page. Policies the owner has not confirmed yet show as highlighted placeholders.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTASection from '../components/CTASection.astro';
+import Disclaimer from '../components/Disclaimer.astro';
+import Icon from '../components/Icon.astro';
+import JsonLd from '../components/JsonLd.astro';
+import PageHero from '../components/PageHero.astro';
+import PaymentTimeline from '../components/PaymentTimeline.astro';
+import PriceCard from '../components/PriceCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Text from '../components/Text.astro';
+import { site } from '../config/site';
+import { services, serviceUrl } from '../data/services';
+import { packagePrice } from '../lib/format';
+import { businessSchema } from '../lib/schema';
+import { url } from '../lib/url';
+import { waMessages } from '../lib/whatsapp';
+
+const notIncluded = [
+  { icon: 'id-card', text: 'Official fees, for example the IRP registration fee' },
+  { icon: 'house', text: 'Rent, accommodation deposits and booking fees' },
+  { icon: 'bus', text: 'Transport fares, including Leap Card top-ups' },
+  { icon: 'plane-landing', text: site.pickupTransportNote },
+  { icon: 'wallet', text: 'Bank charges and fees' },
+  { icon: 'smartphone', text: 'Phone and SIM card costs' },
+  { icon: 'receipt', text: 'Any other third-party charges' },
+];
+
+const facts = [
+  { term: 'Price', value: `${packagePrice} ${site.fee.perUnit}. The price is per person, not per booking.` },
+  { term: 'What it covers', value: 'All seven services listed on this page.' },
+  { term: 'Airports', value: site.airportsCovered },
+  { term: 'Travel limits', value: site.travelLimits },
+  { term: 'In-person help', value: site.inPersonArea },
+  { term: 'How to pay', value: site.fee.paymentMethods },
+];
+---
+
+<BaseLayout
+  title={`Pricing: ${packagePrice} Per Client | Settle in Ireland`}
+  description={`One package: ${site.fee.title}, ${packagePrice} per client, paid in two parts. What is included, what is not, and what happens if plans change.`}
+  whatsappMessage={waMessages.fees}
+>
+  <JsonLd slot="head" data={businessSchema()} />
+
+  <PageHero
+    eyebrow="Pricing"
+    title={`One package, ${packagePrice} per client`}
+    intro="The price is shown openly so you know exactly what to expect. Below: what is included, what is not, when you pay, and what happens if your plans change."
+    crumbs={[{ label: 'Pricing', href: '/pricing/' }]}
+  />
+
+  <!-- Package and included services -->
+  <section class="section" aria-labelledby="included-heading">
+    <div class="container-site grid items-start gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
+      <div class="lg:sticky lg:top-24" data-reveal>
+        <PriceCard showIncluded={false} feesLink={false} headingLevel="h2" />
+      </div>
+      <div>
+        <SectionHeading id="included-heading" eyebrow="What is included" title="All seven services" />
+        <ol class="mt-8 grid gap-3">
+          {
+            services.map((s) => (
+              <li>
+                <a href={serviceUrl(s)} class="card card-hover flex items-start gap-4 p-5">
+                  <span class="icon-tile">
+                    <Icon name={s.icon} size={22} />
+                  </span>
+                  <span class="min-w-0">
+                    <span class="block font-display font-bold text-ink">{s.name}</span>
+                    <span class="mt-1 block text-[0.97rem]">{s.feeLine}</span>
+                  </span>
+                  <Icon name="chevron-right" size={20} class="ml-auto mt-1 shrink-0 text-muted" />
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key facts -->
+  <section class="section bg-white" aria-labelledby="facts-heading">
+    <div class="container-site">
+      <SectionHeading id="facts-heading" eyebrow="At a glance" title="The details" />
+      <dl class="mt-8 grid overflow-hidden rounded-xl border border-line sm:grid-cols-2">
+        {
+          facts.map((f) => (
+            <div class="border-b border-line p-5 sm:p-6 sm:[&:nth-child(odd)]:border-r">
+              <dt class="font-display font-bold text-ink">{f.term}</dt>
+              <dd class="mt-1.5">
+                <Text value={f.value} />
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <!-- Payment schedule -->
+  <section class="section" aria-labelledby="schedule-heading">
+    <div class="container-site">
+      <SectionHeading
+        id="schedule-heading"
+        eyebrow="Payment schedule"
+        title="Paid in two parts"
+        intro="You pay nothing until you decide to start. The fee is then split into two payments as the service moves forward."
+      />
+      <PaymentTimeline class="mt-10 max-w-4xl" />
+      <div class="mt-8 max-w-4xl rounded-xl border border-line bg-white p-6">
+        <h3 class="flex items-center gap-3 text-[1.15rem]">
+          <Icon name="calendar-check" size={22} class="text-brand-700" />
+          If the IRP appointment is delayed, unavailable, rescheduled or cancelled
+        </h3>
+        <p class="mt-3"><Text value={site.fee.appointmentDelayPolicy} /></p>
+        <p class="mt-3 text-[0.95rem] text-muted">
+          IRP appointments are requested by you through the official channels. I cannot promise a specific date or outcome.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Not included, and changes -->
+  <section class="section bg-white" aria-label="Costs not included, and changes to your plans">
+    <div class="container-site grid gap-6 lg:grid-cols-2">
+      <div class="rounded-xl border border-line bg-canvas p-6 sm:p-8">
+        <h2 class="text-[1.5rem] sm:text-[1.7rem]">What's not included</h2>
+        <p class="mt-2">You pay these directly to the provider. They are never part of the {packagePrice} fee.</p>
+        <ul class="mt-6 grid gap-3">
+          {
+            notIncluded.map((item) => (
+              <li class="flex items-start gap-3.5 rounded-lg bg-white p-3.5">
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-50 text-brand-700">
+                  <Icon name={item.icon} size={18} />
+                </span>
+                <span class="pt-1.5 text-ink">{item.text}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="grid gap-6">
+        <div id="changes" class="rounded-xl border border-line bg-canvas p-6 sm:p-8">
+          <h2 class="text-[1.4rem]">If your plans change</h2>
+          <p class="mt-3"><Text value={site.fee.cancellationPolicy} /></p>
+          <a href={url('/terms/#cancellations')} class="text-link mt-2">Read the Terms of Service <Icon name="arrow-right" size={18} /></a>
+        </div>
+        <div class="rounded-xl border border-line bg-canvas p-6 sm:p-8">
+          <h2 class="text-[1.4rem]">For education agencies</h2>
+          <p class="mt-3">
+            The package and price are the same for students referred by an agency. How payment and referrals work is agreed with each agency.
+          </p>
+          <a href={url('/agency-partnerships/')} class="text-link mt-2">Agency Partnerships <Icon name="arrow-right" size={18} /></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pb-16 pt-16 lg:pb-24 lg:pt-24" aria-label="Independent service">
+    <div class="container-site">
+      <Disclaimer />
+    </div>
+  </section>
+
+  <CTASection
+    title="Questions about the price?"
+    text={`Send me a message and I will explain how the ${packagePrice} package works for your situation.`}
+    message={waMessages.fees}
+    secondary={{ label: 'Plan My Arrival', href: '/contact/#enquiry' }}
+  />
+</BaseLayout>

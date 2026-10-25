@@ -6,41 +6,42 @@
    changed from one place. All text colours meet WCAG AA.
    ============================================================ */
 @theme {
-  /* Deep navy teal: headers, primary buttons, trust */
-  --color-brand-950: #092a35;
-  --color-brand-900: #0f3d4c;
-  --color-brand-800: #154b5d;
-  --color-brand-700: #1c5c70;
-  --color-brand-600: #2a7186;
-  --color-brand-300: #8fb7c2;
-  --color-brand-200: #c5dce1;
-  --color-brand-100: #e2eef0;
-  --color-brand-50: #f1f7f8;
+  /* Deep forest green: headings, primary buttons, dark bands */
+  --color-brand-950: #0f2a20;
+  --color-brand-900: #173b2d;
+  --color-brand-800: #1e4a39;
+  --color-brand-700: #275b47;
+  --color-brand-600: #336f58;
+  --color-brand-300: #a3bdb0;
+  --color-brand-200: #cbdad1;
+  --color-brand-100: #e3ece6;
+  --color-brand-50: #f0f5f1;
 
-  /* Fresh green teal: accents and icons. Use accent-700 for text on light backgrounds. */
-  --color-accent-800: #115c4a;
-  --color-accent-700: #14705a;
-  --color-accent-600: #1f8a70;
-  --color-accent-500: #2ba585;
-  --color-accent-300: #8fd6c0;
-  --color-accent-100: #d9f0e8;
-  --color-accent-50: #edf8f4;
+  /* Softer moss green: icons and text links. Use accent-700 for text on light backgrounds. */
+  --color-accent-800: #24533e;
+  --color-accent-700: #2d6a4f;
+  --color-accent-600: #3a7d5d;
+  --color-accent-500: #4e9472;
+  --color-accent-300: #a9cdb9;
+  --color-accent-100: #dcebe1;
+  --color-accent-50: #eef5f0;
 
-  /* Warm amber: used sparingly for highlights and the price. Use gold-800 for text on light backgrounds. */
-  --color-gold-800: #7a4a05;
-  --color-gold-600: #d68a1f;
-  --color-gold-500: #f2a541;
-  --color-gold-300: #f8cb88;
-  --color-gold-100: #fdecd2;
-  --color-gold-50: #fef7ec;
+  /* Muted gold: used sparingly for the price and small highlights. Use gold-800 for text on light backgrounds. */
+  --color-gold-800: #6b5220;
+  --color-gold-600: #a07d3a;
+  --color-gold-500: #b8944f;
+  --color-gold-300: #d8c08f;
+  --color-gold-100: #f1e6cf;
+  --color-gold-50: #f9f4e8;
 
-  /* Neutrals */
-  --color-ink: #1e293b;
-  --color-body: #475569;
-  --color-muted: #5b6b7f;
-  --color-line: #e1e8e6;
-  --color-line-strong: #c9d4d1;
-  --color-canvas: #f8faf9;
+  /* Warm neutrals and charcoal text */
+  --color-ink: #23272a;
+  --color-body: #474d4a;
+  --color-muted: #5f6662;
+  --color-line: #e7e2d7;
+  --color-line-strong: #cec7b7;
+  --color-canvas: #faf8f3;
+  --color-sand: #f3efe6;
 
   /* WhatsApp: only for WhatsApp buttons. Dark text on the green keeps contrast above AA. */
   --color-wa: #25d366;
@@ -50,9 +51,9 @@
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-display: var(--font-jakarta), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
-  --radius-card: 16px;
-  --shadow-soft: 0 1px 2px rgb(15 61 76 / 0.05), 0 8px 24px -12px rgb(15 61 76 / 0.16);
-  --shadow-lift: 0 2px 4px rgb(15 61 76 / 0.05), 0 22px 44px -18px rgb(15 61 76 / 0.3);
+  --radius-card: 12px;
+  --shadow-soft: 0 1px 2px rgb(23 59 45 / 0.06);
+  --shadow-lift: 0 1px 2px rgb(23 59 45 / 0.06), 0 14px 30px -18px rgb(23 59 45 / 0.35);
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -88,7 +89,7 @@
   h4 {
     color: var(--color-ink);
     font-family: var(--font-display);
-    font-weight: 750;
+    font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.15;
   }
@@ -100,7 +101,7 @@
     text-underline-offset: 3px;
   }
   :focus-visible {
-    outline: 3px solid var(--color-gold-500);
+    outline: 3px solid var(--color-brand-700);
     outline-offset: 3px;
     border-radius: 6px;
   }
@@ -163,16 +164,14 @@
   }
   .eyebrow::before {
     content: '';
-    width: 30px;
-    height: 8px;
+    width: 22px;
+    height: 2px;
     flex-shrink: 0;
-    background:
-      radial-gradient(circle, currentColor 3px, transparent 3.5px) right center / 8px 8px no-repeat,
-      radial-gradient(circle, currentColor 1.1px, transparent 1.6px) left center / 5px 8px repeat-x;
-    mask: linear-gradient(90deg, #000 0 20px, transparent 20px 22px, #000 22px);
+    border-radius: 2px;
+    background: var(--color-gold-500);
   }
   .eyebrow-light {
-    color: var(--color-accent-300);
+    color: var(--color-gold-300);
   }
 
   .lead {
@@ -194,7 +193,7 @@
     min-height: 48px;
     padding: 12px 22px;
     border: 1.5px solid transparent;
-    border-radius: 12px;
+    border-radius: 10px;
     font-family: var(--font-display);
     font-size: 1rem;
     font-weight: 700;
@@ -232,22 +231,17 @@
   .btn-wa {
     background: var(--color-wa);
     color: var(--color-wa-ink);
-    box-shadow: 0 10px 24px -12px rgb(37 211 102 / 0.75);
   }
   .btn-wa:hover {
     background: var(--color-wa-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 16px 28px -14px rgb(37 211 102 / 0.85);
   }
 
   .btn-primary {
     background: var(--color-brand-900);
     color: #fff;
-    box-shadow: 0 10px 24px -14px rgb(15 61 76 / 0.8);
   }
   .btn-primary:hover {
-    background: var(--color-brand-800);
-    transform: translateY(-2px);
+    background: var(--color-brand-700);
   }
 
   .btn-outline {
@@ -256,9 +250,7 @@
     background: transparent;
   }
   .btn-outline:hover {
-    background: var(--color-brand-900);
-    color: #fff;
-    transform: translateY(-2px);
+    background: var(--color-brand-50);
   }
 
   .btn-outline-light {
@@ -269,7 +261,6 @@
   .btn-outline-light:hover {
     border-color: #fff;
     background: rgb(255 255 255 / 0.08);
-    transform: translateY(-2px);
   }
 
   .text-link {
@@ -306,9 +297,8 @@
   }
   @media (hover: hover) {
     .card-hover:hover {
-      transform: translateY(-4px);
       box-shadow: var(--shadow-lift);
-      border-color: var(--color-brand-200);
+      border-color: var(--color-brand-300);
     }
   }
 
@@ -319,10 +309,10 @@
     width: 48px;
     height: 48px;
     flex-shrink: 0;
-    border-radius: 14px;
+    border-radius: 10px;
     background: var(--color-accent-50);
-    color: var(--color-accent-600);
-    box-shadow: inset 0 0 0 1px rgb(31 138 112 / 0.14);
+    color: var(--color-accent-700);
+    box-shadow: inset 0 0 0 1px rgb(45 106 79 / 0.14);
   }
 
   /* Ticked list */
@@ -343,7 +333,7 @@
     height: 22px;
     border-radius: 999px;
     background: var(--color-accent-100)
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314705a' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7.5'/%3E%3C/svg%3E")
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232d6a4f' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7.5'/%3E%3C/svg%3E")
       center / 14px no-repeat;
   }
   .cross-list {
@@ -526,7 +516,7 @@
   .field-input:focus {
     outline: none;
     border-color: var(--color-brand-700);
-    box-shadow: 0 0 0 4px rgb(42 113 134 / 0.2);
+    box-shadow: 0 0 0 4px rgb(39 91 71 / 0.18);
   }
   .field-input[aria-invalid='true'] {
     border-color: #b42318;
@@ -598,6 +588,11 @@
       transform: none;
     }
   }
+}
+
+/* Focus ring on dark green sections */
+.on-dark :focus-visible {
+  outline-color: var(--color-gold-300);
 }
 
 /* Skip link */

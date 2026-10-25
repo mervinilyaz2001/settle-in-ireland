@@ -6,7 +6,7 @@
  *
  * Anything in [SQUARE BRACKETS] is a placeholder. It shows on the site with a yellow
  * highlight until it is replaced, so a quick scroll through the preview shows what is
- * still missing. README.md has the full pre-launch checklist.
+ * still missing. README.md has the full list of owner decisions.
  */
 
 export interface Testimonial {
@@ -20,34 +20,39 @@ export interface Testimonial {
 
 export interface Payment {
   amount: number;
-  /** When this payment is due. Shown on the Fees page, the homepage, the Partner Agencies page and in the Terms. */
+  /** When this payment is due. Shown on the pricing page, the homepage, the agency page and in the Terms. */
   when: string;
 }
 
 export const site = {
   name: 'Settle in Ireland',
   tagline: 'Your Local Contact in Ireland.',
+  /**
+   * The intended domain. NOTE (checked 25 Oct 2026): settleinireland.com is not registered yet.
+   * Until it is, the live site runs at https://mervinilyaz2001.github.io/settle-in-ireland/ and the
+   * GitHub build sets the correct address automatically (README, "Custom domain").
+   */
   domain: 'https://settleinireland.com',
   /** Default description used when a page does not set its own. */
   description:
-    'Independent arrival and settling-in support in Ireland for international clients and their partner agencies. Airport pickup, accommodation help, IRP and PPSN guidance.',
+    'Practical arrival and settling-in support in Ireland: airport pickup, accommodation help, IRP and PPS Number guidance, with one local point of contact.',
 
   /**
    * PRE-LAUNCH SWITCH
    * true adds a "noindex" tag to every page so search engines ignore the site while the
-   * placeholders are being filled in. Set it to false on launch day (README, launch step 1).
+   * placeholders are being filled in. Set it to false on launch day.
    */
   noindex: true,
 
-  /* ---------- The owner (About page, Privacy Policy and Terms) ---------- */
+  /* ---------- The owner (homepage introduction, About page, Privacy Policy and Terms) ---------- */
   ownerName: 'Mizan Mohammed',
-  /** Two or three sentences in the first person, for the About page. */
-  ownerBio: '[SHORT FIRST-PERSON BIO]',
-  /** Path to a photo in /public once there is one, for example '/images/owner.webp'. null shows initials instead. */
+  /** Two or three sentences in the first person. */
+  ownerBio: '[SHORT FIRST-PERSON BIO: who you are and your connection to Ireland]',
+  /** Path to a photo in /public, for example '/images/owner.webp'. null shows initials instead. */
   ownerPhoto: null as string | null,
-  /** Why you started Settle in Ireland, in your own words. Shown on the About page. */
+  /** Why you started Settle in Ireland, in your own words. */
   ownerStory: '[WHY I STARTED SETTLE IN IRELAND, IN TWO OR THREE SENTENCES]',
-  languages: '[e.g. English and Bengali]',
+  languages: '[LANGUAGES YOU SPEAK, e.g. English and Bengali]',
   location: 'Dublin, Ireland',
 
   /* ---------- Contact ---------- */
@@ -56,14 +61,25 @@ export const site = {
   /** Shown on the site exactly as written here. Used for the "Call" links. */
   phone: '+353 89 974 1681',
   email: 'hello@settleinireland.com',
-  responseTime: 'I usually reply within 24 hours.',
+  /**
+   * EMAIL SWITCH
+   * false hides the email address everywhere. The domain settleinireland.com was not registered on
+   * 25 Oct 2026, so this address cannot receive mail yet. Set to true once the mailbox works.
+   */
+  emailActive: false,
+  /** Optional. Only shown if you set it, for example 'I usually reply within one working day.' Leave null to make no promise. */
+  responseTime: null as string | null,
 
   /* ---------- Service details ---------- */
   airportsCovered: 'Dublin Airport. Other Irish airports by arrangement.',
-  /** Shown on the Arrival Planning and Airport Pickup page and in the Fees exclusions. */
+  /** Where you can help in person. Shown in the FAQs and on the pricing page. */
+  inPersonArea: '[OWNER TO CONFIRM: where you can meet clients in person, for example Dublin and nearby areas]',
+  /** Any limits on travel for pickups and in-person help, and any extra cost outside that area. */
+  travelLimits: '[OWNER TO CONFIRM: travel limits for airport pickup and in-person help, and any extra cost outside that area]',
+  /** Shown on the Arrival Planning and Airport Pickup page and in the pricing exclusions. */
   pickupTransportNote:
     'Taxi or transport costs for the journey from the airport to the accommodation may be separate. I confirm this with the client before they travel.',
-  /** How long WhatsApp support lasts. Reads as part of a sentence: "I support clients ... during the first weeks after arrival." */
+  /** How long WhatsApp support lasts. Reads as part of a sentence: "WhatsApp support during the first weeks after arrival." */
   supportPeriod: 'during the first weeks after arrival',
 
   /* ---------- Fee ---------- */
@@ -79,19 +95,28 @@ export const site = {
       { amount: 200, when: "Once the client's IRP registration appointment is confirmed." },
     ] as Payment[],
     milestoneNote: 'This is a service milestone only. I do not sell, reserve or guarantee government appointments.',
+    /** What happens to the second payment if the IRP appointment is delayed, unavailable, rescheduled or cancelled. */
+    appointmentDelayPolicy:
+      '[OWNER TO CONFIRM: what happens to the second payment if the IRP registration appointment is delayed, unavailable, rescheduled or cancelled, for example whether it stays due only once an appointment is confirmed, and whether support continues in the meantime]',
     exclusions: 'Government fees, accommodation costs, deposits and third-party charges are separate.',
-    paymentMethods: '[e.g. Bank transfer. Receipts are provided for every payment.]',
+    paymentMethods: '[OWNER TO CONFIRM: how clients pay, e.g. bank transfer, and that receipts are provided]',
     /**
-     * Cancellation and refund summary. Shown on the Fees page and in the Terms.
-     * The text below is a fair starting point. Check it and change it before launch.
+     * Cancellation and refund summary. Shown on the pricing page and in the Terms.
+     * The text below is a starting point only. Check it, change it and have it reviewed before launch.
      */
     cancellationPolicy:
       '[OWNER TO CONFIRM] The first payment covers pre-arrival planning work, which starts as soon as it is paid. If plans change, for example a visa is refused or travel is postponed, contact me as soon as possible and I will explain what can be refunded or moved to a later date. The second payment is only due once that milestone is reached.',
   },
 
-  /* ---------- Experience ---------- */
+  /* ---------- Education agencies ---------- */
   currentMarkets:
     'Already supporting clients referred by partner agencies in Bangladesh, and open to partner agencies from any country.',
+  agency: {
+    capacity: '[OWNER TO CONFIRM: how many referred students you can support at the same time, or per intake]',
+    payment: '[OWNER TO CONFIRM: whether the agency or the student pays, invoicing and payment timing]',
+    reporting: '[OWNER TO CONFIRM: which milestones you report on, and whether by WhatsApp or email]',
+    escalation: '[OWNER TO CONFIRM: how urgent issues are raised and handled, and who the agency contacts]',
+  },
 
   /* ---------- Pre-filled WhatsApp messages ---------- */
   whatsappMessages: {
@@ -107,36 +132,49 @@ export const site = {
     fees: 'Hi, I have a question about the {price} {package} package.',
   },
 
+  /* ---------- Enquiry forms ----------
+   * The forms send enquiries to a form provider. Until one is connected, the forms open the
+   * enquiry in WhatsApp instead, so no enquiry is ever lost. To connect one (README, "Enquiry form"):
+   *   Formspree:  provider: 'formspree', formspreeId: 'abcdwxyz'   (from https://formspree.io/f/abcdwxyz)
+   *   Web3Forms:  provider: 'web3forms', web3formsKey: 'your-access-key'
+   * Both are free for small volumes and email each enquiry to you.
+   */
+  forms: {
+    provider: null as null | 'formspree' | 'web3forms',
+    formspreeId: null as string | null,
+    web3formsKey: null as string | null,
+  },
+
   /* ---------- Testimonials ----------
    * Hidden until there are real ones. To show them:
    * 1. Add each quote below, word for word, with the person's written permission.
    * 2. Set showTestimonials to true.
-   * Example (do not publish made-up quotes):
-   *   testimonials: [
-   *     { quote: 'Their exact words.', name: 'First name and initial', context: 'Client, arrived September 2026' },
-   *   ],
    */
   showTestimonials: false,
   testimonials: [] as Testimonial[],
 
   /* ---------- Map ----------
    * Off by default. Only turn on with a real business address, and note that Google Maps
-   * embeds set cookies, which would then need a consent banner.
+   * embeds set cookies, which would then need consent.
    */
   showMap: false,
   mapEmbedUrl: null as string | null,
 
-  /* ---------- Analytics ----------
-   * Off by default, so no tracking and no cookies. Plausible and Umami are cookieless, so
-   * turning one of them on does not need a cookie banner. Any analytics that sets cookies does.
-   *   provider: 'plausible', siteId: 'settleinireland.com'
-   *   provider: 'umami', siteId: 'your-website-id', scriptUrl: 'https://cloud.umami.is/script.js'
+  /* ---------- Analytics and Search Console ----------
+   * Everything is off by default: no tracking and no cookies.
+   * GA4: set ga4MeasurementId (e.g. 'G-XXXXXXXXXX'). A cookie consent banner then appears
+   *      automatically, and GA4 only loads after the visitor accepts.
+   * Plausible or Umami (cookieless, no banner needed):
+   *      provider: 'plausible', siteId: 'settleinireland.com'
+   *      provider: 'umami', siteId: 'your-website-id', scriptUrl: 'https://cloud.umami.is/script.js'
+   * Search Console: paste only the content value of the HTML-tag verification method.
    */
   analytics: {
-    enabled: false,
+    ga4MeasurementId: null as string | null,
     provider: null as null | 'plausible' | 'umami',
     siteId: null as string | null,
     scriptUrl: null as string | null,
+    googleSiteVerification: null as string | null,
   },
 
   /* ---------- Social profiles ----------

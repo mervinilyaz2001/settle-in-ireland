@@ -1,7 +1,11 @@
 ---
 /**
- * Enquiry form that turns the answers into a WhatsApp message (or an email).
- * Nothing is sent to or stored by the website: no server, no cookies, no local storage.
+ * Enquiry forms for individuals and for education agencies.
+ *
+ * When a form provider is set in src/config/site.ts (forms), the form sends the enquiry to it and
+ * the provider emails it to the owner. Until then, the form opens the enquiry in WhatsApp instead,
+ * so it never pretends to have sent something it has not. Nothing is stored by the website itself.
+ * Spam protection: a hidden "honeypot" field and a minimum time before sending.
  */
 import FormField from './FormField.astro';
 import Icon from './Icon.astro';
@@ -10,17 +14,26 @@ import { services } from '../data/services';
 import { url } from '../lib/url';
 
 interface Props {
-  variant: 'client' | 'agency';
+  variant: 'individual' | 'agency';
   title?: string;
   intro?: string;
 }
 
 const { variant, title, intro } = Astro.props;
-const f = variant === 'client' ? 'client' : 'agency';
-const serviceChoices = [`${site.fee.title} (all seven services)`, ...services.map((s) => s.name)];
+const f = variant;
+const { provider, formspreeId, web3formsKey } = site.forms;
+const endpoint =
+  provider === 'formspree' && formspreeId
+    ? `https://formspree.io/f/${formspreeId}`
+    : provider === 'web3forms' && web3formsKey
+      ? 'https://api.web3forms.com/submit'
+      : null;
+const connected = Boolean(endpoint);
+
+const supportChoices = [`${site.fee.title} (all seven services)`, ...services.map((s) => s.name), 'Not sure yet'];
 const consentText = 'I agree that Settle in Ireland can use these details to reply to my enquiry.';
 const heading =
-  variant === 'client' ? 'New enquiry from the Settle in Ireland website' : 'New partner agency enquiry from the Settle in Ireland website';
+  variant === 'individual' ? 'New enquiry from the Settle in Ireland website' : 'New agency partnership enquiry from the Settle in Ireland website';
 ---
 
 <form
@@ -29,40 +42,47 @@ const heading =
   novalidate
   aria-labelledby={`${f}-form-title`}
   data-enquiry-form
+  data-form-type={variant}
+  data-provider={connected ? provider : undefined}
+  data-endpoint={endpoint ?? undefined}
+  data-key={provider === 'web3forms' ? (web3formsKey ?? undefined) : undefined}
   data-wa-number={site.whatsappNumber}
-  data-email={site.email}
+  data-email={site.emailActive ? site.email : undefined}
   data-heading={heading}
-  data-subject-prefix={variant === 'client' ? 'Enquiry from' : 'Partner agency enquiry from'}
-  data-subject-field={variant === 'client' ? `${f}-name` : `${f}-agency`}
+  data-subject-prefix={variant === 'individual' ? 'Enquiry from' : 'Agency partnership enquiry from'}
+  data-subject-field={variant === 'individual' ? `${f}-name` : `${f}-agency`}
 >
-  <h2 id={`${f}-form-title`} class="text-[1.5rem] sm:text-[1.75rem]">
-    {title ?? (variant === 'client' ? 'Tell me about your move' : 'Partner agency enquiry')}
+  <h2 id={`${f}-form-title`} class="text-[1.5rem] sm:text-[1.7rem]">
+    {title ?? (variant === 'individual' ? 'Tell me about your move' : 'Agency partnership enquiry')}
   </h2>
   {intro && <p class="mt-2">{intro}</p>}
-  <p class="mt-3 flex gap-2.5 rounded-xl bg-accent-50 p-3.5 text-[0.93rem] text-accent-800">
-    <Icon name="lock" size={18} class="mt-0.5 shrink-0" />
-    <span>Nothing is sent from this website. When you press the button, your answers open as a message in WhatsApp or your email app, so you can check it before you press send.</span>
-  </p>
+  <p class="mt-2 text-[0.93rem] text-muted">Fields marked "required" must be filled in. Everything else is optional.</p>
 
-  <div class="mt-6 rounded-xl border-2 border-[#b42318] bg-[#fef3f2] p-4" tabindex="-1" hidden data-error-summary>
-    <p class="font-display font-bold text-[#7a1a12]" data-error-summary-title>Please check the following:</p>
+  <div class="mt-6 rounded-lg border-2 border-[#b42318] bg-[#fef3f2] p-4" tabindex="-1" hidden data-error-summary>
+    <p class="font-display font-bold text-[#7a1a12]">Please check the following:</p>
     <ul class="mt-2 list-disc pl-5 text-[0.95rem] text-[#7a1a12]" data-error-list></ul>
   </div>
 
+  <!-- Spam trap: hidden from people, often filled in by bots -->
+  <div class="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
+    <label for={`${f}-website-check`}>Leave this field empty</label>
+    <input type="text" id={`${f}-website-check`} name="company_url_check" tabindex="-1" autocomplete="off" data-honeypot />
+  </div>
+
   {
-    variant === 'client' ? (
+    variant === 'individual' ? (
       <div class="mt-6 grid gap-5 sm:grid-cols-2">
         <FormField id={`${f}-name`} name="name" label="Full name" required autocomplete="name" errorRequired="Please enter your full name." />
         <FormField
-          id={`${f}-country`}
-          name="country"
-          label="Country you are coming from"
-          summary="Coming from"
+          id={`${f}-email`}
+          name="email"
+          label="Email"
+          type="email"
           required
-          autocomplete="country-name"
-          errorRequired="Please tell me which country you are coming from."
+          autocomplete="email"
+          inputmode="email"
+          errorRequired="Please enter your email address so I can reply."
         />
-        <FormField id={`${f}-email`} name="email" label="Email" type="email" autocomplete="email" inputmode="email" />
         <FormField
           id={`${f}-whatsapp`}
           name="whatsapp"
@@ -70,53 +90,40 @@ const heading =
           type="tel"
           autocomplete="tel"
           inputmode="tel"
-          hint="Include your country code, for example +880."
+          hint="Include your country code, for example +55 or +880."
         />
-        <FormField id={`${f}-arrival`} name="arrival" label="Expected arrival date in Ireland" summary="Expected arrival" type="date" />
+        <FormField id={`${f}-country`} name="country" label="Country you are moving from" autocomplete="country-name" />
+        <FormField id={`${f}-arrival`} name="arrival" label="Expected arrival date" type="date" />
         <FormField
-          id={`${f}-airport`}
-          name="airport"
-          label="Arrival airport"
-          type="select"
-          options={['Dublin', 'Shannon', 'Cork', 'Knock', 'Other / Not sure']}
+          id={`${f}-destination`}
+          name="destination"
+          label="Where in Ireland are you going?"
+          summary="Destination in Ireland"
+          hint="For example Dublin, Cork or Galway."
         />
-        <FormField id={`${f}-college`} name="college" label="College or course in Ireland" class="sm:col-span-2" />
 
-        <fieldset class="sm:col-span-2" data-summary="Referred by an agency" data-summary-type="radio">
+        <fieldset class="sm:col-span-2" data-summary="Accommodation arranged" data-summary-type="radio">
           <legend class="field-label">
-            Were you referred by an agency?<span class="field-hint"> (optional)</span>
+            Is your accommodation arranged?<span class="field-hint"> (optional)</span>
           </legend>
-          <div class="mt-1 grid grid-cols-2 gap-3 sm:max-w-sm">
-            <label class="choice">
-              <input type="radio" name="referred" value="Yes" data-toggle-target={`${f}-agency-wrap`} />
-              Yes
-            </label>
-            <label class="choice">
-              <input type="radio" name="referred" value="No" data-toggle-target={`${f}-agency-wrap`} />
-              No
-            </label>
+          <div class="mt-1 grid gap-3 sm:grid-cols-3">
+            {['Yes', 'No', 'Partly or not sure'].map((choice) => (
+              <label class="choice">
+                <input type="radio" name="accommodation" value={choice} />
+                {choice}
+              </label>
+            ))}
           </div>
         </fieldset>
-        <div id={`${f}-agency-wrap`} class="sm:col-span-2" hidden data-show-when="Yes">
-          <FormField
-            id={`${f}-agency-name`}
-            name="agency"
-            label="Agency name"
-            summary="Agency name"
-            required
-            autocomplete="organization"
-            errorRequired="Please enter the name of the agency that referred you."
-          />
-        </div>
 
-        <fieldset class="sm:col-span-2" data-summary="Services needed" data-summary-type="checkbox">
+        <fieldset class="sm:col-span-2" data-summary="Support needed" data-summary-type="checkbox">
           <legend class="field-label">
-            Which services do you need?<span class="field-hint"> (optional, choose any)</span>
+            What support do you need?<span class="field-hint"> (optional, choose any)</span>
           </legend>
           <div class="mt-1 grid gap-2.5 sm:grid-cols-2">
-            {serviceChoices.map((choice, i) => (
+            {supportChoices.map((choice, i) => (
               <label class:list={['choice', i === 0 && 'sm:col-span-2 font-semibold']}>
-                <input type="checkbox" name="services" value={choice} />
+                <input type="checkbox" name="support" value={choice} />
                 <span>{choice}</span>
               </label>
             ))}
@@ -135,14 +142,7 @@ const heading =
       </div>
     ) : (
       <div class="mt-6 grid gap-5 sm:grid-cols-2">
-        <FormField
-          id={`${f}-agency`}
-          name="agency"
-          label="Agency name"
-          required
-          autocomplete="organization"
-          errorRequired="Please enter your agency's name."
-        />
+        <FormField id={`${f}-agency`} name="agency" label="Agency name" required autocomplete="organization" errorRequired="Please enter your agency's name." />
         <FormField
           id={`${f}-contact`}
           name="contact"
@@ -152,32 +152,14 @@ const heading =
           errorRequired="Please enter the name of the contact person."
         />
         <FormField
-          id={`${f}-country`}
-          name="country"
-          label="Country"
-          required
-          autocomplete="country-name"
-          errorRequired="Please enter the country your agency is based in."
-        />
-        <FormField id={`${f}-city`} name="city" label="City" autocomplete="address-level2" />
-        <FormField
           id={`${f}-email`}
           name="email"
-          label="Email"
+          label="Work email"
           type="email"
           required
           autocomplete="email"
           inputmode="email"
-          errorRequired="Please enter an email address so I can reply."
-        />
-        <FormField
-          id={`${f}-whatsapp`}
-          name="whatsapp"
-          label="WhatsApp number"
-          type="tel"
-          autocomplete="tel"
-          inputmode="tel"
-          hint="Include your country code, for example +880."
+          errorRequired="Please enter a work email address so I can reply."
         />
         <FormField
           id={`${f}-website`}
@@ -189,28 +171,22 @@ const heading =
           placeholder="www.youragency.com"
         />
         <FormField
+          id={`${f}-countries`}
+          name="countries"
+          label="Countries you serve"
+          summary="Countries served"
+          required
+          hint="The countries your students come from."
+          errorRequired="Please tell me which countries your students come from."
+        />
+        <FormField
           id={`${f}-volume`}
           name="volume"
-          label="Approximate number of clients you send to Ireland per year"
-          summary="Clients sent to Ireland per year"
+          label="Approximate students referred to Ireland per year"
+          summary="Approximate referral volume"
           type="select"
-          options={['1 to 10', '11 to 50', '51 to 100', '100+', 'Not sure']}
+          options={['1 to 10', '11 to 50', '51 to 100', 'More than 100', 'Not sure yet']}
         />
-
-        <fieldset class="sm:col-span-2" data-summary="Intakes" data-summary-type="checkbox">
-          <legend class="field-label">
-            Intakes you work with<span class="field-hint"> (optional, choose any)</span>
-          </legend>
-          <div class="mt-1 grid grid-cols-1 gap-2.5 min-[420px]:grid-cols-3">
-            {['January', 'September', 'Other'].map((intake) => (
-              <label class="choice">
-                <input type="checkbox" name="intakes" value={intake} />
-                <span>{intake}</span>
-              </label>
-            ))}
-          </div>
-        </fieldset>
-
         <FormField
           id={`${f}-message`}
           name="message"
@@ -218,7 +194,7 @@ const heading =
           type="textarea"
           maxlength={1500}
           class="sm:col-span-2"
-          placeholder="Tell me about your agency, your clients and any questions you have."
+          placeholder="Tell me about your agency, your intakes and any questions you have."
         />
       </div>
     )
@@ -244,49 +220,74 @@ const heading =
     <p id={`${f}-consent-error`} class="field-error" hidden data-error></p>
   </div>
 
-  <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-    <button type="submit" class="btn btn-wa btn-lg">
-      <Icon name="whatsapp" size={24} />
-      Send on WhatsApp
-    </button>
-    <button type="button" class="btn btn-outline btn-lg" data-send-email>
-      <Icon name="mail" size={20} />
-      Send by email instead
-    </button>
+  <p class="mt-5 flex gap-2.5 rounded-lg bg-sand p-3.5 text-[0.92rem] text-ink">
+    <Icon name="lock" size={18} class="mt-0.5 shrink-0 text-brand-700" />
+    <span>
+      Please do not include passport numbers, immigration documents, bank details or other sensitive information in this form.
+      {connected ? ' Your enquiry is sent securely by email to me.' : ' Pressing the button opens your enquiry in WhatsApp, ready to send.'}
+    </span>
+  </p>
+
+  <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+    {
+      connected ? (
+        <button type="submit" class="btn btn-primary btn-lg" data-submit>
+          <Icon name="send" size={20} />
+          <span data-submit-label>Send enquiry</span>
+        </button>
+      ) : (
+        <button type="submit" class="btn btn-wa btn-lg" data-submit>
+          <Icon name="whatsapp" size={24} />
+          <span data-submit-label>Send via WhatsApp</span>
+        </button>
+      )
+    }
+    {
+      site.emailActive && !connected && (
+        <button type="button" class="btn btn-outline btn-lg" data-send-email>
+          <Icon name="mail" size={20} />
+          Send by email instead
+        </button>
+      )
+    }
   </div>
 
-  <div class="mt-7 rounded-2xl border border-accent-300 bg-accent-50 p-5 sm:p-6" tabindex="-1" hidden data-success>
+  <!-- Success, shown after sending -->
+  <div class="mt-7 rounded-xl border border-accent-300 bg-accent-50 p-5 sm:p-6" tabindex="-1" hidden data-success>
     <p class="flex items-center gap-2.5 font-display text-[1.15rem] font-bold text-ink">
-      <Icon name="circle-check" size={24} class="text-accent-600" />
-      <span data-success-title>Almost done. Just press send.</span>
+      <Icon name="circle-check" size={24} class="text-accent-700" />
+      <span data-success-title></span>
     </p>
     <p class="mt-2" data-success-text></p>
-    <p class="mt-3 text-[0.95rem]">If nothing opened, use one of these options instead:</p>
-    <div class="mt-3 flex flex-wrap gap-2">
-      <a class="btn btn-wa btn-sm" href="#" target="_blank" rel="noopener" data-success-wa>
-        <Icon name="whatsapp" size={18} /> Open WhatsApp<span class="sr-only"> (opens in a new tab)</span>
-      </a>
-      <a class="btn btn-outline btn-sm" href="#" data-success-mail>
-        <Icon name="mail" size={18} /> Open email
+    <div class="mt-4 flex flex-wrap gap-2" data-success-fallback hidden>
+      <a class="btn btn-wa btn-sm" href="#" target="_blank" rel="noopener" data-success-wa data-track-location="form_fallback" data-lead={variant}>
+        <Icon name="whatsapp" size={18} /> Open WhatsApp again<span class="sr-only"> (opens in a new tab)</span>
       </a>
       <button type="button" class="btn btn-outline btn-sm" data-copy>
         <Icon name="clipboard-list" size={18} /> <span data-copy-label>Copy the message</span>
       </button>
     </div>
-    <details class="mt-4">
-      <summary class="inline-flex min-h-11 cursor-pointer items-center font-semibold text-accent-800">See your message</summary>
-      <pre class="mt-2 max-h-72 overflow-auto rounded-xl border border-line bg-white p-4 font-sans text-[0.9rem] whitespace-pre-wrap text-ink" data-preview></pre>
-    </details>
+  </div>
+
+  <!-- Error, shown if the form provider could not be reached -->
+  <div class="mt-7 rounded-xl border-2 border-[#b42318] bg-[#fef3f2] p-5 sm:p-6" tabindex="-1" hidden data-send-error>
+    <p class="font-display text-[1.1rem] font-bold text-[#7a1a12]">Sorry, your enquiry could not be sent.</p>
+    <p class="mt-2 text-[#7a1a12]">Please try again in a moment, or send it on WhatsApp instead. Your answers are still in the form.</p>
+    <a class="btn btn-wa btn-sm mt-4" href="#" target="_blank" rel="noopener" data-error-wa data-track-location="form_error" data-lead={variant}>
+      <Icon name="whatsapp" size={18} /> Send on WhatsApp instead<span class="sr-only"> (opens in a new tab)</span>
+    </a>
   </div>
 </form>
 
 <script>
-  type Field = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+  import { track } from '../scripts/analytics';
 
+  type Field = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+  const MIN_SECONDS = 2.5;
   const isHidden = (el: Element) => Boolean(el.closest('[hidden]'));
 
   function errorFor(el: Field): string | null {
-    if (isHidden(el)) return null;
+    if (isHidden(el) || el.hasAttribute('data-honeypot')) return null;
     if (el instanceof HTMLInputElement && el.type === 'checkbox') {
       return el.required && !el.checked ? (el.dataset.errorRequired ?? 'Please tick this box.') : null;
     }
@@ -297,7 +298,7 @@ const heading =
       return 'Please check the email address. It should look like name@example.com.';
     }
     if (el.type === 'tel' && value.replace(/\D/g, '').length < 7) {
-      return 'Please check this number. Include the country code, for example +880.';
+      return 'Please check this number. Include the country code, for example +55.';
     }
     if (el.type === 'url' && !/^(https?:\/\/)?[^\s/.]+(\.[^\s/.]+)+(\/\S*)?$/i.test(value)) {
       return 'Please check the website address, for example www.youragency.com.';
@@ -325,43 +326,39 @@ const heading =
     return new Intl.DateTimeFormat('en-IE', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(y, m - 1, d));
   }
 
-  function buildSummary(form: HTMLFormElement): string {
-    const lines: string[] = [form.dataset.heading ?? 'New enquiry', ''];
+  /** The answers as label and value pairs, skipping empty optional fields. */
+  function answers(form: HTMLFormElement): [string, string][] {
+    const out: [string, string][] = [];
     form.querySelectorAll<HTMLElement>('[data-summary]').forEach((node) => {
       if (isHidden(node)) return;
-      const label = node.dataset.summary;
+      const label = node.dataset.summary ?? '';
       if (node instanceof HTMLFieldSetElement) {
         const checked = Array.from(node.querySelectorAll<HTMLInputElement>('input:checked')).map((i) => i.value);
-        if (!checked.length) return;
-        if (node.dataset.summaryType === 'radio') {
-          lines.push(`${label}: ${checked[0]}`);
-        } else {
-          lines.push(`${label}:`, ...checked.map((v) => `- ${v}`));
-        }
+        if (checked.length) out.push([label, checked.join(', ')]);
         return;
       }
       const el = node as Field;
       const value = el.value.trim();
       if (!value) return;
-      if (el instanceof HTMLTextAreaElement) {
-        lines.push('', `${label}:`, value, '');
-      } else if (el instanceof HTMLInputElement && el.type === 'date') {
-        lines.push(`${label}: ${formatDate(value)}`);
-      } else {
-        lines.push(`${label}: ${value}`);
-      }
+      out.push([label, el instanceof HTMLInputElement && el.type === 'date' ? formatDate(value) : value]);
+    });
+    return out;
+  }
+
+  function summaryText(form: HTMLFormElement): string {
+    const lines = [form.dataset.heading ?? 'New enquiry', ''];
+    answers(form).forEach(([label, value]) => {
+      if (label === 'Message') lines.push('', 'Message:', value);
+      else lines.push(`${label}: ${value}`);
     });
     const consent = form.querySelector<HTMLInputElement>('[data-consent]');
     if (consent?.checked) lines.push('', `${consent.dataset.consent}`);
-    return lines
-      .join('\n')
-      .replace(/\n{3,}/g, '\n\n')
-      .trim();
+    return lines.join('\n').replace(/\n{3,}/g, '\n\n').trim();
   }
 
   function validate(form: HTMLFormElement): boolean {
     const fields = Array.from(form.querySelectorAll<Field>('input, select, textarea')).filter(
-      (el) => !(el instanceof HTMLInputElement && el.type === 'radio') && !(el instanceof HTMLInputElement && el.type === 'checkbox' && !el.required),
+      (el) => !(el instanceof HTMLInputElement && (el.type === 'radio' || (el.type === 'checkbox' && !el.required))),
     );
     const problems: { el: Field; message: string }[] = [];
     fields.forEach((el) => {
@@ -369,7 +366,6 @@ const heading =
       showError(el, message);
       if (message) problems.push({ el, message });
     });
-
     const summary = form.querySelector<HTMLElement>('[data-error-summary]');
     const list = form.querySelector<HTMLUListElement>('[data-error-list]');
     if (summary && list) {
@@ -394,84 +390,130 @@ const heading =
     return problems.length === 0;
   }
 
-  document.querySelectorAll<HTMLFormElement>('[data-enquiry-form]').forEach((form) => {
-    const waNumber = form.dataset.waNumber ?? '';
-    const email = form.dataset.email ?? '';
-    const success = form.querySelector<HTMLElement>('[data-success]');
-
-    // Show the agency name field only when "Yes" is chosen
-    form.querySelectorAll<HTMLInputElement>('[data-toggle-target]').forEach((radio) => {
-      radio.addEventListener('change', () => {
-        const target = document.getElementById(radio.dataset.toggleTarget ?? '');
-        if (!target) return;
-        const show = form.querySelector<HTMLInputElement>(`input[name="${radio.name}"]:checked`)?.value === target.dataset.showWhen;
-        target.hidden = !show;
+  async function sendToProvider(form: HTMLFormElement, subject: string): Promise<boolean> {
+    const provider = form.dataset.provider;
+    const endpoint = form.dataset.endpoint;
+    if (!endpoint) return false;
+    const payload: Record<string, string> = { form_type: form.dataset.formType ?? 'individual' };
+    answers(form).forEach(([label, value]) => (payload[label] = value));
+    if (provider === 'web3forms') {
+      payload.access_key = form.dataset.key ?? '';
+      payload.subject = subject;
+      payload.from_name = 'Settle in Ireland website';
+      payload.botcheck = '';
+    } else {
+      payload._subject = subject;
+      const email = form.querySelector<HTMLInputElement>('input[type="email"]')?.value.trim();
+      if (email) payload._replyto = email;
+    }
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload),
       });
-    });
+      if (!res.ok) return false;
+      const data = await res.json().catch(() => ({}));
+      return provider === 'web3forms' ? data.success === true : true;
+    } catch {
+      return false;
+    }
+  }
+
+  document.querySelectorAll<HTMLFormElement>('[data-enquiry-form]').forEach((form) => {
+    const formType = form.dataset.formType ?? 'individual';
+    const shownAt = Date.now();
+    const success = form.querySelector<HTMLElement>('[data-success]');
+    const sendError = form.querySelector<HTMLElement>('[data-send-error]');
+    const submit = form.querySelector<HTMLButtonElement>('[data-submit]');
+    const submitLabel = form.querySelector<HTMLElement>('[data-submit-label]');
+    let sending = false;
 
     // Re-check a field once the person leaves it, but only after it has shown an error
-    form.addEventListener('focusout', (e) => {
+    const recheck = (e: Event) => {
       const el = e.target as Field;
       if (el.getAttribute?.('aria-invalid') === 'true') showError(el, errorFor(el));
-    });
-    form.addEventListener('change', (e) => {
-      const el = e.target as Field;
-      if (el.getAttribute?.('aria-invalid') === 'true') showError(el, errorFor(el));
-    });
+    };
+    form.addEventListener('focusout', recheck);
+    form.addEventListener('change', recheck);
 
-    const links = () => {
-      const text = buildSummary(form);
-      const subjectField = document.getElementById(form.dataset.subjectField ?? '') as HTMLInputElement | null;
-      const subject = `${form.dataset.subjectPrefix} ${subjectField?.value.trim() ?? ''}`.trim();
-      return {
-        text,
-        wa: `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`,
-        mail: `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`,
-      };
+    const waUrl = () => `https://wa.me/${form.dataset.waNumber}?text=${encodeURIComponent(summaryText(form))}`;
+    const subject = () => {
+      const field = document.getElementById(form.dataset.subjectField ?? '') as HTMLInputElement | null;
+      return `${form.dataset.subjectPrefix} ${field?.value.trim() ?? ''}`.trim();
     };
 
-    const showSuccess = (channel: 'whatsapp' | 'email', text: string, wa: string, mail: string) => {
+    const showSuccess = (title: string, text: string, fallback: boolean) => {
       if (!success) return;
-      const title = success.querySelector('[data-success-title]');
-      const body = success.querySelector('[data-success-text]');
-      if (title) title.textContent = 'Almost done. Just press send.';
-      if (body) {
-        body.textContent =
-          channel === 'whatsapp'
-            ? 'WhatsApp has opened in a new tab or in the app, with your message ready. Check the details and press send.'
-            : 'Your email app has opened with your message ready. Check the details and press send.';
-      }
-      success.querySelector<HTMLAnchorElement>('[data-success-wa]')?.setAttribute('href', wa);
-      success.querySelector<HTMLAnchorElement>('[data-success-mail]')?.setAttribute('href', mail);
-      const preview = success.querySelector('[data-preview]');
-      if (preview) preview.textContent = text;
+      sendError && (sendError.hidden = true);
+      success.querySelector('[data-success-title]')!.textContent = title;
+      success.querySelector('[data-success-text]')!.textContent = text;
+      const fb = success.querySelector<HTMLElement>('[data-success-fallback]');
+      if (fb) fb.hidden = !fallback;
+      success.querySelector<HTMLAnchorElement>('[data-success-wa]')?.setAttribute('href', waUrl());
       success.hidden = false;
       success.focus();
     };
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (!validate(form)) return;
-      const { text, wa, mail } = links();
-      window.open(wa, '_blank', 'noopener');
-      showSuccess('whatsapp', text, wa, mail);
+      if (sending || !validate(form)) return;
+      const honeypot = form.querySelector<HTMLInputElement>('[data-honeypot]');
+      const tooFast = (Date.now() - shownAt) / 1000 < MIN_SECONDS;
+      if (honeypot?.value || tooFast) {
+        // Most likely a bot: act as if sent, but send nothing
+        showSuccess('Thank you.', 'Your enquiry has been received.', false);
+        return;
+      }
+
+      if (form.dataset.endpoint) {
+        sending = true;
+        submit?.setAttribute('aria-disabled', 'true');
+        if (submitLabel) submitLabel.textContent = 'Sending...';
+        const ok = await sendToProvider(form, subject());
+        sending = false;
+        submit?.removeAttribute('aria-disabled');
+        if (submitLabel) submitLabel.textContent = 'Send enquiry';
+        if (ok) {
+          track('enquiry_submit', { form: formType, method: 'form' });
+          showSuccess('Thank you, your enquiry has been sent.', 'I will reply to the email address you gave. Please check your spam folder if you do not see a reply.', false);
+          form.reset();
+        } else {
+          track('enquiry_error', { form: formType });
+          if (sendError) {
+            sendError.querySelector<HTMLAnchorElement>('[data-error-wa]')?.setAttribute('href', waUrl());
+            success && (success.hidden = true);
+            sendError.hidden = false;
+            sendError.focus();
+          }
+        }
+        return;
+      }
+
+      // No form provider connected yet: hand the enquiry to WhatsApp
+      window.open(waUrl(), '_blank', 'noopener');
+      track('enquiry_submit', { form: formType, method: 'whatsapp' });
+      showSuccess(
+        'Almost done. Just press send in WhatsApp.',
+        'WhatsApp has opened in a new tab or in the app, with your enquiry ready to send. If nothing opened, use the button below.',
+        true,
+      );
     });
 
     form.querySelector('[data-send-email]')?.addEventListener('click', () => {
       if (!validate(form)) return;
-      const { text, wa, mail } = links();
-      window.location.href = mail;
-      showSuccess('email', text, wa, mail);
+      window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject())}&body=${encodeURIComponent(summaryText(form))}`;
+      track('enquiry_submit', { form: formType, method: 'email' });
+      showSuccess('Almost done. Just press send in your email app.', 'Your email app has opened with your enquiry ready to send.', true);
     });
 
     form.querySelector('[data-copy]')?.addEventListener('click', async () => {
       const label = form.querySelector('[data-copy-label]');
       try {
-        await navigator.clipboard.writeText(buildSummary(form));
+        await navigator.clipboard.writeText(summaryText(form));
         if (label) label.textContent = 'Copied';
       } catch {
-        if (label) label.textContent = 'Select the text below to copy it';
-        form.querySelector('details')?.setAttribute('open', '');
+        if (label) label.textContent = 'Copy not available';
       }
     });
   });

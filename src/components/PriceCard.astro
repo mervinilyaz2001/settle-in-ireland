@@ -21,7 +21,7 @@ const Heading = headingLevel;
 ---
 
 <div class:list={['card relative overflow-hidden', className]}>
-  <div aria-hidden="true" class="h-2 bg-gradient-to-r from-gold-500 via-gold-300 to-gold-500"></div>
+  <div aria-hidden="true" class="h-1 bg-gold-500"></div>
   <div class="p-6 sm:p-8">
     <p class="inline-flex items-center gap-2 rounded-full bg-gold-100 px-3 py-1 text-[0.8rem] font-bold text-gold-800">
       <Icon name="badge-euro" size={16} /> One clear, fixed fee
@@ -75,11 +75,11 @@ const Heading = headingLevel;
     </p>
 
     <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-      <WhatsAppButton message={waMessages.fees} label="Ask about the package" />
+      <WhatsAppButton message={waMessages.fees} label="Ask about the package" track="price_card" />
       {
         feesLink && (
-          <a href={url('/fees/')} class="text-link">
-            See full fee details <Icon name="arrow-right" size={18} />
+          <a href={url('/pricing/')} class="text-link">
+            See full pricing <Icon name="arrow-right" size={18} />
           </a>
         )
       }

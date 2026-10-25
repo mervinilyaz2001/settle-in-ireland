@@ -1,0 +1,96 @@
+---
+/**
+ * The person behind Settle in Ireland. Name, photo, bio, story and languages come from
+ * src/config/site.ts. Missing details show as highlighted placeholders, never invented text.
+ */
+import Icon from './Icon.astro';
+import LogoMark from './LogoMark.astro';
+import Text from './Text.astro';
+import { site } from '../config/site';
+import { isPlaceholder } from '../lib/format';
+import { url } from '../lib/url';
+
+interface Props {
+  /** Heading level: h2 on the homepage, h2 on the About page too, below the page title. */
+  showAboutLink?: boolean;
+}
+const { showAboutLink = true } = Astro.props;
+
+const initials = isPlaceholder(site.ownerName)
+  ? ''
+  : site.ownerName
+      .split(/\s+/)
+      .map((p) => p[0])
+      .join('')
+      .slice(0, 2)
+      .toUpperCase();
+
+const expectations = [
+  'You deal with one person, from your first message to your first weeks in Ireland.',
+  'You know what is included, and what is not, before you pay anything.',
+  'You get straight answers, including when something is outside what I can do.',
+  'I point you to the official sources, because rules and fees can change.',
+];
+---
+
+<div class="grid items-start gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+  <figure class="mx-auto w-full max-w-[340px] lg:mx-0">
+    {
+      site.ownerPhoto ? (
+        <img
+          src={url(site.ownerPhoto)}
+          alt={`${site.ownerName}, who runs Settle in Ireland`}
+          width="800"
+          height="1000"
+          loading="lazy"
+          decoding="async"
+          class="aspect-[4/5] w-full rounded-xl object-cover"
+        />
+      ) : (
+        <div class="grid aspect-[4/5] w-full place-items-center rounded-xl border border-dashed border-line-strong bg-brand-50">
+          <div class="text-center">
+            <span class="mx-auto grid h-28 w-28 place-items-center rounded-full bg-brand-900 font-display text-4xl font-bold text-white">
+              {initials || <LogoMark size={56} tone="dark" />}
+            </span>
+            <p class="mt-4 px-6 text-[0.88rem] text-muted">
+              <mark class="todo">[OWNER PHOTO: add a friendly portrait, see README]</mark>
+            </p>
+          </div>
+        </div>
+      )
+    }
+    <figcaption class="mt-4">
+      <p class="font-display text-[1.15rem] font-bold text-ink"><Text value={site.ownerName} /></p>
+      <p class="text-[0.95rem] text-muted">Runs {site.name}</p>
+      <ul class="mt-3 grid gap-1.5 text-[0.95rem]">
+        <li class="flex items-center gap-2"><Icon name="map-pin" size={18} class="shrink-0 text-accent-700" /> Based in <Text value={site.location} /></li>
+        <li class="flex items-start gap-2"><Icon name="message-square-text" size={18} class="mt-0.5 shrink-0 text-accent-700" /> <span>Speaks <Text value={site.languages} /></span></li>
+      </ul>
+    </figcaption>
+  </figure>
+
+  <div>
+    <p class="eyebrow">The person behind the service</p>
+    <h2 class="mt-3 text-[1.85rem] sm:text-[2.3rem]">Hi, I'm <Text value={site.ownerName} />.</h2>
+    <div class="prose-site mt-5 text-[1.03rem]">
+      <p>
+        I run {site.name}, an independent arrival and settling-in service. I help people moving to Ireland with the practical side of their first
+        weeks: planning the arrival, meeting them at the airport, finding somewhere safe to live, and understanding steps like IRP registration,
+        the PPS Number, a bank account and public transport.
+      </p>
+      <p><Text value={site.ownerBio} /></p>
+      <p><Text value={site.ownerStory} /></p>
+    </div>
+    <h3 class="mt-8 text-[1.15rem]">What you can expect from one point of contact</h3>
+    <ul class="check-list mt-4">
+      {expectations.map((e) => <li>{e}</li>)}
+    </ul>
+    {
+      showAboutLink && (
+        <a href={url('/about/')} class="text-link mt-4">
+          More about me <Icon name="arrow-right" size={18} />
+        </a>
+      )
+    }
+  </div>
+</div>

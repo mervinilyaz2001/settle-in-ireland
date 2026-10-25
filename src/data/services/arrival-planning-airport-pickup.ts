@@ -1,5 +1,6 @@
 import { site } from '../../config/site';
 import { official } from '../official';
+import { packagePrice } from '../../lib/format';
 import type { Service } from '../types';
 
 const service: Service = {
@@ -13,6 +14,7 @@ const service: Service = {
   overview:
     'Before the client travels, I check their flight details and share a simple arrival checklist on WhatsApp. On the day, I meet them at the airport, help them get to their accommodation and make sure they can call and message from day one.',
   feeLine: 'Pre-arrival check-in, an arrival checklist, a meeting at the airport and help getting to the accommodation.',
+  costs: `Included in the ${packagePrice} package. ${site.pickupTransportNote}`,
   metaTitle: 'Airport Pickup in Dublin for International Clients',
   metaDescription:
     'Arrival planning and airport pickup for international clients moving to Ireland. A named local contact meets you at the airport and helps you settle in.',

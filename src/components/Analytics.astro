@@ -1,13 +1,80 @@
 ---
 /**
- * Optional privacy-friendly analytics. Off by default (see analytics in src/config/site.ts).
- * Plausible and Umami do not set cookies, so no cookie banner is needed when one of them is on.
+ * Optional analytics. Everything is off by default (see analytics in src/config/site.ts).
+ * - Plausible and Umami are cookieless, so they load straight away and need no banner.
+ * - GA4 sets cookies, so a consent banner is shown and GA4 only loads after "Accept".
+ *   The choice is remembered on the visitor's device and can be changed from the footer.
  */
 import { site } from '../config/site';
+import { url } from '../lib/url';
 
-const { enabled, provider, siteId, scriptUrl } = site.analytics;
-const on = enabled && provider && siteId;
+const { ga4MeasurementId: ga4, provider, siteId, scriptUrl } = site.analytics;
 ---
 
-{on && provider === 'plausible' && <script is:inline defer data-domain={siteId} src={scriptUrl ?? 'https://plausible.io/js/script.js'} />}
-{on && provider === 'umami' && <script is:inline defer data-website-id={siteId} src={scriptUrl ?? 'https://cloud.umami.is/script.js'} />}
+{provider === 'plausible' && siteId && <script is:inline defer data-domain={siteId} src={scriptUrl ?? 'https://plausible.io/js/script.js'} />}
+{provider === 'umami' && siteId && <script is:inline defer data-website-id={siteId} src={scriptUrl ?? 'https://cloud.umami.is/script.js'} />}
+
+{
+  ga4 && (
+    <div
+      class="consent on-dark fixed inset-x-3 bottom-3 z-50 mx-auto max-w-xl rounded-xl bg-brand-950 p-4 text-white shadow-2xl sm:p-5"
+      role="region"
+      aria-label="Cookie choices"
+      hidden
+      data-consent-banner
+    >
+      <p class="text-[0.95rem]">
+        May I use Google Analytics cookies to see how this site is used? They are only set if you accept. You can change your choice at any time
+        from the footer. <a href={url('/privacy-policy/#cookies')} class="font-semibold underline">Privacy Policy</a>
+      </p>
+      <div class="mt-3 flex flex-wrap gap-2">
+        <button type="button" class="btn btn-sm bg-white text-brand-950" data-consent-choice="granted">Accept</button>
+        <button type="button" class="btn btn-sm btn-outline-light" data-consent-choice="denied">Reject</button>
+      </div>
+    </div>
+  )
+}
+
+{
+  ga4 && (
+    <script is:inline define:vars={{ ga4 }}>
+      (function () {
+        var KEY = 'sii-analytics-consent';
+        var banner = document.querySelector('[data-consent-banner]');
+        var loaded = false;
+        function read() {
+          try { return localStorage.getItem(KEY); } catch (e) { return null; }
+        }
+        function save(value) {
+          try { localStorage.setItem(KEY, value); } catch (e) {}
+        }
+        function load() {
+          if (loaded) return;
+          loaded = true;
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function () { window.dataLayer.push(arguments); };
+          window.gtag('js', new Date());
+          window.gtag('config', ga4);
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(ga4);
+          document.head.appendChild(s);
+        }
+        var choice = read();
+        if (choice === 'granted') load();
+        else if (!choice && banner) banner.hidden = false;
+        document.addEventListener('click', function (e) {
+          var t = e.target.closest && e.target.closest('[data-consent-choice], [data-cookie-settings]');
+          if (!t || !banner) return;
+          if (t.hasAttribute('data-cookie-settings')) { banner.hidden = false; return; }
+          var value = t.getAttribute('data-consent-choice');
+          var before = read();
+          save(value);
+          banner.hidden = true;
+          if (value === 'granted') load();
+          else if (before === 'granted') location.reload();
+        });
+      })();
+    </script>
+  )
+}

@@ -31,7 +31,7 @@ export function businessSchema() {
       price: site.fee.amount,
       priceCurrency: site.fee.currency,
       description: `${site.fee.title}, ${site.fee.perUnit}. ${site.fee.exclusions}`,
-      url: absoluteUrl('/fees/'),
+      url: absoluteUrl('/pricing/'),
     },
   };
 }
@@ -52,7 +52,7 @@ export function serviceSchema(service: Service) {
       price: site.fee.amount,
       priceCurrency: site.fee.currency,
       description: `Included in the ${site.fee.title} package, ${site.fee.perUnit}.`,
-      url: absoluteUrl('/fees/'),
+      url: absoluteUrl('/pricing/'),
     },
   };
 }

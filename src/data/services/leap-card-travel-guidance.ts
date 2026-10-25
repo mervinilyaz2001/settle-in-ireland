@@ -1,4 +1,5 @@
 import { official } from '../official';
+import { packagePrice } from '../../lib/format';
 import type { Service } from '../types';
 
 const service: Service = {
@@ -12,6 +13,7 @@ const service: Service = {
   overview:
     'The TFI Leap Card is a reusable travel card that usually costs less than paying cash fares. I explain the card types, how to top up and how to plan journeys on buses, the Luas, the DART and trains, so the client can travel with confidence from the first week.',
   feeLine: 'Getting a TFI Leap Card, understanding card types, journey planning and travel safety.',
+  costs: `Included in the ${packagePrice} package. The card, top-ups and fares are paid by you directly.`,
   metaTitle: 'TFI Leap Card and Travel Guidance | Settle in Ireland',
   metaDescription:
     'Help getting a TFI Leap Card and using public transport in Dublin and across Ireland: card types, journey planning, safety and everyday travel tips.',

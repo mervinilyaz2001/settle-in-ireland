@@ -1,4 +1,5 @@
 import { official } from '../official';
+import { packagePrice } from '../../lib/format';
 import type { Service } from '../types';
 
 const service: Service = {
@@ -12,6 +13,7 @@ const service: Service = {
   overview:
     'Opening a bank account is often one of the first tasks after arrival. I explain the difference between traditional banks and app-based banking options, the documents banks usually ask for and how to plan around the common proof of address problem. I do not recommend specific providers or handle money.',
   feeLine: 'Neutral guidance on banking options, typical documents and planning around proof of address.',
+  costs: `Included in the ${packagePrice} package. Any account or card fees are set by the bank or provider and paid by you.`,
   metaTitle: 'Bank Account Setup Help in Ireland | Settle in Ireland',
   metaDescription:
     'Neutral guidance on opening a bank account after moving to Ireland: typical documents, proof of address and how to compare your banking options.',

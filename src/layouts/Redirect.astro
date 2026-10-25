@@ -1,0 +1,31 @@
+---
+/**
+ * A tiny page that sends visitors from an old address to the new one. GitHub Pages cannot do
+ * server redirects, so this uses an instant refresh plus a canonical link for search engines.
+ */
+import { absoluteUrl, url } from '../lib/url';
+
+interface Props {
+  to: string;
+  title: string;
+}
+const { to, title } = Astro.props;
+const target = url(to);
+---
+
+<!doctype html>
+<html lang="en-IE">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{`${title} | Settle in Ireland`}</title>
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href={absoluteUrl(to)} />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+  </head>
+  <body style="font-family: system-ui, sans-serif; padding: 2rem;">
+    <h1>This page has moved</h1>
+    <p><a href={target}>Go to {title}</a></p>
+    <script is:inline define:vars={{ target }}>location.replace(target);</script>
+  </body>
+</html>

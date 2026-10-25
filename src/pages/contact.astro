@@ -1,51 +1,81 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import CTASection from '../components/CTASection.astro';
-import ContactOptions from '../components/ContactOptions.astro';
 import EnquiryForm from '../components/EnquiryForm.astro';
 import Icon from '../components/Icon.astro';
 import JsonLd from '../components/JsonLd.astro';
 import PageHero from '../components/PageHero.astro';
 import Text from '../components/Text.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
 import { site } from '../config/site';
+import { mailHref, telHref } from '../lib/format';
 import { businessSchema } from '../lib/schema';
-import { waMessages } from '../lib/whatsapp';
 import { url } from '../lib/url';
+import { waMessages } from '../lib/whatsapp';
+
+const next = [
+  'I read your enquiry and reply personally.',
+  'We talk through your plans and what is included.',
+  'You decide whether to go ahead. There is no cost until you do.',
+];
 ---
 
 <BaseLayout
-  title="Contact | Settle in Ireland"
-  description="Message Settle in Ireland on WhatsApp, call or email, or send an enquiry about arrival and settling-in support in Ireland."
+  title="Plan Your Arrival | Contact Settle in Ireland"
+  description="Message Settle in Ireland on WhatsApp, call, or send a short enquiry form to plan your arrival and first weeks in Ireland."
   whatsappMessage={waMessages.client}
 >
   <JsonLd slot="head" data={businessSchema()} />
 
   <PageHero
     eyebrow="Contact"
-    title="Get in touch"
-    intro={`WhatsApp is the quickest way to reach me. You can also call, email or send the enquiry form below. ${site.responseTime}`}
+    title="Plan your arrival"
+    intro="WhatsApp is the quickest way to reach me. You can also call, or send the short form below."
     crumbs={[{ label: 'Contact', href: '/contact/' }]}
   />
 
   <section class="section" aria-label="Contact options and enquiry form">
     <div class="container-site grid items-start gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
-      <div class="grid gap-5 lg:sticky lg:top-28">
-        <ContactOptions message={waMessages.client} />
-
-        <div class="card flex gap-4 p-5 sm:p-6">
-          <span class="icon-tile"><Icon name="map-pin" size={22} /></span>
-          <div>
-            <h2 class="text-[1.1rem]">Based in Ireland</h2>
-            <p class="mt-1"><Text value={site.location} /></p>
-            <p class="mt-1 text-[0.95rem] text-muted">{site.airportsCovered}</p>
+      <div class="grid gap-5 lg:sticky lg:top-24">
+        <div class="rounded-xl border border-line bg-white p-6 sm:p-7">
+          <h2 class="flex items-center gap-2.5 text-[1.35rem]"><Icon name="whatsapp" size={26} class="text-[#128c4a]" /> WhatsApp</h2>
+          <p class="mt-2">The quickest way to reach me, from anywhere in the world.{site.responseTime && ` ${site.responseTime}`}</p>
+          <div class="mt-5">
+            <WhatsAppButton message={waMessages.client} size="lg" block track="contact_card" />
           </div>
+          <a href={telHref()} class="mt-4 flex min-h-11 items-center gap-3 font-semibold text-ink hover:text-brand-700">
+            <Icon name="phone" size={20} class="text-accent-700" /> Call {site.phone}
+          </a>
+          {
+            site.emailActive && (
+              <a href={mailHref()} class="flex min-h-11 items-center gap-3 break-all font-semibold text-ink hover:text-brand-700">
+                <Icon name="mail" size={20} class="text-accent-700" /> {site.email}
+              </a>
+            )
+          }
         </div>
 
-        <a href={url('/partner-agencies/')} class="card card-hover flex items-center gap-4 border-brand-200 bg-brand-50 p-5 sm:p-6">
-          <span class="icon-tile !bg-brand-900 !text-white !shadow-none"><Icon name="building" size={22} /></span>
+        <div class="rounded-xl border border-line bg-white p-6">
+          <h2 class="text-[1.1rem]">What happens next</h2>
+          <ol class="mt-3 grid gap-2.5">
+            {
+              next.map((n, i) => (
+                <li class="flex gap-3">
+                  <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-50 font-display text-[0.85rem] font-bold text-brand-900">{i + 1}</span>
+                  <span>{n}</span>
+                </li>
+              ))
+            }
+          </ol>
+          <p class="mt-4 flex items-center gap-2 text-[0.95rem] text-muted">
+            <Icon name="map-pin" size={18} class="shrink-0" /> Based in <Text value={site.location} />
+          </p>
+        </div>
+
+        <a href={url('/agency-partnerships/')} class="card card-hover flex items-center gap-4 p-5">
+          <span class="icon-tile"><Icon name="building" size={22} /></span>
           <span class="min-w-0 flex-1">
-            <span class="block font-display font-bold text-ink">Are you an agency?</span>
-            <span class="mt-0.5 block text-[0.95rem]">See how the partnership works and send a partner agency enquiry.</span>
+            <span class="block font-display font-bold text-ink">Are you an education agency?</span>
+            <span class="mt-0.5 block text-[0.95rem]">Use the agency partnership form instead.</span>
           </span>
           <Icon name="arrow-right" size={20} class="shrink-0 text-brand-700" />
         </a>
@@ -55,7 +85,7 @@ import { url } from '../lib/url';
             <iframe
               title="Map showing where Settle in Ireland is based"
               src={site.mapEmbedUrl}
-              class="aspect-[4/3] w-full rounded-2xl border border-line"
+              class="aspect-[4/3] w-full rounded-xl border border-line"
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
             />
@@ -63,18 +93,9 @@ import { url } from '../lib/url';
         }
       </div>
 
-      <EnquiryForm
-        variant="client"
-        title="Client enquiry"
-        intro="Tell me a little about your plans and I will reply with the next steps."
-      />
+      <div id="enquiry" class="scroll-mt-24">
+        <EnquiryForm variant="individual" intro="A few details about your move help me reply with useful information." />
+      </div>
     </div>
   </section>
-
-  <CTASection
-    title="Prefer to just send a message?"
-    text={`That works too. Say hello on WhatsApp and tell me when you are arriving. ${site.responseTime}`}
-    message={waMessages.client}
-    secondary={{ label: 'How it works', href: '/how-it-works/' }}
-  />
 </BaseLayout>
