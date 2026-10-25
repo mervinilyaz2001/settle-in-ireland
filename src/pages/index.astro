@@ -105,8 +105,16 @@ const reasons = [
             Become a Partner Agency <Icon name="arrow-right" size={20} />
           </a>
         </div>
-        <a href={url('/contact/')} class="mt-4 inline-flex min-h-11 items-center gap-2 font-semibold text-white underline decoration-accent-300 decoration-2 underline-offset-4 hover:decoration-white">
-          I'm a client arriving in Ireland <Icon name="arrow-right" size={18} />
+        <a
+          href={url('/moving-to-ireland-on-your-own/')}
+          class="group mt-5 flex items-center gap-3 rounded-xl border border-white/20 bg-white/[0.07] px-4 py-3 text-white transition-colors hover:bg-white/[0.13] sm:inline-flex"
+        >
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-gold-500 text-brand-950"><Icon name="luggage" size={20} /></span>
+          <span class="min-w-0 flex-1">
+            <span class="block font-semibold">Moving to Ireland without an agency?</span>
+            <span class="block text-[0.92rem] text-brand-100">See how I can help you directly</span>
+          </span>
+          <Icon name="arrow-right" size={20} class="shrink-0 transition-transform group-hover:translate-x-1" />
         </a>
         <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-3 border-t border-white/15 pt-6 text-[0.97rem] font-medium text-brand-100" aria-label="Why choose Settle in Ireland">
           <li class="flex items-center gap-2"><Icon name="user-check" size={20} class="text-accent-300" /> Named local contact</li>
@@ -204,7 +212,10 @@ const reasons = [
           <div aria-hidden="true" class="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-accent-50"></div>
           <span class="icon-tile relative !bg-accent-600 !text-white !shadow-none"><Icon name="luggage" size={24} /></span>
           <h3 class="relative mt-5 text-[1.5rem]">For Clients</h3>
-          <p class="relative mt-2">Moving to Ireland is a big step. You will not be alone when you arrive, and your family will know someone reliable is there.</p>
+          <p class="relative mt-2">
+            Moving to Ireland is a big step. Whether an agency referred you or you are arranging everything yourself, you will not be alone when
+            you arrive, and your family will know someone reliable is there.
+          </p>
           <ul class="check-list mt-6">
             <li>Someone to meet you at the airport</li>
             <li>Help with IRP, PPSN, your bank account and transport</li>
@@ -212,10 +223,10 @@ const reasons = [
             <li>Practical tips for your first weeks in Ireland</li>
           </ul>
           <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-            <a href={url('/contact/')} class="btn btn-outline">
-              Plan my arrival <Icon name="arrow-right" size={20} />
+            <a href={url('/moving-to-ireland-on-your-own/')} class="btn bg-accent-700 text-white hover:bg-accent-800">
+              No agency? Start here <Icon name="arrow-right" size={20} />
             </a>
-            <a href={url('/how-it-works/')} class="text-link">How it works <Icon name="arrow-right" size={18} /></a>
+            <a href={url('/contact/')} class="text-link">Plan my arrival <Icon name="arrow-right" size={18} /></a>
           </div>
         </article>
       </div>
@@ -232,6 +243,19 @@ const reasons = [
         intro="A simple, clear split of responsibilities, so nothing falls between the cracks when your client lands."
       />
       <HandoverChain class="mt-10" />
+      <a
+        href={url('/moving-to-ireland-on-your-own/')}
+        class="group mt-6 flex flex-col gap-3 rounded-2xl border border-accent-300 bg-accent-50 p-5 text-ink transition-colors hover:bg-accent-100 sm:flex-row sm:items-center sm:gap-4"
+      >
+        <span class="icon-tile !bg-white"><Icon name="luggage" size={22} /></span>
+        <span class="flex-1">
+          <strong class="font-display">Arranging your move yourself, without an agency?</strong>
+          You can come to me directly. The support is the same.
+        </span>
+        <span class="inline-flex items-center gap-1.5 font-bold text-accent-700">
+          See how it works <Icon name="arrow-right" size={18} class="transition-transform group-hover:translate-x-1" />
+        </span>
+      </a>
     </div>
   </section>
 

@@ -10,6 +10,7 @@ export const waMessages = {
   general: site.whatsappMessages.general,
   partnerAgency: site.whatsappMessages.partnerAgency,
   client: site.whatsappMessages.client,
+  direct: site.whatsappMessages.direct,
   fees: site.whatsappMessages.fees.replace('{price}', packagePrice).replace('{package}', site.fee.title),
   service: (serviceName: string) => site.whatsappMessages.service.replace('{service}', serviceName),
 };

@@ -99,6 +99,8 @@ export const site = {
     partnerAgency:
       "Hi, I represent an education agency and I'm interested in becoming a partner agency with Settle in Ireland.",
     client: "Hi, I'm moving to Ireland soon and I'd like to know more about your arrival and settling-in support.",
+    /** For clients arranging their own move, without an agency. */
+    direct: "Hi, I'm moving to Ireland on my own, without an agency, and I'd like to know more about your support.",
     /** {service} is replaced with the service name on each service page. */
     service: "Hi, I'd like to know more about your {service} support.",
     /** {price} and {package} are filled in from the fee settings above. */

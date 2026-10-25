@@ -7,4 +7,4 @@ export const governmentDisclaimerText =
   'Settle in Ireland is an independent private service. It is not affiliated with, endorsed by or acting on behalf of any Irish government department or body, including Immigration Service Delivery (ISD), the Department of Justice, the Department of Social Protection, the Garda National Immigration Bureau or Transport for Ireland, or any college or university.';
 
 export const adviceDisclaimerText =
-  'I provide practical guidance and support only. I do not provide legal, immigration or visa advice, and I do not handle visa applications or college admissions, which the partner agency manages. I never sell, reserve or guarantee government appointments of any kind.';
+  'I provide practical guidance and support only. I do not provide legal, immigration or visa advice, and I do not handle visa applications or college admissions, which are managed by the partner agency or by the client directly. I never sell, reserve or guarantee government appointments of any kind.';

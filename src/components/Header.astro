@@ -18,6 +18,7 @@ const links = [
 const mobileLinks = [
   { label: 'Fees', href: '/fees/' },
   { label: 'Partner Agencies', href: '/partner-agencies/' },
+  { label: 'Moving Without an Agency', href: '/moving-to-ireland-on-your-own/' },
   { label: 'How It Works', href: '/how-it-works/' },
   { label: 'About', href: '/about/' },
   { label: 'FAQ', href: '/faq/' },
@@ -27,7 +28,7 @@ const inServices = path.startsWith(url('/services/'));
 const current = (href: string) => (path === url(href) ? 'page' : undefined);
 ---
 
-<header class="site-header sticky top-0 z-40 border-b border-transparent bg-canvas/95" data-site-header>
+<header class="site-header sticky top-0 z-40 border-b border-transparent bg-canvas" data-site-header>
   <div class="header-inner container-site flex items-center justify-between gap-4">
     <a href={url('/')} class="flex min-h-11 shrink-0 items-center rounded-lg" aria-label="Settle in Ireland, home">
       <Logo />
@@ -63,6 +64,9 @@ const current = (href: string) => (path === url(href) ? 'page' : undefined);
             </ul>
             <a href={url('/services/')} class="mt-2 flex min-h-11 items-center justify-between rounded-xl bg-brand-50 px-4 font-semibold text-brand-900 hover:bg-brand-100" aria-current={current('/services/')}>
               All services <Icon name="arrow-right" size={18} />
+            </a>
+            <a href={url('/moving-to-ireland-on-your-own/')} class="mt-1 flex min-h-11 items-center justify-between rounded-xl px-4 text-[0.93rem] font-semibold text-accent-700 hover:bg-accent-50" aria-current={current('/moving-to-ireland-on-your-own/')}>
+              Moving without an agency? <Icon name="arrow-right" size={18} />
             </a>
           </div>
         </li>
@@ -168,7 +172,7 @@ const current = (href: string) => (path === url(href) ? 'page' : undefined);
   }
   .site-header.is-scrolled {
     border-color: var(--color-line);
-    background-color: rgb(255 255 255 / 0.94);
+    background-color: #fff;
     box-shadow: 0 8px 24px -18px rgb(15 61 76 / 0.35);
   }
   .site-header.is-scrolled .header-inner {

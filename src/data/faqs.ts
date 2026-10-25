@@ -37,7 +37,7 @@ export const faqCategories: FAQCategory[] = [
       {
         id: 'need-agency',
         q: 'Do I need to be referred by an agency?',
-        a: '<p>No. Many clients are referred by a partner agency, but you are welcome to contact me directly. Send me a message on WhatsApp or use the <a href="/contact/">enquiry form</a>.</p>',
+        a: '<p>No. Many clients are referred by a partner agency, but you are welcome to contact me directly. See <a href="/moving-to-ireland-on-your-own/">Moving to Ireland on your own</a> for how it works, or send me a message on WhatsApp.</p>',
       },
       {
         id: 'countries',
@@ -58,7 +58,7 @@ export const faqCategories: FAQCategory[] = [
       {
         id: 'visa-admissions',
         q: 'Do you help with visa applications or college admissions?',
-        a: '<p>No. College admissions and visa applications are handled by the partner agency in the client\'s home country. I support the client with the practical steps once they are travelling to Ireland and after they arrive.</p>',
+        a: '<p>No. College admissions and visa applications are handled by the partner agency in the client\'s home country, or by the client directly if they are arranging their own move. I support the client with the practical steps once they are travelling to Ireland and after they arrive.</p>',
       },
       {
         id: 'legal-advice',

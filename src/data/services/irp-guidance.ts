@@ -97,7 +97,7 @@ const service: Service = {
   notIncluded: [
     'The official registration fee, which the client pays directly.',
     'Booking, reserving or guaranteeing appointments.',
-    'Legal or immigration advice, or visa applications. The partner agency handles the visa application.',
+    'Legal or immigration advice, or visa applications. The partner agency, or the client if they are arranging their own move, handles any visa application.',
     "Any decision about the client's immigration permission. Only the official authorities make these decisions.",
   ],
   resources: [
