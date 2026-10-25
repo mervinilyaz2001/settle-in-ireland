@@ -87,10 +87,11 @@ Work through this before the site goes live.
 
 **Must do**
 
-- [ ] `whatsappNumber`: replace the placeholder `353000000000` with the real WhatsApp number.
-- [ ] `phone`: replace `+353 00 000 0000`.
+- [x] `whatsappNumber`: set to 353899741681.
+- [x] `phone`: set to +353 89 974 1681.
 - [ ] `email`: confirm `hello@settleinireland.com` is set up and receiving mail.
-- [ ] `ownerName`, `ownerBio`, `ownerStory`: write these in your own words (About page).
+- [x] `ownerName`: Mizan Mohammed.
+- [ ] `ownerBio`, `ownerStory`: write these in your own words (About page).
 - [ ] `languages`: e.g. "English and Bengali".
 - [ ] `fee.paymentMethods`: how clients pay, and that receipts are given.
 - [ ] `fee.cancellationPolicy`: check the draft wording, remove `[OWNER TO CONFIRM]`, and make sure it matches the Terms.

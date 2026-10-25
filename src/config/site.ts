@@ -40,7 +40,7 @@ export const site = {
   noindex: true,
 
   /* ---------- The owner (About page, Privacy Policy and Terms) ---------- */
-  ownerName: '[OWNER NAME]',
+  ownerName: 'Mizan Mohammed',
   /** Two or three sentences in the first person, for the About page. */
   ownerBio: '[SHORT FIRST-PERSON BIO]',
   /** Path to a photo in /public once there is one, for example '/images/owner.webp'. null shows initials instead. */
@@ -52,9 +52,9 @@ export const site = {
 
   /* ---------- Contact ---------- */
   /** International format with no + sign and no spaces, for example 353871234567. */
-  whatsappNumber: '353000000000',
+  whatsappNumber: '353899741681',
   /** Shown on the site exactly as written here. Used for the "Call" links. */
-  phone: '+353 00 000 0000',
+  phone: '+353 89 974 1681',
   email: 'hello@settleinireland.com',
   responseTime: 'I usually reply within 24 hours.',
 
