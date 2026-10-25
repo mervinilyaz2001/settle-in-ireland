@@ -73,7 +73,7 @@ const reasons = [
 
 <BaseLayout
   title="Arrival Support in Ireland | Settle in Ireland"
-  description={`Your local contact in Ireland. Airport pickup, accommodation help, IRP and PPSN guidance for international clients and partner agencies. ${packagePrice} per client.`}
+  description={`Moving to Ireland? A named local contact for airport pickup, accommodation help, IRP and PPSN guidance, on your own or via an agency. ${packagePrice} per client.`}
 >
   <JsonLd slot="head" data={[businessSchema(), websiteSchema]} />
 
@@ -92,33 +92,29 @@ const reasons = [
       <div>
         <p class="eyebrow eyebrow-light">{site.tagline}</p>
         <h1 id="hero-heading" class="mt-4 text-[2.5rem] leading-[1.06] !text-white sm:text-6xl lg:text-[4.2rem]">
-          A Local Contact for <span class="text-gold-300">Your Clients</span>
+          Moving to Ireland? Have someone here <span class="text-gold-300">from day one.</span>
         </h1>
         <p class="lead mt-6 max-w-[38rem] text-brand-100">
-          I provide personal arrival and settling-in support for clients referred by partner education agencies. Your agency continues to
-          manage college admissions and visa applications, while I support your clients with the practical steps that follow, giving them a
-          named local contact in Ireland and your agency a reliable handover.
+          Coming from outside Europe, on your own or through an agency? Your first weeks in Ireland bring a lot to sort out. I meet you at the
+          airport, help you find somewhere safe to live, and guide you through IRP registration, your PPS Number, a bank account and getting
+          around. One named person to message on WhatsApp, from before you fly.
         </p>
         <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-          <WhatsAppButton size="lg" />
-          <a href={url('/partner-agencies/')} class="btn btn-outline-light btn-lg">
-            Become a Partner Agency <Icon name="arrow-right" size={20} />
+          <WhatsAppButton size="lg" label="Message me on WhatsApp" />
+          <a href={url('/moving-to-ireland-on-your-own/')} class="btn btn-outline-light btn-lg">
+            Plan my move <Icon name="arrow-right" size={20} />
           </a>
         </div>
         <a
-          href={url('/moving-to-ireland-on-your-own/')}
-          class="group mt-5 flex items-center gap-3 rounded-xl border border-white/20 bg-white/[0.07] px-4 py-3 text-white transition-colors hover:bg-white/[0.13] sm:inline-flex"
+          href={url('/partner-agencies/')}
+          class="mt-4 inline-flex min-h-11 items-center gap-2 font-semibold text-white underline decoration-accent-300 decoration-2 underline-offset-4 hover:decoration-white"
         >
-          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-gold-500 text-brand-950"><Icon name="luggage" size={20} /></span>
-          <span class="min-w-0 flex-1">
-            <span class="block font-semibold">Moving to Ireland without an agency?</span>
-            <span class="block text-[0.92rem] text-brand-100">See how I can help you directly</span>
-          </span>
-          <Icon name="arrow-right" size={20} class="shrink-0 transition-transform group-hover:translate-x-1" />
+          Education agency? Partner with me <Icon name="arrow-right" size={18} />
         </a>
         <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-3 border-t border-white/15 pt-6 text-[0.97rem] font-medium text-brand-100" aria-label="Why choose Settle in Ireland">
-          <li class="flex items-center gap-2"><Icon name="user-check" size={20} class="text-accent-300" /> Named local contact</li>
-          <li class="flex items-center gap-2"><Icon name="badge-euro" size={20} class="text-gold-300" /> Clear fixed fee</li>
+          <li class="flex items-center gap-2"><Icon name="plane-landing" size={20} class="text-accent-300" /> Met at the airport</li>
+          <li class="flex items-center gap-2"><Icon name="badge-euro" size={20} class="text-gold-300" /> {packagePrice}, one clear fee</li>
+          <li class="flex items-center gap-2"><Icon name="user-check" size={20} class="text-accent-300" /> One named contact</li>
           <li class="flex items-center gap-2"><Icon name="shield-check" size={20} class="text-accent-300" /> Independent service</li>
         </ul>
       </div>
@@ -175,8 +171,8 @@ const reasons = [
           Based in Ireland
         </div>
         <div class="absolute -bottom-5 -right-2 flex items-center gap-2 rounded-full bg-white px-3.5 py-2 text-[0.85rem] font-semibold text-ink shadow-lg sm:-right-6">
-          <span class="grid h-6 w-6 place-items-center rounded-full bg-gold-100 text-gold-800"><Icon name="building" size={14} /></span>
-          Partner agency kept updated
+          <span class="grid h-6 w-6 place-items-center rounded-full bg-gold-100 text-gold-800"><Icon name="users" size={14} /></span>
+          Family kept updated
         </div>
       </div>
     </div>
@@ -189,26 +185,11 @@ const reasons = [
         id="paths-heading"
         eyebrow="Who I help"
         title="Support on both sides of the journey"
-        intro="Partner agencies get a reliable handover in Ireland. Their clients get a real person to meet them, guide them and answer their questions."
+        intro="Clients get a real person in Ireland to meet them, guide them and answer their questions. Partner agencies get a reliable handover."
         align="center"
       />
       <div class="mt-12 grid gap-5 md:grid-cols-2 lg:gap-6">
         <article class="card relative overflow-hidden p-7 sm:p-9" data-reveal>
-          <div aria-hidden="true" class="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-brand-50"></div>
-          <span class="icon-tile relative !bg-brand-900 !text-white !shadow-none"><Icon name="building" size={24} /></span>
-          <h3 class="relative mt-5 text-[1.5rem]">For Partner Agencies</h3>
-          <p class="relative mt-2">A reliable, professional handover partner on the ground in Ireland, so your clients are looked after and your reputation is protected.</p>
-          <ul class="check-list mt-6">
-            <li>A reliable handover once your client is ready to travel</li>
-            <li>Your clients are met and looked after</li>
-            <li>Clear, fixed pricing: {packagePrice} {site.fee.perUnit}</li>
-            <li>Regular updates at agreed milestones</li>
-          </ul>
-          <a href={url('/partner-agencies/')} class="btn btn-primary mt-8">
-            Become a Partner Agency <Icon name="arrow-right" size={20} />
-          </a>
-        </article>
-        <article class="card relative overflow-hidden p-7 sm:p-9" data-reveal style="--reveal-delay:120ms">
           <div aria-hidden="true" class="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-accent-50"></div>
           <span class="icon-tile relative !bg-accent-600 !text-white !shadow-none"><Icon name="luggage" size={24} /></span>
           <h3 class="relative mt-5 text-[1.5rem]">For Clients</h3>
@@ -228,6 +209,21 @@ const reasons = [
             </a>
             <a href={url('/contact/')} class="text-link">Plan my arrival <Icon name="arrow-right" size={18} /></a>
           </div>
+        </article>
+        <article class="card relative overflow-hidden p-7 sm:p-9" data-reveal style="--reveal-delay:120ms">
+          <div aria-hidden="true" class="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-brand-50"></div>
+          <span class="icon-tile relative !bg-brand-900 !text-white !shadow-none"><Icon name="building" size={24} /></span>
+          <h3 class="relative mt-5 text-[1.5rem]">For Partner Agencies</h3>
+          <p class="relative mt-2">A reliable, professional handover partner on the ground in Ireland, so your clients are looked after and your reputation is protected.</p>
+          <ul class="check-list mt-6">
+            <li>A reliable handover once your client is ready to travel</li>
+            <li>Your clients are met and looked after</li>
+            <li>Clear, fixed pricing: {packagePrice} {site.fee.perUnit}</li>
+            <li>Regular updates at agreed milestones</li>
+          </ul>
+          <a href={url('/partner-agencies/')} class="btn btn-primary mt-8">
+            Become a Partner Agency <Icon name="arrow-right" size={20} />
+          </a>
         </article>
       </div>
     </div>
@@ -396,10 +392,10 @@ const reasons = [
   <!-- 10. Final call to action -->
   <div class="pt-16 lg:pt-24">
     <CTASection
-      title="Have a client arriving in Ireland soon?"
-      text={`Send me a message on WhatsApp and I will explain how I can support them from arrival day onwards. ${site.responseTime}`}
-      message={waMessages.partnerAgency}
-      secondary={{ label: 'Become a Partner Agency', href: '/partner-agencies/' }}
+      title="Moving to Ireland soon? Let's talk."
+      text={`Send me a message on WhatsApp with your plans and I will explain how I can help, from before you fly to your first weeks here. ${site.responseTime}`}
+      message={waMessages.client}
+      secondary={{ label: 'For partner agencies', href: '/partner-agencies/' }}
     />
   </div>
 </BaseLayout>
