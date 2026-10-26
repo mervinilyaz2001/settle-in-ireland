@@ -1,5 +1,4 @@
 import { official } from '../official';
-import { packagePrice } from '../../lib/format';
 import type { Service } from '../types';
 
 const service: Service = {
@@ -9,16 +8,16 @@ const service: Service = {
   navName: 'Bank Account Setup',
   icon: 'wallet',
   summary:
-    'I help the client understand their banking options, the documents banks usually ask for and how to plan around proof of address.',
+    'We help the client understand their banking options, the documents banks usually ask for and how to plan around proof of address.',
   overview:
-    'Opening a bank account is often one of the first tasks after arrival. I explain the difference between traditional banks and app-based banking options, the documents banks usually ask for and how to plan around the common proof of address problem. I do not recommend specific providers or handle money.',
+    'Opening a bank account is often one of the first tasks after arrival. We explain the difference between traditional banks and app-based banking options, the documents banks usually ask for and how to plan around the common proof of address problem. We do not recommend specific providers or handle money.',
   feeLine: 'Neutral guidance on banking options, typical documents and planning around proof of address.',
-  costs: `Included in the ${packagePrice} package. Any account or card fees are set by the bank or provider and paid by you.`,
+  costs: `Included in our Moving on Your Own package. Any account or card fees are set by the bank or provider and paid by you.`,
   metaTitle: 'Bank Account Setup Help in Ireland | Settle in Ireland',
   metaDescription:
     'Neutral guidance on opening a bank account after moving to Ireland: typical documents, proof of address and how to compare your banking options.',
   intro:
-    'A bank account makes daily life in Ireland much easier, from paying rent to receiving wages. I help the client understand their options and prepare the documents banks usually ask for. This is practical guidance only. I am not a financial advisor and I do not recommend any specific provider.',
+    'A bank account makes daily life in Ireland much easier, from paying rent to receiving wages. We help the client understand their options and prepare the documents banks usually ask for. This is practical guidance only. We are not a financial advisor and we do not recommend any specific provider.',
   covers: [
     'Explaining the main types of banking options: traditional banks with branches, and app-based or digital banking options.',
     'Explaining what to compare, such as monthly fees, card fees, branch access and the cost of sending money abroad.',
@@ -30,7 +29,7 @@ const service: Service = {
   steps: [
     {
       title: 'Understand the options',
-      text: 'I explain the general types of accounts and what to compare.',
+      text: 'We explain the general types of accounts and what to compare.',
     },
     {
       title: 'Check the requirements',
@@ -38,7 +37,7 @@ const service: Service = {
     },
     {
       title: 'Prepare documents',
-      text: 'I help the client gather identification, proof of address and any other documents the provider asks for.',
+      text: 'We help the client gather identification, proof of address and any other documents the provider asks for.',
     },
     {
       title: 'Apply',
@@ -46,7 +45,7 @@ const service: Service = {
     },
     {
       title: 'Bank safely',
-      text: 'I explain safe banking habits, such as never sharing codes or passwords with anyone.',
+      text: 'We explain safe banking habits, such as never sharing codes or passwords with anyone.',
     },
   ],
   prepare: [
@@ -83,7 +82,7 @@ const service: Service = {
   ],
   notIncluded: [
     'Recommending or endorsing a specific bank or provider.',
-    'Financial advice of any kind. I am not a financial advisor.',
+    'Financial advice of any kind. We are not a financial advisor.',
     "Handling the client's money, bank details, passwords or cards.",
     'A guarantee that an account will be approved. Each provider makes its own decisions.',
     'Bank fees and charges.',
@@ -103,7 +102,7 @@ const service: Service = {
   faqs: [
     {
       q: 'Which bank should I choose?',
-      a: '<p>I cannot recommend a specific provider, and I am not a financial advisor. I explain what to compare, such as fees, branch access and app features, so you can choose what suits you. The CCPC website has neutral comparison information.</p>',
+      a: '<p>We cannot recommend a specific provider, and we are not a financial advisor. We explain what to compare, such as fees, branch access and app features, so you can choose what suits you. The CCPC website has neutral comparison information.</p>',
     },
     {
       q: 'Can I open an account before I arrive?',
@@ -111,7 +110,7 @@ const service: Service = {
     },
     {
       q: 'Will you need my bank details?',
-      a: '<p>No. I never ask for passwords, PINs, security codes or card details, and I never handle clients\' money.</p>',
+      a: '<p>No. We never ask for passwords, PINs, security codes or card details, and we never handle clients\' money.</p>',
     },
   ],
 };

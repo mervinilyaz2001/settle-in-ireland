@@ -8,7 +8,7 @@ publishing. "Not verified" means it could not be tested without an account or de
 | Area | What was checked |
 |---|---|
 | Build | `npm run build`: 22 pages (18 content pages, 4 redirects), no errors or warnings |
-| Content checks | `npm run check:content`: no em or en dashes; one H1 per page; titles under 60 and descriptions under 160 characters; footer disclaimer on every page; full disclaimer on IRP, PPSN, Pricing, FAQ and Terms; every WhatsApp link uses +353 89 974 1681 with a pre-filled message and opens in a new tab; floating WhatsApp button on every page; €350, €150 and €200 consistent on Home, Pricing, Agency Partnerships and Terms; no "null" or "undefined" text; email hidden while `emailActive` is false; every internal link and anchor resolves |
+| Content checks | `npm run check:content`: no em or en dashes; one H1 per page; titles under 60 and descriptions under 160 characters; footer disclaimer on every page; full disclaimer on IRP, PPSN, Pricing, FAQ and Terms; every WhatsApp link uses the configured number (now +353 89 974 1613) with a pre-filled message and opens in a new tab; floating WhatsApp button on every page; €350, €150 and €200 consistent on Home, Pricing, Agency Partnerships and Terms; no "null" or "undefined" text; email hidden while `emailActive` is false; every internal link and anchor resolves |
 | Spacing | No missing spaces before or after links on any page |
 | Layout | No sideways scrolling on any of the 18 pages at 360, 390, 768, 1024 and 1440 px |
 | Visual review | Home, Individual Support, Agency Partnerships, Pricing and Contact checked at phone and desktop widths |

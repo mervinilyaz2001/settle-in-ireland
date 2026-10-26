@@ -1,6 +1,6 @@
 ---
 /**
- * AGENCY PARTNERSHIPS
+ * EDUCATION AGENCIES (agency partnerships)
  * The B2B page for education agencies. Partnership details the owner has not confirmed yet
  * (capacity, payment, reporting, escalation, coverage) come from src/config/site.ts and show as
  * highlighted placeholders. No named partners are shown.
@@ -21,7 +21,7 @@ import { url } from '../lib/url';
 import { waMessages } from '../lib/whatsapp';
 
 const value = [
-  { icon: 'user-check', title: 'A local contact for referred students', text: 'Each student has one named person in Ireland to message for help.' },
+  { icon: 'user-check', title: 'One-to-one support for every student', text: 'Each student you refer gets one-to-one help from our team in Ireland.' },
   { icon: 'list-checks', title: 'A defined support package', text: 'The same seven services for every student, so you know what they receive.' },
   { icon: 'clipboard-list', title: 'Transparent scope', text: 'What is included, what is not and which costs are separate are written down from the start.' },
   { icon: 'route', title: 'A consistent referral process', text: 'The same steps for every referral, from consent to arrival.' },
@@ -32,8 +32,8 @@ const process = [
   { title: 'Agency enquiry', text: 'Send the form below or a WhatsApp message with a little about your agency.' },
   { title: 'Introductory discussion', text: 'A short call or WhatsApp conversation about your students, intakes and expectations.' },
   { title: 'Scope and pricing agreement', text: 'We agree the services, the price, how payment works and how we keep in touch.' },
-  { title: 'Student consent and referral', text: "With the student's consent, you share their details and arrival plans with me." },
-  { title: 'Service delivery', text: 'I contact the student before departure and support them through arrival and their first weeks.' },
+  { title: 'Student consent and referral', text: "With the student's consent, you share their details and arrival plans with us." },
+  { title: 'Service delivery', text: 'We contact the student before departure and support them through arrival and their first weeks.' },
   { title: 'Agreed follow-up', text: 'You receive updates at the milestones we agreed.' },
 ];
 
@@ -51,15 +51,15 @@ const details = [
 ---
 
 <BaseLayout
-  title="Education Agency Partnerships | Settle in Ireland"
-  description="Give the students you refer a local point of contact in Ireland, with a defined support package, transparent scope and an agreed referral process."
+  title="Arrival Support for Education Agencies | Settle in Ireland"
+  description="For education agencies sending students to Ireland: one-to-one help for each student with arrival, accommodation, IRP and PPSN. Agencies from any country."
   whatsappMessage={waMessages.partnerAgency}
 >
   <PageHero
-    eyebrow="Agency partnerships"
+    eyebrow="For education agencies"
     title="Your students have arrived. We've got them from here."
-    intro="Give your students a local point of contact in Ireland for practical arrival and settling-in support, with a clearly defined process and agreed responsibilities."
-    crumbs={[{ label: 'Agency Partnerships', href: '/agency-partnerships/' }]}
+    intro="Give the students you send to Ireland one-to-one support from our team with the practical steps after they land, with a clearly defined process and agreed responsibilities."
+    crumbs={[{ label: 'Education Agencies', href: '/agency-partnerships/' }]}
   >
     <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
       <a href="#agency-enquiry" class="btn btn-primary btn-lg">Start a partnership enquiry</a>
@@ -74,11 +74,11 @@ const details = [
         </li>
         <li class="flex gap-3">
           <span class="icon-tile !h-10 !w-10 !rounded-xl"><Icon name="user-check" size={20} /></span>
-          <span><strong class="block text-ink">One named contact</strong> For your students and your team.</span>
+          <span><strong class="block text-ink">One-to-one support</strong> For every student, and one point of contact for your team.</span>
         </li>
         <li class="flex gap-3">
           <span class="icon-tile !h-10 !w-10 !rounded-xl"><Icon name="globe" size={20} /></span>
-          <span><strong class="block text-ink">Agencies from any country</strong> Already working with partner agencies in Bangladesh.</span>
+          <span><strong class="block text-ink">Agencies from any country</strong> Already working with partner agencies in South Asia.</span>
         </li>
       </ul>
     </div>
@@ -91,7 +91,7 @@ const details = [
         id="value-heading"
         eyebrow="What your agency gets"
         title="A reliable handover in Ireland"
-        intro="I provide personal arrival and settling-in support for clients referred by partner education agencies. Your agency continues to manage college admissions and visa applications, while I support your students with the practical steps that follow."
+        intro="We provide one-to-one arrival and settling-in support for students referred by partner education agencies. Your agency continues to manage college admissions and visa applications, while we support your students with the practical steps that follow."
       />
       <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {
@@ -136,7 +136,7 @@ const details = [
       <SectionHeading
         id="scope-heading"
         eyebrow="Clear responsibilities"
-        title="What your agency handles, and what I handle"
+        title="What your agency handles, and what we handle"
         intro="A clean split, so your students always know who to ask."
       />
       <div class="mt-10 grid overflow-hidden rounded-xl border border-line bg-white md:grid-cols-2">
@@ -175,7 +175,7 @@ const details = [
         </div>
       </div>
       <p class="mt-6 max-w-3xl text-[0.97rem]">
-        I provide practical guidance and support only. I do not give legal, immigration or visa advice, and I do not guarantee student outcomes,
+        We provide practical guidance and support only. We do not give legal, immigration or visa advice, and we do not guarantee student outcomes,
         appointments or approvals, which stay with the relevant authorities.
       </p>
     </div>
@@ -212,7 +212,7 @@ const details = [
             <Icon name="lock" size={20} class="text-brand-700" /> Data and consent
           </h3>
           <p class="mt-3 text-[0.97rem]">
-            Student details are shared with me only with the student's consent, and used only to provide the service.
+            Student details are shared with us only with the student's consent, and used only to provide the service.
             <a href={url('/privacy-policy/')} class="font-semibold text-accent-700 underline">Privacy Policy</a>
           </p>
         </div>
@@ -227,7 +227,7 @@ const details = [
         <SectionHeading
           eyebrow="Get in touch"
           title="Start a partnership enquiry"
-          intro="Tell me about your agency and I will reply to arrange an introductory discussion. Prefer WhatsApp? Message me directly."
+          intro="Tell us about your agency and we will reply to arrange an introductory discussion. Prefer WhatsApp? Message us directly."
         />
         <div class="mt-6">
           <WhatsAppButton message={waMessages.partnerAgency} track="agency_form_side" lead="agency" />
@@ -239,9 +239,9 @@ const details = [
 
   <CTASection
     title="Have students moving to Ireland?"
-    text="Send me a message on WhatsApp and we can arrange an introductory discussion."
+    text="Send us a message on WhatsApp and we can arrange an introductory discussion."
     message={waMessages.partnerAgency}
-    secondary={{ label: 'See the services', href: '/individual-support/' }}
+    secondary={{ label: 'See the services', href: '/moving-to-ireland-on-your-own/' }}
     lead="agency"
   />
 </BaseLayout>

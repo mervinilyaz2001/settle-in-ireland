@@ -1,0 +1,82 @@
+---
+/**
+ * The four main services, in this order: education agencies, moving on your own, IRP and PPSN.
+ * Used on the homepage and the About page. No prices here: the package price is only shown on
+ * the Moving on Your Own and Education Agencies pages.
+ */
+import Icon from './Icon.astro';
+import { getService, serviceUrl } from '../data/services';
+import { url } from '../lib/url';
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+
+const irp = getService('irp-application-assistance');
+const ppsn = getService('ppsn-application-assistance');
+
+const offers = [
+  {
+    icon: 'building',
+    label: 'For education agencies',
+    title: 'Education Agencies',
+    text: 'Sending students to Ireland? We give every student you refer one-to-one support with the practical steps after they land.',
+    points: ['One point of contact for each student', 'Updates for your team at agreed milestones', 'Partner agencies from any country'],
+    href: url('/agency-partnerships/'),
+    cta: 'Agency partnerships',
+  },
+  {
+    icon: 'graduation-cap',
+    label: 'For students',
+    title: 'Moving on Your Own',
+    text: 'Applied to study in Ireland without an agency? We help you prepare before you fly and get set up in your first weeks.',
+    points: ['Arrival plan and accommodation checks', 'IRP, PPSN, bank account and Leap Card', 'One-to-one support from day one'],
+    href: url('/moving-to-ireland-on-your-own/'),
+    cta: 'See the package',
+  },
+  {
+    icon: irp.icon,
+    label: 'Available on its own',
+    title: 'IRP Registration and Renewal for Students',
+    text: 'Help preparing for your first IRP registration, or renewing your Irish Residence Permit as a student, step by step.',
+    points: ['First-time IRP registration', 'Online IRP renewal', 'Document checklists and official links'],
+    href: serviceUrl(irp),
+    cta: 'IRP assistance',
+  },
+  {
+    icon: ppsn.icon,
+    label: 'Available on its own',
+    title: 'PPSN Application Assistance',
+    text: 'Help applying for your Personal Public Service Number (PPS Number), from the documents to proof of address.',
+    points: ['Check if and when you need one', 'Documents and proof of address', 'Help with letters after you apply'],
+    href: serviceUrl(ppsn),
+    cta: 'PPSN assistance',
+  },
+];
+---
+
+<ul class:list={['grid gap-5 sm:grid-cols-2 xl:grid-cols-4', className]}>
+  {
+    offers.map((o, i) => (
+      <li data-reveal style={`--reveal-delay:${i * 90}ms`}>
+        <article class="card card-hover group relative flex h-full flex-col p-6">
+          <span class="icon-tile self-start">
+            <Icon name={o.icon} size={24} />
+          </span>
+          <p class="mt-5 text-[0.75rem] font-bold uppercase tracking-[0.1em] text-accent-700">{o.label}</p>
+          <h3 class="mt-1.5 text-[1.2rem] leading-snug">{o.title}</h3>
+          <p class="mt-2 text-[0.97rem]">{o.text}</p>
+          <ul class="check-list mt-4 text-[0.95rem]">
+            {o.points.map((p) => (
+              <li>{p}</li>
+            ))}
+          </ul>
+          <a href={o.href} class="text-link mt-auto self-start pt-5 after:absolute after:inset-0 after:rounded-[inherit] after:content-['']">
+            {o.cta} <Icon name="arrow-right" size={18} />
+          </a>
+        </article>
+      </li>
+    ))
+  }
+</ul>

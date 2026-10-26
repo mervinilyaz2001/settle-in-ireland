@@ -17,6 +17,15 @@ export interface Resource {
 
 export interface Service {
   slug: string;
+  /**
+   * Set for a service that is also offered on its own, with its own page at this address
+   * (for example '/irp-application-assistance/'). Other services live at /services/{slug}/.
+   */
+  path?: string;
+  /** The page heading, when it should be longer than the name. */
+  title?: string;
+  /** Pre-filled WhatsApp message for this service's buttons. */
+  waMessage?: string;
   order: number;
   name: string;
   /** Shorter name for the menu and footer. */

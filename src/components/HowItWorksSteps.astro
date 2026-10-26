@@ -1,30 +1,27 @@
 ---
 /** The four-step process, used on the homepage and the How It Works page. */
-import { site } from '../config/site';
-import { formatPrice } from '../lib/format';
 
 interface Props {
   class?: string;
 }
 const { class: className } = Astro.props;
-const [first] = site.fee.payments;
 
 const steps = [
   {
-    title: 'Tell me about your move',
+    title: 'Tell us about your move',
     text: 'Send a message on WhatsApp or fill in the short enquiry form: when you plan to arrive, where you are going and what help you need.',
   },
   {
     title: 'Discuss your needs and confirm what is included',
-    text: 'We talk through your plans. I explain what I can help with, what I cannot, and which costs are separate.',
+    text: 'We talk through your plans. We explain what we can help with, what we cannot, and which costs are separate.',
   },
   {
     title: 'Agree on the service and payment terms',
-    text: `If you decide to go ahead, we agree the plan and the payment schedule. The service starts with the first payment of ${formatPrice(first.amount)}. You pay nothing before that.`,
+    text: 'If you decide to go ahead, we agree the plan and the payment schedule. The service starts with the first payment. You pay nothing before that.',
   },
   {
     title: 'Receive practical support according to the agreed plan',
-    text: 'I help you prepare before you travel and guide you through getting set up in your first weeks, by WhatsApp and phone, as agreed.',
+    text: 'One-to-one support from our team before you travel and in your first weeks, by WhatsApp and phone, and in person if needed.',
   },
 ];
 ---

@@ -13,7 +13,7 @@ import { url } from '../lib/url';
 import { waMessages } from '../lib/whatsapp';
 
 const next = [
-  'I read your enquiry and reply personally.',
+  'We read your enquiry and reply personally.',
   'We talk through your plans and what is included.',
   'You decide whether to go ahead. There is no cost until you do.',
 ];
@@ -29,7 +29,7 @@ const next = [
   <PageHero
     eyebrow="Contact"
     title="Plan your arrival"
-    intro="WhatsApp is the quickest way to reach me. You can also call, or send the short form below."
+    intro="WhatsApp is the quickest way to reach us. You can also call, or send the short form below."
     crumbs={[{ label: 'Contact', href: '/contact/' }]}
   />
 
@@ -38,7 +38,7 @@ const next = [
       <div class="grid gap-5 lg:sticky lg:top-24">
         <div class="rounded-xl border border-line bg-white p-6 sm:p-7">
           <h2 class="flex items-center gap-2.5 text-[1.35rem]"><Icon name="whatsapp" size={26} class="text-[#128c4a]" /> WhatsApp</h2>
-          <p class="mt-2">The quickest way to reach me, from anywhere in the world.{site.responseTime && ` ${site.responseTime}`}</p>
+          <p class="mt-2">The quickest way to reach us, from anywhere in the world.{site.responseTime && ` ${site.responseTime}`}</p>
           <div class="mt-5">
             <WhatsAppButton message={waMessages.client} size="lg" block track="contact_card" />
           </div>
@@ -94,7 +94,7 @@ const next = [
       </div>
 
       <div id="enquiry" class="scroll-mt-24">
-        <EnquiryForm variant="individual" intro="A few details about your move help me reply with useful information." />
+        <EnquiryForm variant="individual" intro="A few details about your move help us reply with useful information." />
       </div>
     </div>
   </section>

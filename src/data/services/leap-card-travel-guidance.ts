@@ -1,5 +1,4 @@
 import { official } from '../official';
-import { packagePrice } from '../../lib/format';
 import type { Service } from '../types';
 
 const service: Service = {
@@ -9,16 +8,16 @@ const service: Service = {
   navName: 'Leap Card and Travel Guidance',
   icon: 'bus',
   summary:
-    'I help the client get a TFI Leap Card, understand public transport and plan safe journeys around their new area.',
+    'We help the client get a TFI Leap Card, understand public transport and plan safe journeys around their new area.',
   overview:
-    'The TFI Leap Card is a reusable travel card that usually costs less than paying cash fares. I explain the card types, how to top up and how to plan journeys on buses, the Luas, the DART and trains, so the client can travel with confidence from the first week.',
+    'The TFI Leap Card is a reusable travel card that usually costs less than paying cash fares. We explain the card types, how to top up and how to plan journeys on buses, the Luas, the DART and trains, so the client can travel with confidence from the first week.',
   feeLine: 'Getting a TFI Leap Card, understanding card types, journey planning and travel safety.',
-  costs: `Included in the ${packagePrice} package. The card, top-ups and fares are paid by you directly.`,
+  costs: `Included in our Moving on Your Own package. The card, top-ups and fares are paid by you directly.`,
   metaTitle: 'TFI Leap Card and Travel Guidance | Settle in Ireland',
   metaDescription:
     'Help getting a TFI Leap Card and using public transport in Dublin and across Ireland: card types, journey planning, safety and everyday travel tips.',
   intro:
-    'Public transport is how most new arrivals get around. The TFI Leap Card is a reusable travel card used on public transport in Dublin and other parts of Ireland, and it usually costs less than paying cash fares. I help the client choose the right card, top it up and plan their journeys.',
+    'Public transport is how most new arrivals get around. The TFI Leap Card is a reusable travel card used on public transport in Dublin and other parts of Ireland, and it usually costs less than paying cash fares. We help the client choose the right card, top it up and plan their journeys.',
   covers: [
     'Explaining what the TFI Leap Card is and how it saves money compared to cash fares.',
     'Explaining the card types, including discounted cards for certain groups, such as the official Student Leap Card and the TFI Young Adult Card, and who may be eligible.',
@@ -31,7 +30,7 @@ const service: Service = {
   steps: [
     {
       title: 'Choose the right card',
-      text: 'I explain the card types and help the client check which one they may be eligible for on the official website.',
+      text: 'We explain the card types and help the client check which one they may be eligible for on the official website.',
     },
     {
       title: 'Get the card',
@@ -39,7 +38,7 @@ const service: Service = {
     },
     {
       title: 'Register and top up',
-      text: 'I explain how to register the card, which can protect the balance if it is lost, and the ways to top it up.',
+      text: 'We explain how to register the card, which can protect the balance if it is lost, and the ways to top it up.',
     },
     {
       title: 'Plan regular journeys',
@@ -47,7 +46,7 @@ const service: Service = {
     },
     {
       title: 'Travel with confidence',
-      text: 'I explain safety, etiquette and what to do if something goes wrong on a journey.',
+      text: 'We explain safety, etiquette and what to do if something goes wrong on a journey.',
     },
   ],
   prepare: [
@@ -117,11 +116,11 @@ const service: Service = {
     },
     {
       q: 'Can I get a discounted card?',
-      a: '<p>Discounted cards exist for certain groups, such as the Student Leap Card and the TFI Young Adult Card. The card providers set the eligibility rules, so check the <a href="https://about.leapcard.ie" target="_blank" rel="noopener">official Leap Card website</a>. I can help you understand them.</p>',
+      a: '<p>Discounted cards exist for certain groups, such as the Student Leap Card and the TFI Young Adult Card. The card providers set the eligibility rules, so check the <a href="https://about.leapcard.ie" target="_blank" rel="noopener">official Leap Card website</a>. We can help you understand them.</p>',
     },
     {
       q: 'How do I plan a journey?',
-      a: '<p>The official TFI Live app and the Transport for Ireland website show routes and real-time information. I show you how to use them for your regular routes.</p>',
+      a: '<p>The official TFI Live app and the Transport for Ireland website show routes and real-time information. We show you how to use them for your regular routes.</p>',
     },
   ],
 };

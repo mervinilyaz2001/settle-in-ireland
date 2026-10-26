@@ -1,5 +1,5 @@
 /**
- * Official external websites linked from the site. Checked on 25 October 2026.
+ * Official external websites linked from the site. Checked on 26 October 2026.
  * If a deep link stops working, point it at the home page of the same official site.
  */
 export const official = {
@@ -11,6 +11,10 @@ export const official = {
   isdFirstTime: {
     label: 'How to register your immigration permission for the first time (Immigration Service Delivery)',
     url: 'https://www.irishimmigration.ie/registering-your-immigration-permission/how-to-register-your-immigration-permission-for-the-first-time/',
+  },
+  isdRenewal: {
+    label: 'Renewing your registration permission if you live in Ireland (Immigration Service Delivery)',
+    url: 'https://www.irishimmigration.ie/registering-your-immigration-permission/how-to-renew-your-current-permission/renewing-your-registration-permission-if-you-live-in-the-republic-of-ireland/',
   },
   ciHome: { label: 'Citizens Information', url: 'https://www.citizensinformation.ie' },
   ciMovingToIreland: {

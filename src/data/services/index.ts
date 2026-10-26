@@ -10,9 +10,17 @@ export const services: Service[] = Object.entries(modules)
   .map(([, mod]) => mod.default)
   .sort((a, b) => a.order - b.order);
 
-export function serviceUrl(service: Pick<Service, 'slug'>): string {
-  return url(`/services/${service.slug}/`);
+/** The service's own address, before the site folder is added. */
+export function servicePath(service: Pick<Service, 'slug' | 'path'>): string {
+  return service.path ?? `/services/${service.slug}/`;
 }
+
+export function serviceUrl(service: Pick<Service, 'slug' | 'path'>): string {
+  return url(servicePath(service));
+}
+
+/** Services that are also offered on their own: IRP and PPSN application assistance. */
+export const standaloneServices = (): Service[] => services.filter((s) => s.path);
 
 export function getService(slug: string): Service {
   const found = services.find((s) => s.slug === slug);

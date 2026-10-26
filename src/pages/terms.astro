@@ -34,18 +34,19 @@ import { url } from '../lib/url';
         please ask before you pay.
       </p>
 
-      <h2>1. Who I am</h2>
+      <h2>1. Who we are</h2>
       <p>
-        Settle in Ireland is run by <Text value={site.legal.ownerLegalName} />, a sole trader based in Ireland ("I", "me"). In these terms, "you" or
-        "the client" means the person receiving the service. A "partner agency" is an agency that refers a client to me.
+        Settle in Ireland is run by <Text value={site.legal.legalName} />, based in Ireland ("we", "us"). In these terms, "you" or
+        "the client" means the person receiving the service. A "partner agency" is an agency that refers a client to us.
       </p>
 
       <h2>2. The service</h2>
       <p>
-        I provide practical arrival and settling-in support for international clients moving to Ireland. I act as the client's named local contact and
-        help with the practical steps after arrival. All support is given remotely, by WhatsApp and phone. I do not provide airport
-        pickups or meet clients in person. College admissions and visa applications are handled by the partner agency or by the client, not
-        by me.
+        We provide practical arrival and settling-in support for international clients moving to Ireland. We give each client one-to-one support from our team and
+        help with the practical steps after arrival. Support is given mainly by WhatsApp and phone, and we meet in person only if it is
+        needed. We do not provide airport pickups. IRP application assistance and PPSN application assistance can also be agreed on their own,
+        at a price we confirm in writing before you start. College admissions and visa applications are handled by the partner agency or by the client, not
+        by us.
       </p>
 
       <h2>3. What is included</h2>
@@ -54,7 +55,7 @@ import { url } from '../lib/url';
         {services.map((s) => <li>{s.name}</li>)}
       </ul>
       <p>
-        WhatsApp support for practical questions is available {site.supportPeriod}. I confirm the exact support period with you at the start of the
+        WhatsApp support for practical questions is available {site.supportPeriod}. We confirm the exact support period with you at the start of the
         service.
       </p>
 
@@ -99,7 +100,7 @@ import { url } from '../lib/url';
 
       <h2>8. No guarantee of third-party outcomes</h2>
       <p>
-        Many important outcomes depend on other people and organisations. I will always do my best to help you prepare, but I cannot guarantee, for
+        Many important outcomes depend on other people and organisations. We will always do our best to help you prepare, but we cannot guarantee, for
         example:
       </p>
       <ul>
@@ -111,7 +112,7 @@ import { url } from '../lib/url';
 
       <h2>9. Your responsibilities</h2>
       <ul>
-        <li>Give me accurate and up-to-date information, and tell me quickly if your plans change.</li>
+        <li>Give us accurate and up-to-date information, and tell us quickly if your plans change.</li>
         <li>Check official requirements yourself and keep your own documents safe.</li>
         <li>Make your own decisions, applications and payments to third parties.</li>
         <li>Follow the advice of official bodies, and in an emergency call 112 or 999 first.</li>
@@ -119,20 +120,20 @@ import { url } from '../lib/url';
 
       <h2>10. Limitation of liability</h2>
       <p>
-        I provide the service with reasonable care and skill. I am not responsible for the acts, decisions or charges of third parties, such as
-        landlords, banks, transport providers, colleges or public bodies, or for losses caused by information you did not give me.
+        We provide the service with reasonable care and skill. We are not responsible for the acts, decisions or charges of third parties, such as
+        landlords, banks, transport providers, colleges or public bodies, or for losses caused by information you did not give us.
       </p>
       <p>
-        As far as the law allows, my total liability to you is limited to the amount you have paid me for the service. Nothing in these terms limits
+        As far as the law allows, our total liability to you is limited to the amount you have paid us for the service. Nothing in these terms limits
         liability that cannot be limited under Irish law, such as liability for death or personal injury caused by negligence.
       </p>
 
       <h2>11. Privacy</h2>
-      <p>I handle your personal data as explained in the <a href={url('/privacy-policy/')}>Privacy Policy</a>.</p>
+      <p>We handle your personal data as explained in the <a href={url('/privacy-policy/')}>Privacy Policy</a>.</p>
 
       <h2>12. Changes to these terms</h2>
       <p>
-        I may update these terms from time to time. The version on this page on the date you make the first payment applies to your service.
+        We may update these terms from time to time. The version on this page on the date you make the first payment applies to your service.
       </p>
 
       <h2>13. Governing law</h2>
@@ -140,7 +141,7 @@ import { url } from '../lib/url';
 
       <h2>14. Contact</h2>
       <p>
-        Message me on WhatsApp or call {site.phone}, or write to <Text value={site.legal.postalAddress} />.
+        Message us on WhatsApp or call {site.phone}, or write to <Text value={site.legal.postalAddress} />.
         {site.emailActive && <span>You can also email <a href={mailHref('Question about the Terms of Service')}>{site.email}</a>.</span>}
       </p>
     </article>
@@ -150,5 +151,5 @@ import { url } from '../lib/url';
     </div>
   </div>
 
-  <CTASection title="Questions about these terms?" text="Ask me before you pay." />
+  <CTASection title="Questions about these terms?" text="Ask us before you pay." />
 </BaseLayout>

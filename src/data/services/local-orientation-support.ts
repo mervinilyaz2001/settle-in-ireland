@@ -1,6 +1,5 @@
 import { site } from '../../config/site';
 import { official } from '../official';
-import { packagePrice } from '../../lib/format';
 import type { Service } from '../types';
 
 const service: Service = {
@@ -10,14 +9,14 @@ const service: Service = {
   navName: 'Local Orientation and Support',
   icon: 'compass',
   summary:
-    'I help the client find their way around, get a local SIM, register with a GP and settle into daily life, with ongoing WhatsApp support.',
-  overview: `The first weeks in a new country raise lots of small questions. I help the client get to know their area, from shops and transport to doctors and community groups, and I am available on WhatsApp ${site.supportPeriod} for practical questions.`,
+    'We help the client find their way around, get a local SIM, register with a GP and settle into daily life, with ongoing WhatsApp support.',
+  overview: `The first weeks in a new country raise lots of small questions. We help the client get to know their area, from shops and transport to doctors and community groups, and we are available on WhatsApp ${site.supportPeriod} for practical questions.`,
   feeLine: `Getting to know the local area, daily life tips and WhatsApp support ${site.supportPeriod}.`,
-  costs: `Included in the ${packagePrice} package. Phone plans, GP visits, shopping and other personal costs are your own.`,
+  costs: `Included in our Moving on Your Own package. Phone plans, GP visits, shopping and other personal costs are your own.`,
   metaTitle: 'Local Orientation for New Arrivals | Settle in Ireland',
   metaDescription:
     'Practical help settling into daily life in Ireland: SIM cards, grocery shops, GPs, emergencies, recycling, tenant rights and ongoing WhatsApp support.',
-  intro: `Settling in is about more than paperwork. I help the client find their way around their local area, understand daily life in Ireland and feel at home sooner. I am also available on WhatsApp ${site.supportPeriod} for the practical questions that come up.`,
+  intro: `Settling in is about more than paperwork. We help the client find their way around their local area, understand daily life in Ireland and feel at home sooner. We are also available on WhatsApp ${site.supportPeriod} for the practical questions that come up.`,
   covers: [
     'Getting a local SIM card or eSIM and choosing a plan.',
     'Finding affordable grocery shops, markets and pharmacies nearby.',
@@ -33,23 +32,23 @@ const service: Service = {
   steps: [
     {
       title: 'The essentials nearby',
-      text: 'In the first days, I help the client find the shops, pharmacy and transport stops near their accommodation.',
+      text: 'In the first days, we help the client find the shops, pharmacy and transport stops near their accommodation.',
     },
     {
       title: 'Daily life set-up',
-      text: 'I help with a SIM card, shopping on a budget, and how bins and recycling work at their address.',
+      text: 'We help with a SIM card, shopping on a budget, and how bins and recycling work at their address.',
     },
     {
       title: 'Health and safety',
-      text: 'I explain how to register with a GP and what to do in an emergency.',
+      text: 'We explain how to register with a GP and what to do in an emergency.',
     },
     {
       title: 'Community',
-      text: 'If the client wishes, I share information about places of worship and community groups nearby.',
+      text: 'If the client wishes, we share information about places of worship and community groups nearby.',
     },
     {
       title: 'Ongoing support',
-      text: `I stay available on WhatsApp ${site.supportPeriod} for practical questions.`,
+      text: `We stay available on WhatsApp ${site.supportPeriod} for practical questions.`,
     },
   ],
   prepare: [
@@ -85,7 +84,7 @@ const service: Service = {
     },
   ],
   notIncluded: [
-    'Accompanying you in person. All support is given remotely, by WhatsApp and phone.',
+    'Accompanying you to every appointment. Support is mainly by WhatsApp and phone, and we meet in person only if it is needed.',
     'Medical, legal or financial advice.',
     'Phone plans, shopping, GP fees and other personal costs.',
     'Emergency support. In an emergency, always call 112 or 999 first.',
@@ -116,15 +115,15 @@ const service: Service = {
   faqs: [
     {
       q: 'How long does WhatsApp support last?',
-      a: `<p>I am available on WhatsApp ${site.supportPeriod} for practical questions. I confirm the exact support period with the client at the start of the service.</p>`,
+      a: `<p>We are available on WhatsApp ${site.supportPeriod} for practical questions. We confirm the exact support period with the client at the start of the service.</p>`,
     },
     {
       q: 'Can you help me find a doctor?',
-      a: '<p>Yes. I explain how GPs work in Ireland and help you find practices near you that are taking new patients. I do not give medical advice.</p>',
+      a: '<p>Yes. We explain how GPs work in Ireland and help you find practices near you that are taking new patients. We do not give medical advice.</p>',
     },
     {
       q: 'What should I do in an emergency?',
-      a: '<p>Call 112 or 999. These calls are free and connect you to the Gardaí (police), ambulance, fire service and coast guard. Once you are safe, you can message me.</p>',
+      a: '<p>Call 112 or 999. These calls are free and connect you to the Gardaí (police), ambulance, fire service and coast guard. Once you are safe, you can message us.</p>',
     },
   ],
 };

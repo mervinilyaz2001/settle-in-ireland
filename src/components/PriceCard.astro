@@ -10,13 +10,13 @@ import { url } from '../lib/url';
 interface Props {
   showIncluded?: boolean;
   showPayments?: boolean;
-  /** Shows the "See full fee details" link. Turn off on the Fees page itself. */
+  /** Shows a link to the package and price details on the Moving on Your Own page. */
   feesLink?: boolean;
   headingLevel?: 'h2' | 'h3';
   class?: string;
 }
 
-const { showIncluded = true, showPayments = true, feesLink = true, headingLevel = 'h3', class: className } = Astro.props;
+const { showIncluded = true, showPayments = true, feesLink = false, headingLevel = 'h3', class: className } = Astro.props;
 const Heading = headingLevel;
 ---
 
@@ -78,7 +78,7 @@ const Heading = headingLevel;
       <WhatsAppButton message={waMessages.fees} label="Ask about the package" track="price_card" />
       {
         feesLink && (
-          <a href={url('/pricing/')} class="text-link">
+          <a href={url('/moving-to-ireland-on-your-own/#package')} class="text-link">
             See full pricing <Icon name="arrow-right" size={18} />
           </a>
         )

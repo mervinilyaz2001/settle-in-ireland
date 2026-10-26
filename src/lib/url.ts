@@ -5,7 +5,7 @@
  */
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-/** Adds the site's folder to an internal link, for example '/pricing/' becomes '/settle-in-ireland/pricing/' on GitHub Pages. */
+/** Adds the site's folder to an internal link, for example '/contact/' becomes '/settle-in-ireland/contact/' on GitHub Pages. */
 export function url(path: string): string {
   if (!path.startsWith('/') || path.startsWith('//')) return path;
   if (base && (path === base || path.startsWith(`${base}/`))) return path;

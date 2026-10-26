@@ -7,11 +7,11 @@ import PageHero from '../components/PageHero.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
 import { site } from '../config/site';
-import { formatPrice } from '../lib/format';
 import { url } from '../lib/url';
 import { waMessages } from '../lib/whatsapp';
 
 const [first, second] = site.fee.payments;
+const lower = (t: string) => t.charAt(0).toLowerCase() + t.slice(1);
 
 const prepare = [
   'Your expected arrival date, even if it is only approximate.',
@@ -23,10 +23,10 @@ const prepare = [
 
 const afterEnquiry = [
   {
-    title: 'I read your enquiry',
-    text: `I reply personally, by WhatsApp or by email, using the details you gave.${site.responseTime ? ` ${site.responseTime}` : ''}`,
+    title: 'We read your enquiry',
+    text: `We reply personally, by WhatsApp or by email, using the details you gave.${site.responseTime ? ` ${site.responseTime}` : ''}`,
   },
-  { title: 'We talk it through', text: 'A short conversation about your plans, what I can help with and what I cannot.' },
+  { title: 'We talk it through', text: 'A short conversation about your plans, what we can help with and what we cannot.' },
   { title: 'You decide', text: 'If you want to go ahead, we agree the plan and the payment terms. If not, there is no cost and no obligation.' },
 ];
 
@@ -36,7 +36,7 @@ const phases: { id: string; icon: string; title: string; items: { text: string; 
     icon: 'plane',
     title: 'Before you travel',
     items: [
-      { text: `First payment of ${formatPrice(first.amount)}: ${first.when.charAt(0).toLowerCase()}${first.when.slice(1)}`, payment: true },
+      { text: `First payment: ${lower(first.when)}`, payment: true },
       { text: 'Arrival planning: your flight details, an arrival checklist and how to get from the airport to your accommodation.' },
       { text: 'Accommodation help: understanding your options, checking listings and avoiding scams.' },
     ],
@@ -58,7 +58,7 @@ const phases: { id: string; icon: string; title: string; items: { text: string; 
     items: [
       { text: 'Guidance on IRP registration, your PPS Number, a bank account and a TFI Leap Card.' },
       { text: `Local orientation, and WhatsApp support ${site.supportPeriod}.` },
-      { text: `Second payment of ${formatPrice(second.amount)}: ${second.when.charAt(0).toLowerCase()}${second.when.slice(1)} ${site.fee.milestoneNote}`, payment: true },
+      { text: `Second payment: ${lower(second.when)} ${site.fee.milestoneNote}`, payment: true },
     ],
   },
 ];
@@ -66,7 +66,7 @@ const phases: { id: string; icon: string; title: string; items: { text: string; 
 
 <BaseLayout
   title="How It Works | Settle in Ireland"
-  description="How arrival and settling-in support works: four simple steps, what to prepare before you get in touch, and what happens after you enquire."
+  description="How our one-to-one arrival and settling-in support works: four simple steps, what to prepare before you get in touch, and what happens next."
 >
   <PageHero
     eyebrow="How it works"
@@ -86,7 +86,7 @@ const phases: { id: string; icon: string; title: string; items: { text: string; 
     <div class="container-site grid gap-10 lg:grid-cols-2 lg:gap-14">
       <div>
         <h2 class="text-[1.7rem] sm:text-[2rem]">What to have ready</h2>
-        <p class="mt-3">You do not need everything at once. These details help me reply with useful information.</p>
+        <p class="mt-3">You do not need everything at once. These details help us reply with useful information.</p>
         <ul class="check-list mt-6">
           {prepare.map((p) => <li>{p}</li>)}
         </ul>
@@ -149,15 +149,17 @@ const phases: { id: string; icon: string; title: string; items: { text: string; 
         }
       </ol>
       <p class="mt-8">
-        Are you an education agency? See how referrals work on the
-        <a href={url('/agency-partnerships/')} class="font-semibold text-accent-700 underline">Agency Partnerships</a> page.
+        The price and payment details are on the
+        <a href={url('/moving-to-ireland-on-your-own/#package')} class="font-semibold text-accent-700 underline">Moving on Your Own</a> page. Are you an
+        education agency? See how referrals work on the
+        <a href={url('/agency-partnerships/')} class="font-semibold text-accent-700 underline">Education Agencies</a> page.
       </p>
     </div>
   </section>
 
   <CTASection
     title="Moving to Ireland soon?"
-    text="Send me a message on WhatsApp and we can start planning your arrival."
+    text="Send us a message on WhatsApp and we can start planning your arrival."
     message={waMessages.client}
     secondary={{ label: 'Plan My Arrival', href: '/contact/#enquiry' }}
   />

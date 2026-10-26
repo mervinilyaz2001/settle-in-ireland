@@ -39,14 +39,14 @@ const cookieless = site.analytics.provider && site.analytics.siteId ? site.analy
   <div class="container-site py-14 lg:py-20">
     <article class="prose-site mx-auto max-w-[46rem] text-[1.02rem]">
       <p class="lead !mt-0">
-        This policy explains what personal data Settle in Ireland collects, why, how it is handled, how long it is kept and what your rights are. I
-        have written it in plain English. If anything is unclear, please ask me.
+        This policy explains what personal data Settle in Ireland collects, why, how it is handled, how long it is kept and what your rights are. We
+        have written it in plain English. If anything is unclear, please ask us.
       </p>
 
-      <h2>1. Who I am</h2>
+      <h2>1. Who we are</h2>
       <p>
-        Settle in Ireland is an independent arrival and settling-in support service run by <Text value={site.legal.ownerLegalName} />, a sole trader
-        based in Ireland. For the purposes of data protection law, I am the "controller" of the personal data described in this policy.
+        Settle in Ireland is an independent arrival and settling-in support service run by <Text value={site.legal.legalName} />,
+        based in Ireland. For the purposes of data protection law, we are the "controller" of the personal data described in this policy.
       </p>
       <ul>
         <li>WhatsApp: <a href={waLink()} target="_blank" rel="noopener">{site.phone}</a></li>
@@ -56,19 +56,19 @@ const cookieless = site.analytics.provider && site.analytics.siteId ? site.analy
         <li>Business registration: <Text value={site.legal.businessRegistration} /></li>
       </ul>
 
-      <h2>2. What data I collect</h2>
-      <p>I only collect the information you, or an education agency with your consent, choose to send me. This can include:</p>
+      <h2>2. What data we collect</h2>
+      <p>We only collect the information you, or an education agency with your consent, choose to send us. This can include:</p>
       <ul>
         <li>your name, email address and phone or WhatsApp number;</li>
         <li>the country you are moving from, your expected arrival date and where in Ireland you are going;</li>
-        <li>whether your accommodation is arranged, the support you need, and the messages you send me;</li>
+        <li>whether your accommodation is arranged, the support you need, and the messages you send us;</li>
         <li>for agencies: the agency name, contact person, work email, website, countries served and approximate referral numbers;</li>
         <li>if you go ahead: your flight details, your accommodation address and payment records.</li>
       </ul>
       <p>
-        I do not ask for passport numbers, immigration documents, bank details or other sensitive information through the website, and I ask you
-        not to send them in the enquiry form. If you later choose to show me a document so I can help you prepare for an official process, I only
-        use it for that and do not keep a copy longer than necessary. Please never send me passwords, PINs or security codes.
+        We do not ask for passport numbers, immigration documents, bank details or other sensitive information through the website, and we ask you
+        not to send them in the enquiry form. If you later choose to show us a document so we can help you prepare for an official process, we only
+        use it for that and do not keep a copy longer than necessary. Please never send us passwords, PINs or security codes.
       </p>
 
       <h2>3. How the enquiry forms work</h2>
@@ -76,13 +76,13 @@ const cookieless = site.analytics.provider && site.analytics.siteId ? site.analy
         formProvider ? (
           <p>
             When you send an enquiry form, your answers are sent securely (over HTTPS) to {formProvider.name}, a form service that emails them to
-            me. {formProvider.name} processes them on my behalf under its <a href={formProvider.url} target="_blank" rel="noopener">own privacy policy</a>.
+            us. {formProvider.name} processes them on our behalf under its <a href={formProvider.url} target="_blank" rel="noopener">own privacy policy</a>.
             If you choose to send your enquiry on WhatsApp instead, it goes through WhatsApp.
           </p>
         ) : (
           <p>
             At the moment the enquiry forms do not send anything themselves. When you press the button, your answers open as a message in WhatsApp,
-            and nothing reaches me until you press send there.
+            and nothing reaches us until you press send there.
           </p>
         )
       }
@@ -112,9 +112,9 @@ const cookieless = site.analytics.provider && site.analytics.siteId ? site.analy
         Pages) may keep basic technical logs, such as IP addresses, for security and to keep the website running.
       </p>
 
-      <h2>5. Why I use your data, and the legal basis</h2>
+      <h2>5. Why we use your data, and the legal basis</h2>
       <ul>
-        <li><strong>To reply to your enquiry</strong>, because you asked me to and it is a step before a possible agreement.</li>
+        <li><strong>To reply to your enquiry</strong>, because you asked us to and it is a step before a possible agreement.</li>
         <li><strong>To provide the service</strong> you or your agency arranged, which is necessary for our agreement.</li>
         <li><strong>To update your agency or family</strong> about your arrival and progress, but only with your consent, which you can withdraw at any time.</li>
         <li><strong>To keep financial records</strong>, because Irish tax law requires it.</li>
@@ -123,25 +123,25 @@ const cookieless = site.analytics.provider && site.analytics.siteId ? site.analy
 
       <h2>6. Education agencies</h2>
       <p>
-        If an agency refers you, they share your details with me only after you have agreed. I share updates about your arrival and progress with
-        the agency only at the milestones you have agreed to. I never sell your data or share it for marketing.
+        If an agency refers you, they share your details with us only after you have agreed. We share updates about your arrival and progress with
+        the agency only at the milestones you have agreed to. We never sell your data or share it for marketing.
       </p>
 
       <h2>7. Who else processes your data</h2>
       <ul>
         <li><strong>WhatsApp</strong> (Meta), for messages and calls;</li>
-        {formProvider && <li><strong>{formProvider.name}</strong>, which delivers website enquiries to me by email;</li>}
-        <li><strong>my email provider</strong>, for emails;</li>
+        {formProvider && <li><strong>{formProvider.name}</strong>, which delivers website enquiries to us by email;</li>}
+        <li><strong>our email provider</strong>, for emails;</li>
         <li><strong>GitHub Pages</strong>, which hosts this website;</li>
         {ga4 && <li><strong>Google</strong>, for Google Analytics, only if you accept analytics cookies;</li>}
         <li><strong>an accountant</strong>, if needed, for financial records.</li>
       </ul>
       <p>
         These providers process data under their own privacy policies and terms. Some may process data outside the European Economic Area, using
-        the safeguards required by law. I only share your data with public authorities if the law requires it.
+        the safeguards required by law. We only share your data with public authorities if the law requires it.
       </p>
 
-      <h2>8. How long I keep your data</h2>
+      <h2>8. How long we keep your data</h2>
       <ul>
         <li>Enquiries that do not go ahead: deleted within <Text value="[OWNER TO CONFIRM: e.g. 12 months]" /> of our last contact.</li>
         <li>Client records: kept for the length of the service and up to <Text value="[OWNER TO CONFIRM: e.g. 12 months]" /> after it ends, then deleted.</li>
@@ -152,39 +152,39 @@ const cookieless = site.analytics.provider && site.analytics.siteId ? site.analy
       <h2>9. Your rights</h2>
       <p>Under the General Data Protection Regulation (GDPR), you have the right to:</p>
       <ul>
-        <li>ask for a copy of the personal data I hold about you;</li>
-        <li>ask me to correct data that is wrong or incomplete;</li>
-        <li>ask me to delete your data;</li>
-        <li>ask me to limit how I use your data, or object to how I use it;</li>
+        <li>ask for a copy of the personal data we hold about you;</li>
+        <li>ask us to correct data that is wrong or incomplete;</li>
+        <li>ask us to delete your data;</li>
+        <li>ask us to limit how we use your data, or object to how we use it;</li>
         <li>ask for your data in a format you can take elsewhere;</li>
-        <li>withdraw your consent at any time, where I rely on consent.</li>
+        <li>withdraw your consent at any time, where we rely on consent.</li>
       </ul>
       <p>
-        To use any of these rights, contact me on WhatsApp, by phone{site.emailActive ? ', by email' : ''} or by post using the details in section 1.
-        I will reply within one month, as the law requires. You can also ask me to delete our WhatsApp conversation, but please note that WhatsApp
+        To use any of these rights, contact us on WhatsApp, by phone{site.emailActive ? ', by email' : ''} or by post using the details in section 1.
+        We will reply within one month, as the law requires. You can also ask us to delete our WhatsApp conversation, but please note that WhatsApp
         and your own phone keep their own copies.
       </p>
 
       <h2>10. Complaints</h2>
       <p>
-        If you are unhappy with how I handle your data, please contact me first so I can try to put it right. You also have the right to complain to the
+        If you are unhappy with how we handle your data, please contact us first so we can try to put it right. You also have the right to complain to the
         Data Protection Commission, the Irish data protection authority, at
         <a href={official.dpc.url} target="_blank" rel="noopener">www.dataprotection.ie</a>.
       </p>
 
       <h2>11. Keeping your data safe</h2>
       <p>
-        The website and its forms use encrypted connections (HTTPS). I take reasonable steps to protect your data, such as using secure devices and
-        accounts protected with strong passwords, and I only keep what I need.
+        The website and its forms use encrypted connections (HTTPS). We take reasonable steps to protect your data, such as using secure devices and
+        accounts protected with strong passwords, and we only keep what we need.
       </p>
 
       <h2>12. Clients under 18</h2>
-      <p>If you are under 18, please ask a parent or guardian to contact me on your behalf.</p>
+      <p>If you are under 18, please ask a parent or guardian to contact us on your behalf.</p>
 
       <h2>13. Changes to this policy</h2>
-      <p>If I change this policy, I will update it on this page and change the date at the top.</p>
+      <p>If we change this policy, we will update it on this page and change the date at the top.</p>
     </article>
   </div>
 
-  <CTASection title="Questions about your data?" text="Send me a message and I will help." />
+  <CTASection title="Questions about your data?" text="Send us a message and we will help." />
 </BaseLayout>

@@ -10,9 +10,8 @@ import PageHero from '../components/PageHero.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
 import { site } from '../config/site';
-import { services } from '../data/services';
+import { servicePath, services } from '../data/services';
 import type { Service } from '../data/types';
-import { packagePrice } from '../lib/format';
 import { serviceSchema } from '../lib/schema';
 import { waMessages } from '../lib/whatsapp';
 import { url } from '../lib/url';
@@ -22,8 +21,11 @@ interface Props {
 }
 
 const { service } = Astro.props;
-const message = waMessages.service(service.name);
+const message = service.waMessage ?? waMessages.service(service.name);
 const others = services.filter((s) => s.slug !== service.slug);
+// IRP and PPSN assistance are also offered on their own; the other services are part of the package
+const standalone = Boolean(service.path);
+const packagePath = '/moving-to-ireland-on-your-own/';
 
 const toc = [
   { id: 'covers', label: 'What this service covers' },
@@ -40,20 +42,33 @@ const toc = [
   <JsonLd slot="head" data={serviceSchema(service)} />
 
   <PageHero
-    eyebrow={`Service ${service.order} of ${services.length}`}
-    title={service.name}
+    eyebrow={standalone ? 'Available on its own' : 'Part of Moving on Your Own'}
+    title={service.title ?? service.name}
     intro={service.intro}
-    crumbs={[
-      { label: 'Individual Support', href: '/individual-support/' },
-      { label: service.navName, href: `/services/${service.slug}/` },
-    ]}
+    crumbs={
+      standalone
+        ? [{ label: service.navName, href: servicePath(service) }]
+        : [
+            { label: 'Moving on Your Own', href: packagePath },
+            { label: service.navName, href: servicePath(service) },
+          ]
+    }
   >
     <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
       <WhatsAppButton message={message} size="lg" track="service_hero" />
-      <a href={url('/pricing/')} class="inline-flex min-h-11 items-center gap-2 rounded-full bg-gold-100 px-4 py-2 font-semibold text-gold-800 hover:bg-gold-300/60">
-        <Icon name="badge-euro" size={18} />
-        Included in the {packagePrice} package
-      </a>
+      {
+        standalone ? (
+          <a href={url('/contact/#enquiry')} class="inline-flex min-h-11 items-center gap-2 rounded-full bg-gold-100 px-4 py-2 font-semibold text-gold-800 hover:bg-gold-300/60">
+            <Icon name="badge-euro" size={18} />
+            Available on its own: contact us for a price
+          </a>
+        ) : (
+          <a href={url(`${packagePath}#package`)} class="inline-flex min-h-11 items-center gap-2 rounded-full bg-gold-100 px-4 py-2 font-semibold text-gold-800 hover:bg-gold-300/60">
+            <Icon name="badge-euro" size={18} />
+            Part of our Moving on Your Own package
+          </a>
+        )
+      }
     </div>
     {service.governmentDisclaimer && <Disclaimer class="mt-8" />}
   </PageHero>
@@ -188,14 +203,22 @@ const toc = [
         <section aria-labelledby="package-heading" class="relative overflow-hidden rounded-xl border border-gold-300 bg-gold-50 p-6 sm:p-8">
           <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p class="text-[0.82rem] font-bold uppercase tracking-[0.1em] text-gold-800">Included in the package</p>
+              <p class="text-[0.82rem] font-bold uppercase tracking-[0.1em] text-gold-800">
+                {standalone ? 'Need more help?' : 'Part of the package'}
+              </p>
               <h2 id="package-heading" class="mt-2 text-[1.35rem] sm:text-[1.55rem]">
-                Included in the {packagePrice} {site.fee.title} package
+                {standalone ? 'Moving to Ireland? Get this and six other services together' : 'Included in our Moving on Your Own package'}
               </h2>
-              <p class="mt-2">All seven services for one fixed fee, {site.fee.perUnit}. {site.fee.exclusions}</p>
+              <p class="mt-2">
+                {
+                  standalone
+                    ? 'Our Moving on Your Own package includes this service, plus arrival planning, accommodation help, banking, transport and local orientation.'
+                    : `All seven services together, with one-to-one support from our team. ${site.fee.exclusions}`
+                }
+              </p>
             </div>
-            <a href={url('/pricing/')} class="btn btn-primary shrink-0">
-              See pricing <Icon name="arrow-right" size={18} />
+            <a href={url(`${packagePath}#package`)} class="btn btn-primary shrink-0">
+              See the package <Icon name="arrow-right" size={18} />
             </a>
           </div>
         </section>
@@ -221,12 +244,10 @@ const toc = [
           <div class="card overflow-hidden">
             <div aria-hidden="true" class="h-1.5 bg-gold-500"></div>
             <div class="p-5">
-              <p class="text-[0.92rem] font-semibold text-muted">{site.fee.title}</p>
-              <p class="mt-1 flex items-end gap-1.5">
-                <span class="font-display text-[2.2rem] leading-none font-extrabold text-brand-900">{packagePrice}</span>
-                <span class="pb-1 text-[0.95rem] font-semibold text-muted">{site.fee.perUnit}</span>
+              <p class="font-display text-[1.1rem] font-bold text-ink">{standalone ? 'Available on its own' : 'Part of Moving on Your Own'}</p>
+              <p class="mt-2 text-[0.92rem]">
+                {standalone ? 'Get help with just this, one to one. Contact us for a price.' : 'Included with six other services in our Moving on Your Own package.'}
               </p>
-              <p class="mt-2 text-[0.92rem]">All seven services included.</p>
               <WhatsAppButton message={message} label="Ask about this service" block class="mt-4" track="service_sidebar" />
             </div>
           </div>
@@ -238,9 +259,9 @@ const toc = [
   <!-- 11. WhatsApp call to action -->
   <CTASection
     title={`Questions about ${service.navName}?`}
-    text="Send me a message on WhatsApp and I will explain how I can help."
+    text="Send us a message on WhatsApp and we will explain how we can help."
     message={message}
-    secondary={{ label: 'Plan My Arrival', href: '/contact/#enquiry' }}
+    secondary={standalone ? { label: 'Contact us', href: '/contact/#enquiry' } : { label: 'Plan My Arrival', href: '/contact/#enquiry' }}
   />
 
   <!-- 12. Other services -->

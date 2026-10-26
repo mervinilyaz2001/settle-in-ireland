@@ -26,7 +26,7 @@ export interface Payment {
 
 export const site = {
   name: 'Settle in Ireland',
-  tagline: 'Your Local Contact in Ireland.',
+  tagline: 'Your Local Team in Ireland.',
   /**
    * The intended domain. NOTE (checked 25 Oct 2026): settleinireland.com is not registered yet.
    * Until it is, the live site runs at https://mervinilyaz2001.github.io/settle-in-ireland/ and the
@@ -35,7 +35,7 @@ export const site = {
   domain: 'https://settleinireland.com',
   /** Default description used when a page does not set its own. */
   description:
-    'Practical help getting set up in Ireland: accommodation, IRP and PPS Number guidance, a bank account and transport, with one local point of contact.',
+    'One-to-one help for international students and education agencies: arrival, accommodation, IRP registration and renewal, and PPSN application assistance.',
 
   /**
    * PRE-LAUNCH SWITCH
@@ -44,22 +44,14 @@ export const site = {
    */
   noindex: true,
 
-  /* ---------- The owner (homepage introduction, About page, Privacy Policy and Terms) ---------- */
-  ownerName: 'Mizan Mohammed',
-  /** Two or three sentences in the first person. */
-  ownerBio: '[SHORT FIRST-PERSON BIO: who you are and your connection to Ireland]',
-  /** Path to a photo in /public, for example '/images/owner.webp'. null shows initials instead. */
-  ownerPhoto: null as string | null,
-  /** Why you started Settle in Ireland, in your own words. */
-  ownerStory: '[WHY I STARTED SETTLE IN IRELAND, IN TWO OR THREE SENTENCES]',
-  languages: '[LANGUAGES YOU SPEAK, e.g. English and Bengali]',
+  /** Where the team is based. Shown on the homepage, About page and in search results. */
   location: 'Dublin, Ireland',
 
   /* ---------- Contact ---------- */
   /** International format with no + sign and no spaces, for example 353871234567. */
-  whatsappNumber: '353899741681',
+  whatsappNumber: '353899741613',
   /** Shown on the site exactly as written here. Used for the "Call" links. */
-  phone: '+353 89 974 1681',
+  phone: '+353 89 974 1613',
   email: 'hello@settleinireland.com',
   /**
    * EMAIL SWITCH
@@ -67,13 +59,13 @@ export const site = {
    * 25 Oct 2026, so this address cannot receive mail yet. Set to true once the mailbox works.
    */
   emailActive: false,
-  /** Optional. Only shown if you set it, for example 'I usually reply within one working day.' Leave null to make no promise. */
+  /** Optional. Only shown if you set it, for example 'We usually reply within one working day.' Leave null to make no promise. */
   responseTime: null as string | null,
 
   /* ---------- Service details ---------- */
-  /** How support is given. Shown on the pricing, agency, About and FAQ pages. */
+  /** How support is given. Shown on the agency, Moving on Your Own, About and FAQ pages. */
   supportMode:
-    'All support is given remotely, by WhatsApp and phone. There is no airport pickup and no in-person meeting.',
+    'Every client gets one-to-one support from our team, mainly by WhatsApp and phone. We meet in person only if it is needed.',
   /** How long WhatsApp support lasts. Reads as part of a sentence: "WhatsApp support during the first weeks after arrival." */
   supportPeriod: 'during the first weeks after arrival',
 
@@ -89,7 +81,7 @@ export const site = {
       // for example: 'On the client\'s arrival in Ireland.'
       { amount: 200, when: "Once the client's IRP registration appointment is confirmed." },
     ] as Payment[],
-    milestoneNote: 'This is a service milestone only. I do not sell, reserve or guarantee government appointments.',
+    milestoneNote: 'This is a service milestone only. We do not sell, reserve or guarantee government appointments.',
     /** What happens to the second payment if the IRP appointment is delayed, unavailable, rescheduled or cancelled. */
     appointmentDelayPolicy:
       '[OWNER TO CONFIRM: what happens to the second payment if the IRP registration appointment is delayed, unavailable, rescheduled or cancelled, for example whether it stays due only once an appointment is confirmed, and whether support continues in the meantime]',
@@ -100,12 +92,12 @@ export const site = {
      * The text below is a starting point only. Check it, change it and have it reviewed before launch.
      */
     cancellationPolicy:
-      '[OWNER TO CONFIRM] The first payment covers pre-arrival planning work, which starts as soon as it is paid. If plans change, for example a visa is refused or travel is postponed, contact me as soon as possible and I will explain what can be refunded or moved to a later date. The second payment is only due once that milestone is reached.',
+      '[OWNER TO CONFIRM] The first payment covers pre-arrival planning work, which starts as soon as it is paid. If plans change, for example a visa is refused or travel is postponed, contact us as soon as possible and we will explain what can be refunded or moved to a later date. The second payment is only due once that milestone is reached.',
   },
 
   /* ---------- Education agencies ---------- */
   currentMarkets:
-    'Already supporting clients referred by partner agencies in Bangladesh, and open to partner agencies from any country.',
+    'Already supporting students referred by partner agencies in South Asia, and open to partner agencies from any country.',
   agency: {
     capacity: '[OWNER TO CONFIRM: how many referred students you can support at the same time, or per intake]',
     payment: '[OWNER TO CONFIRM: whether the agency or the student pays, invoicing and payment timing]',
@@ -123,6 +115,8 @@ export const site = {
     direct: "Hi, I'm moving to Ireland on my own, without an agency, and I'd like to know more about your support.",
     /** {service} is replaced with the service name on each service page. */
     service: "Hi, I'd like to know more about your {service} support.",
+    irp: "Hi, I'd like help with my IRP registration or renewal.",
+    ppsn: "Hi, I'd like help applying for my PPS Number.",
     /** {price} and {package} are filled in from the fee settings above. */
     fees: 'Hi, I have a question about the {price} {package} package.',
   },
@@ -183,7 +177,8 @@ export const site = {
 
   /* ---------- Legal details (Privacy Policy and Terms) ---------- */
   legal: {
-    ownerLegalName: '[OWNER FULL LEGAL NAME]',
+    /** The registered business or company name that runs Settle in Ireland. */
+    legalName: '[BUSINESS LEGAL NAME: the registered business or company name]',
     /** An address for formal notices. It is only shown on the Privacy Policy and Terms pages. */
     postalAddress: '[POSTAL ADDRESS FOR FORMAL NOTICES]',
     /** For example a registered business name number from the CRO, if the business name is registered. */

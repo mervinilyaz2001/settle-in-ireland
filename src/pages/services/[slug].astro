@@ -3,8 +3,9 @@ import ServicePageLayout from '../../layouts/ServicePageLayout.astro';
 import { services } from '../../data/services';
 import type { Service } from '../../data/types';
 
+// IRP and PPSN assistance have their own top-level pages, so they are left out here.
 export function getStaticPaths() {
-  return services.map((service) => ({ params: { slug: service.slug }, props: { service } }));
+  return services.filter((service) => !service.path).map((service) => ({ params: { slug: service.slug }, props: { service } }));
 }
 
 const { service } = Astro.props as { service: Service };

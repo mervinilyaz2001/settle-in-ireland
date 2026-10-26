@@ -1,53 +1,70 @@
 ---
 /**
- * ABOUT
- * The owner's name, photo, bio, story, languages and location come from src/config/site.ts.
- * To add a photo, put it in public/images/ (for example public/images/owner.webp, about 800 x 1000
- * pixels) and set ownerPhoto: '/images/owner.webp'. Never add credentials or experience that
- * cannot be backed up.
+ * ABOUT US
+ * About the company and how the team works. No personal names, bios or photos, by the owner's choice.
+ * Never add credentials, client numbers or experience that cannot be backed up.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CTASection from '../components/CTASection.astro';
 import Disclaimer from '../components/Disclaimer.astro';
-import FounderIntro from '../components/FounderIntro.astro';
 import Icon from '../components/Icon.astro';
 import JsonLd from '../components/JsonLd.astro';
+import OfferCards from '../components/OfferCards.astro';
 import PageHero from '../components/PageHero.astro';
 import SectionHeading from '../components/SectionHeading.astro';
-import Text from '../components/Text.astro';
+import Testimonials from '../components/Testimonials.astro';
 import { site } from '../config/site';
 import { businessSchema } from '../lib/schema';
 
 const values = [
-  { icon: 'user-round', title: 'Personal', text: 'You deal with me directly, from the first message to your first weeks in Ireland.' },
-  { icon: 'shield-check', title: 'Honest', text: 'I explain what I can and cannot do, and I never promise outcomes that depend on others.' },
+  {
+    icon: 'user-check',
+    title: 'One-to-one support',
+    text: 'Every client deals with our team directly, from the first message to the first weeks in Ireland. No call centre.',
+  },
+  { icon: 'shield-check', title: 'Honest', text: 'We explain what we can and cannot do, and we never promise outcomes that depend on others.' },
   { icon: 'list-checks', title: 'Practical', text: 'Clear steps, simple checklists and links to official sources, in plain English.' },
-  { icon: 'whatsapp', title: 'Easy to reach', text: 'Questions are handled on WhatsApp, the app most people moving here already use.' },
+  { icon: 'whatsapp', title: 'Easy to reach', text: 'Message us on WhatsApp or call. We meet in person only if it is needed.' },
+];
+
+const promises = [
+  'We never sell, reserve or guarantee government appointments.',
+  'You always submit your own official applications, and pay official fees directly.',
+  'We always point you to the official Irish websites, because rules and fees change.',
+  'We only share updates with an agency or family when you have agreed to it.',
 ];
 ---
 
 <BaseLayout
-  title="About | Settle in Ireland"
-  description={`Meet ${site.ownerName}, who runs Settle in Ireland, an independent arrival and settling-in service for people moving to Ireland.`}
+  title="About Us | Settle in Ireland"
+  description="Settle in Ireland is an independent team in Dublin giving international students and education agencies one-to-one help with arrival, IRP and PPSN."
 >
   <JsonLd slot="head" data={businessSchema()} />
 
   <PageHero
-    eyebrow="About"
-    title="A real person in Ireland, on your side"
-    intro="Settle in Ireland is a one-person, independent service. When you work with me, you deal with me directly."
-    crumbs={[{ label: 'About', href: '/about/' }]}
+    eyebrow="About us"
+    title="A team in Ireland, helping students settle in"
+    intro={`${site.name} is an independent support service based in ${site.location}. We give international students, and the education agencies that send them, one-to-one help with the practical side of moving to Ireland.`}
+    crumbs={[{ label: 'About Us', href: '/about/' }]}
   />
 
-  <section class="section" aria-label="About the owner">
+  <!-- What we do -->
+  <section class="section" aria-labelledby="what-heading">
     <div class="container-site">
-      <FounderIntro showAboutLink={false} />
+      <SectionHeading
+        id="what-heading"
+        eyebrow="What we do"
+        title="Four ways we can help"
+        intro="Support for agencies and their students, a complete package for students moving on their own, and help with just your IRP or PPS Number if that is all you need."
+      />
+      <OfferCards class="mt-10" />
     </div>
   </section>
 
-  <section class="section bg-white" aria-labelledby="how-i-work-heading">
+  <!-- How we work -->
+  <section class="section bg-white" aria-labelledby="how-we-work-heading">
     <div class="container-site">
-      <SectionHeading id="how-i-work-heading" eyebrow="How I work" title="Personal, honest and practical" />
+      <SectionHeading id="how-we-work-heading" eyebrow="How we work" title="One to one, honest and practical" />
       <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {
           values.map((v, i) => (
@@ -64,15 +81,25 @@ const values = [
     </div>
   </section>
 
+  <!-- Where we are, and what we promise -->
   <section class="section" aria-labelledby="based-heading">
-    <div class="container-site grid items-start gap-8 lg:grid-cols-2 lg:gap-16">
+    <div class="container-site grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
       <div>
-        <SectionHeading id="based-heading" eyebrow="Where I am based" title="Based in Ireland" />
-        <p class="lead mt-5">I am based in <Text value={site.location} />. {site.supportMode}</p>
+        <SectionHeading id="based-heading" eyebrow="Where we are" title={`Based in ${site.location.split(',')[0]}, supporting students across Ireland`} />
+        <p class="lead mt-5">
+          {site.supportMode} We already support students from South Asia, and we welcome clients and education agencies from any country.
+        </p>
+        <h3 class="mt-8 text-[1.2rem]">What you can count on</h3>
+        <ul class="check-list mt-4">
+          {promises.map((p) => <li>{p}</li>)}
+        </ul>
       </div>
       <Disclaimer />
     </div>
   </section>
+
+  <!-- Only shown once real, approved testimonials are added in src/config/site.ts -->
+  {site.showTestimonials && site.testimonials.length > 0 && <Testimonials />}
 
   <CTASection title="Let's talk about your plans" secondary={{ label: 'How it works', href: '/how-it-works/' }} />
 </BaseLayout>

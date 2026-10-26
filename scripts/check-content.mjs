@@ -65,7 +65,13 @@ const routeOf = (file) => {
   const r = '/' + rel(file).replace(/^dist\//, '').replace(/index\.html$/, '').replace(/\.html$/, '');
   return r;
 };
-const fullDisclaimerRoutes = ['/services/irp-guidance/', '/services/ppsn-assistance/', '/pricing/', '/faq/', '/terms/'];
+const fullDisclaimerRoutes = [
+  '/irp-application-assistance/',
+  '/ppsn-application-assistance/',
+  '/moving-to-ireland-on-your-own/',
+  '/faq/',
+  '/terms/',
+];
 const idsByRoute = new Map();
 const htmlByRoute = new Map();
 let redirects = 0;
@@ -137,14 +143,41 @@ for (const [route, html] of htmlByRoute) {
   }
 }
 
-/* ---------- Fee consistency ---------- */
+/* ---------- Fee consistency ----------
+ * The package price is shown on the Moving on Your Own and Education Agencies pages (and in the
+ * Terms), and never on the homepage or the IRP and PPSN pages, which say "contact us for a price". */
 const price = `€${site.fee.amount}`;
-for (const route of ['/', '/pricing/', '/agency-partnerships/', '/terms/']) {
+for (const route of ['/moving-to-ireland-on-your-own/', '/agency-partnerships/', '/terms/']) {
   const html = htmlByRoute.get(route) ?? '';
   if (!html.includes(price)) problems.push(`${route}: ${price} not shown`);
   for (const p of site.fee.payments) {
     if (!html.includes(`€${p.amount}`)) problems.push(`${route}: payment €${p.amount} not shown`);
   }
+}
+for (const route of ['/', '/irp-application-assistance/', '/ppsn-application-assistance/', '/about/', '/faq/']) {
+  const html = htmlByRoute.get(route) ?? '';
+  for (const amount of [site.fee.amount, ...site.fee.payments.map((p) => p.amount)]) {
+    if (html.includes(`€${amount}`)) problems.push(`${route}: €${amount} shown, but prices belong only on the package and agency pages`);
+  }
+}
+
+/* ---------- Team voice and personal details ----------
+ * The business speaks as "we". First-person words are only allowed in the client's own words
+ * (FAQ questions, pre-filled WhatsApp messages, the "Plan My Arrival" button and the form consent). */
+for (const [route, html] of htmlByRoute) {
+  const body = html.slice(html.indexOf('<body'));
+  const text = decode(
+    body
+      .replace(/<script[\s\S]*?<\/script>/g, '')
+      .replace(/<style[\s\S]*?<\/style>/g, '')
+      .replace(/<button[^>]*acc-trigger[\s\S]*?<\/button>/g, '') // FAQ questions are in the client's words
+      .replace(/<[^>]+>/g, ' '),
+  )
+    .replace(/Plan My Arrival/g, '')
+    .replace(/I agree that Settle in Ireland can use these details to reply to my enquiry\./g, '');
+  const hits = text.match(/(?<![\w.'-])(I|I'm|I've|I'll|me|my|My|myself)(?![\w'-])/g);
+  if (hits) problems.push(`${route}: first-person words in business copy: ${[...new Set(hits)].join(', ')}`);
+  if (/Mizan|Bangladesh/.test(text)) problems.push(`${route}: personal name or "Bangladesh" shown (use "South Asia")`);
 }
 
 notes.push(`Pages checked: ${htmlByRoute.size}, redirect pages: ${redirects}`);

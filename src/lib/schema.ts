@@ -1,4 +1,5 @@
 import { site } from '../config/site';
+import { servicePath, services } from '../data/services';
 import type { Service } from '../data/types';
 import { isPlaceholder } from './format';
 import { absoluteUrl } from './url';
@@ -22,16 +23,16 @@ export function businessSchema() {
     ...(site.emailActive ? { email: site.email } : {}),
     areaServed: { '@type': 'Country', name: 'Ireland' },
     address: { '@type': 'PostalAddress', addressLocality: site.location.split(',')[0].trim(), addressCountry: 'IE' },
-    priceRange: `€${site.fee.amount}`,
-    ...(isPlaceholder(site.languages) ? {} : { knowsLanguage: site.languages }),
     ...(sameAs.length ? { sameAs } : {}),
-    makesOffer: {
-      '@type': 'Offer',
-      name: site.fee.title,
-      price: site.fee.amount,
-      priceCurrency: site.fee.currency,
-      description: `${site.fee.title}, ${site.fee.perUnit}. ${site.fee.exclusions}`,
-      url: absoluteUrl('/pricing/'),
+    // The four main services, without prices: the price is only shown on the package and agency pages
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Services',
+      itemListElement: [
+        { name: 'Education Agency Partnerships', path: '/agency-partnerships/' },
+        { name: 'Moving on Your Own: Complete Arrival and Settling-In Support', path: '/moving-to-ireland-on-your-own/' },
+        ...services.filter((s) => s.path).map((s) => ({ name: s.title ?? s.name, path: servicePath(s) })),
+      ].map((o) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: o.name, url: absoluteUrl(o.path) } })),
     },
   };
 }
@@ -44,15 +45,9 @@ export function serviceSchema(service: Service) {
     name: service.name,
     serviceType: service.name,
     description: service.overview,
-    url: absoluteUrl(`/services/${service.slug}/`),
+    url: absoluteUrl(servicePath(service)),
     areaServed: { '@type': 'Country', name: 'Ireland' },
+    audience: { '@type': 'Audience', audienceType: 'International students and new arrivals in Ireland' },
     provider: { '@type': 'ProfessionalService', '@id': businessId, name: site.name, url: absoluteUrl('/') },
-    offers: {
-      '@type': 'Offer',
-      price: site.fee.amount,
-      priceCurrency: site.fee.currency,
-      description: `Included in the ${site.fee.title} package, ${site.fee.perUnit}.`,
-      url: absoluteUrl('/pricing/'),
-    },
   };
 }

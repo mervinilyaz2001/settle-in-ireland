@@ -1,5 +1,4 @@
 import { official } from '../official';
-import { packagePrice } from '../../lib/format';
 import type { Service } from '../types';
 
 const service: Service = {
@@ -9,16 +8,16 @@ const service: Service = {
   navName: 'Accommodation Assistance',
   icon: 'house',
   summary:
-    'I help the client understand the Irish rental market, check listings and avoid rental scams before they arrive.',
+    'We help the client understand the Irish rental market, check listings and avoid rental scams before they arrive.',
   overview:
-    'Finding somewhere to live is one of the hardest parts of moving to Ireland. I explain the typical options and help the client check listings, landlords and agreements and spot scams, all remotely. The client pays rent and deposits directly.',
+    'Finding somewhere to live is one of the hardest parts of moving to Ireland. We explain the typical options and help the client check listings, landlords and agreements and spot scams, all remotely. The client pays rent and deposits directly.',
   feeLine: 'Guidance on the rental market, help checking listings and landlords, and scam warnings.',
-  costs: `Included in the ${packagePrice} package. Rent, deposits, booking fees and bills are paid by you directly to the landlord or provider.`,
+  costs: `Included in our Moving on Your Own package. Rent, deposits, booking fees and bills are paid by you directly to the landlord or provider.`,
   metaTitle: 'Accommodation Help Before Arriving in Ireland',
   metaDescription:
     'Help understanding the Irish rental market, checking listings and avoiding rental scams before you arrive in Ireland. Practical support from a local contact.',
   intro:
-    'Rental availability in Ireland, especially in Dublin, can be very limited, and rental scams are common. I help the client understand their options, search safely and make a careful decision before they arrive. The earlier the search starts, the better.',
+    'Rental availability in Ireland, especially in Dublin, can be very limited, and rental scams are common. We help the client understand their options, search safely and make a careful decision before they arrive. The earlier the search starts, the better.',
   covers: [
     'Explaining the main types of accommodation and what they usually include.',
     'Helping the client set a realistic budget and choose areas with good transport to their college or workplace.',
@@ -39,25 +38,25 @@ const service: Service = {
       'Check that the landlord or letting agent is real before you send money or documents.',
       'Be careful if the rent is much lower than similar places nearby, or if someone pushes you to pay quickly.',
       'Do not send copies of your passport or other identity documents until you are confident the landlord is genuine.',
-      'If something feels wrong, stop and message me before you pay anything.',
+      'If something feels wrong, stop and message us before you pay anything.',
     ],
   },
   steps: [
     {
-      title: 'Tell me what you need',
+      title: 'Tell us what you need',
       text: 'The client shares their budget, preferred area, move-in date and the type of place they want.',
     },
     {
       title: 'Understand the options',
-      text: 'I explain the typical options and what is realistic for that budget and area.',
+      text: 'We explain the typical options and what is realistic for that budget and area.',
     },
     {
       title: 'Search together',
-      text: 'The client searches on rental websites and sends me the listings they like. I help them check each one.',
+      text: 'The client searches on rental websites and sends us the listings they like. We help them check each one.',
     },
     {
       title: 'Check before paying',
-      text: 'I help the client check the listing, the landlord and the agreement, and prepare questions for a live video viewing.',
+      text: 'We help the client check the listing, the landlord and the agreement, and prepare questions for a live video viewing.',
     },
     {
       title: 'Decide and book',
@@ -65,7 +64,7 @@ const service: Service = {
     },
     {
       title: 'Plan the first weeks',
-      text: 'If long-term housing is not ready by arrival day, I help the client plan a short-term stay.',
+      text: 'If long-term housing is not ready by arrival day, we help the client plan a short-term stay.',
     },
   ],
   prepare: [
@@ -104,7 +103,7 @@ const service: Service = {
   ],
   notIncluded: [
     'Rent, deposits, booking fees and bills. The client pays these directly to the landlord or provider.',
-    'A guarantee that accommodation will be found. I help the client search safely, but I cannot promise a property.',
+    'A guarantee that accommodation will be found. We help the client search safely, but we cannot promise a property.',
     "Signing agreements or paying money on the client's behalf.",
     'Legal advice on tenancy disputes. The Residential Tenancies Board and Citizens Information are the right places to start.',
   ],
@@ -123,19 +122,19 @@ const service: Service = {
   faqs: [
     {
       q: 'Can you guarantee accommodation?',
-      a: '<p>No. Rental availability in Ireland can be very limited, so nobody can honestly promise a property. I help the client start early, check listings and avoid scams, so they can make a safe decision.</p>',
+      a: '<p>No. Rental availability in Ireland can be very limited, so nobody can honestly promise a property. We help the client start early, check listings and avoid scams, so they can make a safe decision.</p>',
     },
     {
       q: 'Can you view a property for me?',
-      a: '<p>No. I do not view properties in person. I help you check listings and landlords remotely, and prepare questions for a live video viewing with the landlord, which is one of the best ways to spot a scam.</p>',
+      a: '<p>No. We do not view properties in person. We help you check listings and landlords remotely, and prepare questions for a live video viewing with the landlord, which is one of the best ways to spot a scam.</p>',
     },
     {
       q: 'Do I pay the deposit to you?',
-      a: '<p>No. The client always pays rent, deposits and booking fees directly to the landlord or accommodation provider. I never handle these payments.</p>',
+      a: '<p>No. The client always pays rent, deposits and booking fees directly to the landlord or accommodation provider. We never handle these payments.</p>',
     },
     {
       q: 'Where should I stay for the first weeks?',
-      a: '<p>If long-term housing is not ready when you arrive, a short-term stay such as a hostel, guesthouse or short let gives you time to view rooms in person. I help you plan this.</p>',
+      a: '<p>If long-term housing is not ready when you arrive, a short-term stay such as a hostel, guesthouse or short let gives you time to view rooms in person. We help you plan this.</p>',
     },
   ],
 };

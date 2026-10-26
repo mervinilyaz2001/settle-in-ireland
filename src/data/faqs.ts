@@ -1,8 +1,7 @@
 import { site } from '../config/site';
-import { formatPrice, packagePrice } from '../lib/format';
 import { adviceDisclaimerText, governmentDisclaimerText } from './disclaimers';
 import { official } from './official';
-import { services } from './services';
+import { servicePath, services } from './services';
 import type { FAQ } from './types';
 
 export interface FAQItem extends FAQ {
@@ -15,13 +14,14 @@ export interface FAQCategory {
   items: FAQItem[];
 }
 
+// The amounts are only shown on the Moving on Your Own and Education Agencies pages.
 const paymentList = `<ul>${site.fee.payments
-  .map((p) => `<li><strong>${formatPrice(p.amount)}:</strong> ${p.when}</li>`)
+  .map((p, i) => `<li><strong>${i === 0 ? 'First payment' : 'Second payment'}:</strong> ${p.when}</li>`)
   .join('')}</ul>`;
 
-const serviceList = `<ul>${services.map((s) => `<li><a href="/services/${s.slug}/">${s.name}</a></li>`).join('')}</ul>`;
+const serviceList = `<ul>${services.map((s) => `<li><a href="${servicePath(s)}">${s.name}</a></li>`).join('')}</ul>`;
 
-// Answers are simple HTML. Internal links use the page address, for example /pricing/.
+// Answers are simple HTML. Internal links use the page address, for example /contact/.
 // Anything in [SQUARE BRACKETS] still needs the owner's confirmation and is highlighted on the site.
 export const faqCategories: FAQCategory[] = [
   {
@@ -30,8 +30,13 @@ export const faqCategories: FAQCategory[] = [
     items: [
       {
         id: 'included',
-        q: 'What is included in the package?',
-        a: `<p>The ${site.fee.title} package (${packagePrice} ${site.fee.perUnit}) includes all seven services:</p>${serviceList}<p>${site.fee.exclusions} See <a href="/pricing/">Pricing</a> for the full details.</p>`,
+        q: 'What is included in the Moving on Your Own package?',
+        a: `<p>The ${site.fee.title} package includes all seven services:</p>${serviceList}<p>${site.fee.exclusions} The price and payment details are on the <a href="/moving-to-ireland-on-your-own/#package">Moving on Your Own</a> page.</p>`,
+      },
+      {
+        id: 'single-service',
+        q: 'Can I get help with just my IRP or PPS Number?',
+        a: '<p>Yes. <a href="/irp-application-assistance/">IRP registration and renewal assistance</a> and <a href="/ppsn-application-assistance/">PPSN application assistance</a> are both available on their own, without the full package. Contact us for a price.</p>',
       },
       {
         id: 'eligible',
@@ -45,23 +50,23 @@ export const faqCategories: FAQCategory[] = [
       },
       {
         id: 'pickup',
-        q: 'Do you pick me up from the airport or meet in person?',
-        a: '<p>No. I do not provide airport pickups or meet clients in person. I help you plan the journey from the airport to your accommodation before you fly, and I support you by WhatsApp and phone with everything you need to set up.</p>',
+        q: 'Do you pick me up from the airport?',
+        a: '<p>No. We do not provide airport pickups. We help you plan the journey from the airport to your accommodation before you fly, and we stay in touch on WhatsApp as you travel. After that, support is one-to-one, mainly by WhatsApp and phone, and we meet in person only if it is needed.</p>',
       },
       {
         id: 'where',
         q: 'Where do you provide support?',
-        a: `<p>Before you travel and after you arrive, I support you by WhatsApp and phone, wherever you are. I am based in ${site.location}.</p>`,
+        a: `<p>Before you travel and after you arrive, we support you by WhatsApp and phone, wherever you are in Ireland, and we meet in person only if it is needed. Our team is based in ${site.location}.</p>`,
       },
       {
         id: 'accommodation',
         q: 'Can you help me find accommodation?',
-        a: '<p>Yes, I help you search safely: understanding the rental market, checking listings and landlords, spotting scams and preparing for live video viewings. I cannot guarantee that accommodation will be found, as availability in Ireland, especially Dublin, can be very limited. You always pay rent and deposits directly to the landlord or provider. See <a href="/services/accommodation-assistance/">Accommodation Assistance</a>.</p>',
+        a: '<p>Yes, we help you search safely: understanding the rental market, checking listings and landlords, spotting scams and preparing for live video viewings. We cannot guarantee that accommodation will be found, as availability in Ireland, especially Dublin, can be very limited. You always pay rent and deposits directly to the landlord or provider. See <a href="/services/accommodation-assistance/">Accommodation Assistance</a>.</p>',
       },
       {
         id: 'guarantee',
         q: 'Do you guarantee an IRP appointment or PPSN outcome?',
-        a: `<p>No. I never sell, reserve or guarantee appointments, and official decisions always remain with the relevant authorities: Immigration Service Delivery for IRP registration and the Department of Social Protection for PPS Numbers. I explain the official process and help you prepare. See the <a href="${official.isd.url}" target="_blank" rel="noopener">Immigration Service Delivery website</a> and <a href="${official.govPps.url}" target="_blank" rel="noopener">gov.ie</a> for the current rules.</p>`,
+        a: `<p>No. We never sell, reserve or guarantee appointments, and official decisions always remain with the relevant authorities: Immigration Service Delivery for IRP registration and the Department of Social Protection for PPS Numbers. We explain the official process and help you prepare. See the <a href="${official.isd.url}" target="_blank" rel="noopener">Immigration Service Delivery website</a> and <a href="${official.govPps.url}" target="_blank" rel="noopener">gov.ie</a> for the current rules.</p>`,
       },
       {
         id: 'advice',
@@ -87,7 +92,7 @@ export const faqCategories: FAQCategory[] = [
       {
         id: 'payment',
         q: 'How does payment work?',
-        a: `<p>The fee is ${packagePrice} ${site.fee.perUnit}, paid in two parts:</p>${paymentList}<p>${site.fee.milestoneNote}</p><p>If the IRP registration appointment is delayed, unavailable, rescheduled or cancelled: ${site.fee.appointmentDelayPolicy}</p><p>How to pay: ${site.fee.paymentMethods}</p>`,
+        a: `<p>The Moving on Your Own package is paid in two parts:</p>${paymentList}<p>${site.fee.milestoneNote}</p><p>If the IRP registration appointment is delayed, unavailable, rescheduled or cancelled: ${site.fee.appointmentDelayPolicy}</p><p>How to pay: ${site.fee.paymentMethods}</p>`,
       },
       {
         id: 'plans-change',
@@ -103,17 +108,17 @@ export const faqCategories: FAQCategory[] = [
       {
         id: 'documents',
         q: 'What documents should I prepare?',
-        a: '<p>It depends on your situation, and the official websites have the current lists. Most people need a valid passport, a letter from their college or course provider, proof of their accommodation address, and anything the immigration authorities ask for. Each service page has a "What you need to provide" section, for example <a href="/services/arrival-planning/">Arrival Planning</a> and <a href="/services/irp-guidance/">IRP Guidance</a>.</p><p>Please do not send copies of documents through the website form.</p>',
+        a: '<p>It depends on your situation, and the official websites have the current lists. Most people need a valid passport, a letter from their college or course provider, proof of their accommodation address, and anything the immigration authorities ask for. Each service page has a "What you need to provide" section, for example <a href="/services/arrival-planning/">Arrival Planning</a> and <a href="/irp-application-assistance/">IRP Application Assistance</a>.</p><p>Please do not send copies of documents through the website form.</p>',
       },
       {
         id: 'contact-first',
         q: 'Can I contact you before booking?',
-        a: '<p>Yes. Send me your questions on WhatsApp or through the <a href="/contact/">enquiry form</a>. You pay nothing until you decide to start the service.</p>',
+        a: '<p>Yes. Send us your questions on WhatsApp or through the <a href="/contact/">enquiry form</a>. You pay nothing until you decide to start the service.</p>',
       },
       {
         id: 'personal-info',
         q: 'What personal information do you need?',
-        a: '<p>To reply to an enquiry, only your name and an email address or WhatsApp number. If you go ahead, I also need your arrival details, your accommodation address once you have one, and which services you need. I only ask to see documents when that is needed to help you prepare, and never through the website form. The <a href="/privacy-policy/">Privacy Policy</a> explains how this information is handled.</p>',
+        a: '<p>To reply to an enquiry, only your name and an email address or WhatsApp number. If you go ahead, we also need your arrival details, your accommodation address once you have one, and which services you need. We only ask to see documents when that is needed to help you prepare, and never through the website form. The <a href="/privacy-policy/">Privacy Policy</a> explains how this information is handled.</p>',
       },
     ],
   },
@@ -124,12 +129,12 @@ export const faqCategories: FAQCategory[] = [
       {
         id: 'agencies',
         q: 'Do you work with education agencies?',
-        a: `<p>Yes. Agencies can refer students who are moving to Ireland, so they have a local point of contact after they arrive. ${site.currentMarkets} See <a href="/agency-partnerships/">Agency Partnerships</a>.</p>`,
+        a: `<p>Yes. Agencies can refer students who are moving to Ireland, so they have a local point of contact after they arrive. ${site.currentMarkets} See <a href="/agency-partnerships/">Education Agencies</a>.</p>`,
       },
       {
         id: 'agency-updates',
         q: 'How do you keep an agency updated?',
-        a: `<p>We agree the milestones and the way of reporting during the introductory discussion, and I only share updates with the student's consent. ${site.agency.reporting}</p>`,
+        a: `<p>We agree the milestones and the way of reporting during the introductory discussion, and we only share updates with the student's consent. ${site.agency.reporting}</p>`,
       },
     ],
   },
@@ -140,12 +145,7 @@ export const faqCategories: FAQCategory[] = [
       {
         id: 'best-contact',
         q: 'What is the best way to contact you?',
-        a: `<p>WhatsApp is the quickest way to reach me. You can also call or use the <a href="/contact/">enquiry form</a>.${site.responseTime ? ` ${site.responseTime}` : ''}</p>`,
-      },
-      {
-        id: 'languages',
-        q: 'What languages do you speak?',
-        a: `<p>I speak ${site.languages}.</p>`,
+        a: `<p>WhatsApp is the quickest way to reach us. You can also call or use the <a href="/contact/">enquiry form</a>.${site.responseTime ? ` ${site.responseTime}` : ''}</p>`,
       },
     ],
   },
@@ -154,7 +154,7 @@ export const faqCategories: FAQCategory[] = [
 export const allFaqs: FAQItem[] = faqCategories.flatMap((c) => c.items);
 
 /** The questions shown on the homepage, in this order. */
-export const homeFaqIds = ['included', 'eligible', 'accommodation', 'guarantee', 'plans-change', 'contact-first'];
+export const homeFaqIds = ['single-service', 'eligible', 'accommodation', 'guarantee', 'plans-change', 'contact-first'];
 
 export function faqsById(ids: string[]): FAQItem[] {
   return ids.map((id) => {

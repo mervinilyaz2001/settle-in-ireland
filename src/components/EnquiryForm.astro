@@ -53,7 +53,7 @@ const heading =
   data-subject-field={variant === 'individual' ? `${f}-name` : `${f}-agency`}
 >
   <h2 id={`${f}-form-title`} class="text-[1.5rem] sm:text-[1.7rem]">
-    {title ?? (variant === 'individual' ? 'Tell me about your move' : 'Agency partnership enquiry')}
+    {title ?? (variant === 'individual' ? 'Tell us about your move' : 'Agency partnership enquiry')}
   </h2>
   {intro && <p class="mt-2">{intro}</p>}
   <p class="mt-2 text-[0.93rem] text-muted">Fields marked "required" must be filled in. Everything else is optional.</p>
@@ -81,7 +81,7 @@ const heading =
           required
           autocomplete="email"
           inputmode="email"
-          errorRequired="Please enter your email address so I can reply."
+          errorRequired="Please enter your email address so we can reply."
         />
         <FormField
           id={`${f}-whatsapp`}
@@ -137,7 +137,7 @@ const heading =
           type="textarea"
           maxlength={1500}
           class="sm:col-span-2"
-          placeholder="Anything I should know, or any questions you have."
+          placeholder="Anything we should know, or any questions you have."
         />
       </div>
     ) : (
@@ -159,7 +159,7 @@ const heading =
           required
           autocomplete="email"
           inputmode="email"
-          errorRequired="Please enter a work email address so I can reply."
+          errorRequired="Please enter a work email address so we can reply."
         />
         <FormField
           id={`${f}-website`}
@@ -177,7 +177,7 @@ const heading =
           summary="Countries served"
           required
           hint="The countries your students come from."
-          errorRequired="Please tell me which countries your students come from."
+          errorRequired="Please tell us which countries your students come from."
         />
         <FormField
           id={`${f}-volume`}
@@ -194,7 +194,7 @@ const heading =
           type="textarea"
           maxlength={1500}
           class="sm:col-span-2"
-          placeholder="Tell me about your agency, your intakes and any questions you have."
+          placeholder="Tell us about your agency, your intakes and any questions you have."
         />
       </div>
     )
@@ -208,7 +208,7 @@ const heading =
         name="consent"
         required
         aria-describedby={`${f}-consent-error`}
-        data-error-required="Please tick the box so I can use these details to reply to you."
+        data-error-required="Please tick the box so we can use these details to reply to you."
         data-consent={consentText}
         data-label="Consent"
       />
@@ -224,7 +224,7 @@ const heading =
     <Icon name="lock" size={18} class="mt-0.5 shrink-0 text-brand-700" />
     <span>
       Please do not include passport numbers, immigration documents, bank details or other sensitive information in this form.
-      {connected ? ' Your enquiry is sent securely by email to me.' : ' Pressing the button opens your enquiry in WhatsApp, ready to send.'}
+      {connected ? ' Your enquiry is sent securely by email to us.' : ' Pressing the button opens your enquiry in WhatsApp, ready to send.'}
     </span>
   </p>
 
@@ -476,7 +476,7 @@ const heading =
         if (submitLabel) submitLabel.textContent = 'Send enquiry';
         if (ok) {
           track('enquiry_submit', { form: formType, method: 'form' });
-          showSuccess('Thank you, your enquiry has been sent.', 'I will reply to the email address you gave. Please check your spam folder if you do not see a reply.', false);
+          showSuccess('Thank you, your enquiry has been sent.', 'We will reply to the email address you gave. Please check your spam folder if you do not see a reply.', false);
           form.reset();
         } else {
           track('enquiry_error', { form: formType });

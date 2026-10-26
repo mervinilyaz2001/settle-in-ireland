@@ -1,6 +1,8 @@
 # Settle in Ireland website
 
-The website for **Settle in Ireland**, an independent arrival and settling-in support service.
+The website for **Settle in Ireland**, an independent team in Dublin that gives international students and
+education agencies one-to-one help with arrival, IRP registration and renewal, and PPSN applications. The site
+speaks as "we" (a team) and has no personal names, bios or photos, by the owner's choice.
 Built with [Astro](https://astro.build) and Tailwind CSS as a fully static site.
 
 - **Live (GitHub Pages):** https://mervinilyaz2001.github.io/settle-in-ireland/
@@ -43,15 +45,15 @@ The site can also be hosted on Netlify (`netlify.toml`), Vercel (`vercel.json`) 
 Change these in `src/config/site.ts` unless another file is named. Each one is highlighted on the site
 until it is done.
 
-**About you**
-- [ ] `ownerBio` and `ownerStory`: a few sentences in your own words. No credentials or years of experience you cannot back up.
-- [ ] `ownerPhoto`: a friendly portrait, see section 8.
-- [ ] `languages`: the languages you speak.
+**The business**
+- [ ] `email`: the address to show. Waiting for the owner to confirm which one.
 - [ ] `location`: confirm "Dublin, Ireland" is how you want it shown.
 
 **Service and pricing**
-- [ ] `supportMode`: how support is given. It currently says all support is remote, by WhatsApp and phone, with no
-  airport pickup and no in-person meeting. Change it here if that ever changes, and the whole site follows.
+- [ ] `supportMode`: how support is given. It currently says every client gets one-to-one support, mainly by
+  WhatsApp and phone, and that you meet in person only if it is needed. There is no airport pickup.
+- [ ] Prices: the package price shows **only** on the Moving on Your Own and Education Agencies pages (and in
+  the Terms). IRP and PPSN assistance on their own say "contact us for a price".
 - [ ] `supportPeriod`: confirm how long WhatsApp support lasts.
 - [ ] `fee.payments[1].when`: confirm the second payment is due once the IRP appointment is confirmed.
 - [ ] `fee.appointmentDelayPolicy`: what happens to the second payment if the IRP appointment is delayed, unavailable, rescheduled or cancelled.
@@ -63,7 +65,7 @@ until it is done.
 - [ ] `capacity`, `payment`, `reporting`, `escalation`.
 
 **Legal**
-- [ ] `legal.ownerLegalName`, `legal.postalAddress`, `legal.businessRegistration`, `legal.lastUpdated`.
+- [ ] `legal.legalName` (the registered business or company name), `legal.postalAddress`, `legal.businessRegistration`, `legal.lastUpdated`.
 - [ ] Data retention periods in `src/pages/privacy-policy.astro` (two `[OWNER TO CONFIRM: e.g. 12 months]`).
 - [ ] **Have the Privacy Policy and Terms reviewed** by a solicitor or adviser against GDPR and Irish consumer law. They are templates, and having them does not by itself make the business compliant.
 
@@ -179,16 +181,17 @@ register `form` and `lead_type` as custom dimensions (Admin > Custom definitions
 | WhatsApp number, phone, email, reply time | `src/config/site.ts` |
 | Price, payments, cancellation and delay wording | `fee` in `src/config/site.ts` |
 | Pre-filled WhatsApp messages | `whatsappMessages` in `src/config/site.ts` |
-| The seven services (one file each) | `src/data/services/` |
+| The four services on the homepage and About page | `src/components/OfferCards.astro` |
+| Menu links | `links` in `src/components/Header.astro` |
+| The seven package services (one file each; IRP and PPSN also have their own pages) | `src/data/services/` |
 | FAQs | `src/data/faqs.ts` |
 | Disclaimer wording | `src/data/disclaimers.ts` |
-| Official website links | `src/data/official.ts` (checked 25 Oct 2026) |
+| Official website links | `src/data/official.ts` (checked 26 Oct 2026) |
 | Colours, fonts, spacing | the `@theme` block in `src/styles/global.css` |
 
 ## 8. Photos and animation
 
-- **Your photo:** save a portrait as `public/images/owner.webp` (about 800 x 1000 pixels, under 200 KB) and set
-  `ownerPhoto: '/images/owner.webp'`. Until then a tasteful initials placeholder is shown.
+- **No personal photos or bios.** The owner prefers the site to speak as a team, so there is no founder section.
 - **No stock photos.** The site uses drawn elements instead (the settling-in plan card, dotted routes and
   icons), so nothing suggests a client or a meeting that did not happen.
 - **Animation** lives in the MOTION section near the end of `src/styles/global.css`: the hero entrance, the
@@ -198,14 +201,21 @@ register `form` and `lead_type` as custom dimensions (Admin > Custom definitions
 ## 9. Testimonials
 
 Hidden until real ones exist. Add each quote word for word, with the person's written permission, to
-`testimonials` in `site.ts`, then set `showTestimonials: true`. Until then a "What to expect" section is shown.
+`testimonials` in `site.ts`, then set `showTestimonials: true`. They then appear on the About Us page.
 Never add made-up quotes, review scores or client numbers.
 
 ## 10. Old addresses
 
-These older pages redirect to the new ones, so old links keep working: `/fees/` → `/pricing/`,
-`/partner-agencies/` → `/agency-partnerships/`, `/services/` and `/moving-to-ireland-on-your-own/` →
-`/individual-support/`, `/services/arrival-planning-airport-pickup/` → `/services/arrival-planning/`.
+These older pages redirect to the new ones, so old links keep working:
+
+| Old address | Now goes to |
+|---|---|
+| `/individual-support/`, `/services/` | `/moving-to-ireland-on-your-own/` |
+| `/pricing/`, `/fees/` | `/moving-to-ireland-on-your-own/#package` |
+| `/services/irp-guidance/` | `/irp-application-assistance/` |
+| `/services/ppsn-assistance/` | `/ppsn-application-assistance/` |
+| `/partner-agencies/` | `/agency-partnerships/` |
+| `/services/arrival-planning-airport-pickup/` | `/services/arrival-planning/` |
 
 ## 11. Project structure
 
@@ -221,3 +231,28 @@ public/                       Logos, favicons, social image, security headers
 scripts/                      Brand file generator and content checks
 .github/workflows/deploy.yml  Builds and publishes to GitHub Pages
 ```
+
+## 12. Search keywords (SEO)
+
+Each main page is written around the searches its visitors make. The words below are in the page title, the
+description Google shows, the main heading, the address and the text. Keep them when you edit.
+
+| Page | Address | Searches it targets |
+|---|---|---|
+| Home | `/` | IRP and PPSN help, student arrival support in Ireland, settling in Ireland, one-to-one help in Dublin |
+| Education Agencies | `/agency-partnerships/` | education agency partner Ireland, arrival support for agencies, student support for agencies sending students to Ireland |
+| Moving on Your Own | `/moving-to-ireland-on-your-own/` | moving to Ireland as a student, moving to Ireland without an agency, international student arrival help |
+| IRP | `/irp-application-assistance/` | IRP registration help, IRP renewal for students, IRP renewal online, Irish Residence Permit student, IRP application assistance |
+| PPSN | `/ppsn-application-assistance/` | PPSN application assistance, PPS Number for students, how to get a PPS Number, PPSN proof of address |
+
+Nobody can guarantee the first result on Google. What decides it, in order of impact:
+
+1. **Let Google in.** Set `noindex: false` on launch day, connect the domain, verify Search Console and submit
+   the sitemap (section 6). Until then the site cannot appear in search at all.
+2. **Google Business Profile** for Settle in Ireland in Dublin (it can hide the address and show a service
+   area). This is what shows in the map results for searches like "IRP help Dublin".
+3. **Real reviews** on that profile from real clients. Never write or buy reviews.
+4. **Links from other sites:** partner agencies, student groups and community pages linking to your site.
+5. **Helpful guides** that answer common questions, for example "How to renew your IRP as a student",
+   "How to get a PPS Number as a student" and "Your first week in Dublin". Each one can rank for its own search.
+6. **Check Search Console monthly** to see which searches show the site, then strengthen those pages.
