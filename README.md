@@ -61,12 +61,12 @@ until it is done.
 - [ ] `fee.cancellationPolicy`: check the draft, remove `[OWNER TO CONFIRM]`, and make sure it matches the Terms.
 - [ ] `responseTime`: optional. Leave as `null` unless you want to promise a reply time.
 
-**Education agencies** (`agency` in `site.ts`)
-- [ ] `capacity`, `payment`, `reporting`, `escalation`.
-
 **Legal**
-- [ ] `legal.legalName` (the registered business or company name), `legal.postalAddress`, `legal.businessRegistration`, `legal.lastUpdated`.
-- [ ] Data retention periods in `src/pages/privacy-policy.astro` (two `[OWNER TO CONFIRM: e.g. 12 months]`).
+- [ ] Terms of Service: `legal.legalName` (the registered business or company name) and `legal.postalAddress`. The Privacy
+  Policy just says "We are Settle in Ireland, based in Ireland" and lists no address.
+- [ ] `legal.lastUpdated`: change the date whenever the Privacy Policy or Terms change (now 27 October 2026).
+- Data retention (Privacy Policy section 8): personal data is kept for 2 months, then deleted. Payment records stay
+  six years because Irish tax law requires it.
 - [ ] **Have the Privacy Policy and Terms reviewed** by a solicitor or adviser against GDPR and Irish consumer law. They are templates, and having them does not by itself make the business compliant.
 
 **Contact and launch**

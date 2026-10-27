@@ -98,12 +98,6 @@ export const site = {
   /* ---------- Education agencies ---------- */
   currentMarkets:
     'Already supporting students referred by partner agencies in South Asia, and open to partner agencies from any country.',
-  agency: {
-    capacity: '[OWNER TO CONFIRM: how many referred students you can support at the same time, or per intake]',
-    payment: '[OWNER TO CONFIRM: whether the agency or the student pays, invoicing and payment timing]',
-    reporting: '[OWNER TO CONFIRM: which milestones you report on, and whether by WhatsApp or email]',
-    escalation: '[OWNER TO CONFIRM: how urgent issues are raised and handled, and who the agency contacts]',
-  },
 
   /* ---------- Pre-filled WhatsApp messages ---------- */
   whatsappMessages: {
@@ -179,11 +173,10 @@ export const site = {
   legal: {
     /** The registered business or company name that runs Settle in Ireland. */
     legalName: '[BUSINESS LEGAL NAME: the registered business or company name]',
-    /** An address for formal notices. It is only shown on the Privacy Policy and Terms pages. */
+    /** An address for formal notices. Only shown in the Terms; the Privacy Policy no longer lists one. */
     postalAddress: '[POSTAL ADDRESS FOR FORMAL NOTICES]',
-    /** For example a registered business name number from the CRO, if the business name is registered. */
-    businessRegistration: '[BUSINESS NAME REGISTRATION NUMBER, IF REGISTERED]',
-    lastUpdated: '[DATE THESE POLICIES WERE LAST UPDATED]',
+    /** Shown at the top of the Privacy Policy and the Terms. */
+    lastUpdated: '27 October 2026',
   },
 };
 

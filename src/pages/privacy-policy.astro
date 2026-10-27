@@ -45,15 +45,13 @@ const cookieless = site.analytics.provider && site.analytics.siteId ? site.analy
 
       <h2>1. Who we are</h2>
       <p>
-        Settle in Ireland is an independent arrival and settling-in support service run by <Text value={site.legal.legalName} />,
-        based in Ireland. For the purposes of data protection law, we are the "controller" of the personal data described in this policy.
+        We are Settle in Ireland, based in Ireland. For the purposes of data protection law, we are the "controller" of the personal data
+        described in this policy.
       </p>
       <ul>
         <li>WhatsApp: <a href={waLink()} target="_blank" rel="noopener">{site.phone}</a></li>
         <li>Phone: <a href={telHref()}>{site.phone}</a></li>
         {site.emailActive && <li>Email: <a href={mailHref()}>{site.email}</a></li>}
-        <li>Postal address: <Text value={site.legal.postalAddress} /></li>
-        <li>Business registration: <Text value={site.legal.businessRegistration} /></li>
       </ul>
 
       <h2>2. What data we collect</h2>
@@ -143,8 +141,7 @@ const cookieless = site.analytics.provider && site.analytics.siteId ? site.analy
 
       <h2>8. How long we keep your data</h2>
       <ul>
-        <li>Enquiries that do not go ahead: deleted within <Text value="[OWNER TO CONFIRM: e.g. 12 months]" /> of our last contact.</li>
-        <li>Client records: kept for the length of the service and up to <Text value="[OWNER TO CONFIRM: e.g. 12 months]" /> after it ends, then deleted.</li>
+        <li>Your personal data, including enquiries, messages and client records: kept for 2 months, then deleted.</li>
         <li>Copies of documents: deleted as soon as they are no longer needed to help you.</li>
         <li>Payment and financial records: kept for six years, as Irish tax law requires.</li>
       </ul>
@@ -160,7 +157,7 @@ const cookieless = site.analytics.provider && site.analytics.siteId ? site.analy
         <li>withdraw your consent at any time, where we rely on consent.</li>
       </ul>
       <p>
-        To use any of these rights, contact us on WhatsApp, by phone{site.emailActive ? ', by email' : ''} or by post using the details in section 1.
+        To use any of these rights, contact us on WhatsApp or by phone{site.emailActive ? ', or by email' : ''}, using the details in section 1.
         We will reply within one month, as the law requires. You can also ask us to delete our WhatsApp conversation, but please note that WhatsApp
         and your own phone keep their own copies.
       </p>

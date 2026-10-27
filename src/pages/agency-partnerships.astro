@@ -1,9 +1,9 @@
 ---
 /**
  * EDUCATION AGENCIES (agency partnerships)
- * The B2B page for education agencies. Partnership details the owner has not confirmed yet
- * (capacity, payment, reporting, escalation, coverage) come from src/config/site.ts and show as
- * highlighted placeholders. No named partners are shown.
+ * The B2B page for education agencies. Capacity, payment, reporting and escalation are agreed
+ * with each agency in the introductory discussion, so they are not listed here. No named partners
+ * are shown.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CTASection from '../components/CTASection.astro';
@@ -43,10 +43,6 @@ const details = [
   { term: 'Services delivered', value: 'The seven services in the package, listed above.' },
   { term: 'Pricing', value: `${packagePrice} per student, paid in two parts. Third-party costs are separate.` },
   { term: 'How support is given', value: `${site.supportMode} It works wherever the student is in Ireland.` },
-  { term: 'Capacity and availability', value: site.agency.capacity },
-  { term: 'Payment arrangements', value: site.agency.payment },
-  { term: 'Reporting', value: site.agency.reporting },
-  { term: 'Escalation', value: site.agency.escalation },
 ];
 ---
 

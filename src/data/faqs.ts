@@ -134,7 +134,7 @@ export const faqCategories: FAQCategory[] = [
       {
         id: 'agency-updates',
         q: 'How do you keep an agency updated?',
-        a: `<p>We agree the milestones and the way of reporting during the introductory discussion, and we only share updates with the student's consent. ${site.agency.reporting}</p>`,
+        a: `<p>We agree the milestones and the way of reporting during the introductory discussion, and we only share updates with the student's consent.</p>`,
       },
     ],
   },

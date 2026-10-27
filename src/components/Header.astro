@@ -5,7 +5,9 @@ import WhatsAppButton from './WhatsAppButton.astro';
 import { url } from '../lib/url';
 
 const path = Astro.url.pathname;
-const links = [
+// "Apply Now" opens the enquiry form on the Contact page ("Tell us about your move")
+const links: { label: string; href: string; also?: string[]; cta?: boolean }[] = [
+  { label: 'Apply Now', href: '/contact/#enquiry', cta: true },
   { label: 'Education Agencies', href: '/agency-partnerships/' },
   { label: 'Moving on Your Own', href: '/moving-to-ireland-on-your-own/', also: ['/services/'] },
   { label: 'IRP Assistance', href: '/irp-application-assistance/' },
@@ -33,7 +35,11 @@ const isCurrent = (l: { href: string; also?: string[] }) =>
         {
           links.map((l) => (
             <li>
-              <a href={url(l.href)} class:list={['nav-link', isCurrent(l) && 'is-current']} aria-current={isCurrent(l) ? 'page' : undefined}>
+              <a
+                href={url(l.href)}
+                class:list={['nav-link', l.cta && 'nav-apply', isCurrent(l) && 'is-current']}
+                aria-current={isCurrent(l) ? 'page' : undefined}
+              >
                 {l.label}
               </a>
             </li>
@@ -43,7 +49,7 @@ const isCurrent = (l: { href: string; also?: string[] }) =>
     </nav>
 
     <div class="flex items-center gap-2">
-      <a href={url('/contact/#enquiry')} class="btn btn-primary btn-sm hidden shrink-0 whitespace-nowrap sm:inline-flex">Plan My Arrival</a>
+      <a href={url('/contact/#enquiry')} class="btn btn-primary btn-sm hidden shrink-0 whitespace-nowrap sm:inline-flex xl:hidden">Plan My Arrival</a>
       <button
         type="button"
         class="grid h-11 w-11 place-items-center rounded-lg border border-line-strong bg-white text-brand-900 xl:hidden"
@@ -72,7 +78,7 @@ const isCurrent = (l: { href: string; also?: string[] }) =>
         {
           [...links, ...mobileExtra].map((l) => (
             <li>
-              <a href={url(l.href)} class="mm-link" aria-current={isCurrent(l) ? 'page' : undefined}>
+              <a href={url(l.href)} class:list={['mm-link', l.cta && 'mm-apply']} aria-current={isCurrent(l) ? 'page' : undefined}>
                 {l.label}
               </a>
             </li>
@@ -188,6 +194,30 @@ const isCurrent = (l: { href: string; also?: string[] }) =>
   .mm-link[aria-current='page'] {
     background: var(--color-brand-50);
     color: var(--color-brand-900);
+  }
+  /* Apply Now: a gold pill, like the main buttons, so it stands out at the top of the menu */
+  .nav-link.nav-apply,
+  .mm-link.mm-apply {
+    background: var(--color-gold-500);
+    color: var(--color-brand-950);
+  }
+  .nav-link.nav-apply {
+    min-height: 40px;
+    margin-right: 6px;
+    padding: 0 16px;
+    border-radius: 10px;
+    font-weight: 700;
+  }
+  .nav-link.nav-apply::after {
+    display: none;
+  }
+  .nav-link.nav-apply:hover,
+  .mm-link.mm-apply:hover {
+    background: var(--color-gold-300);
+    color: var(--color-brand-950);
+  }
+  .mm-link.mm-apply {
+    margin-bottom: 6px;
   }
 </style>
 
