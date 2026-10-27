@@ -62,8 +62,8 @@ until it is done.
 - [ ] `responseTime`: optional. Leave as `null` unless you want to promise a reply time.
 
 **Legal**
-- [ ] Terms of Service: `legal.legalName` (the registered business or company name) and `legal.postalAddress`. The Privacy
-  Policy just says "We are Settle in Ireland, based in Ireland" and lists no address.
+- The Privacy Policy and Terms both say "We are Settle in Ireland, based in Ireland", with no legal name or postal
+  address, by the owner's choice.
 - [ ] `legal.lastUpdated`: change the date whenever the Privacy Policy or Terms change (now 27 October 2026).
 - Data retention (Privacy Policy section 8): personal data is kept for 2 months, then deleted. Payment records stay
   six years because Irish tax law requires it.

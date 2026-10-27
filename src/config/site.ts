@@ -169,12 +169,10 @@ export const site = {
     linkedin: null as string | null,
   },
 
-  /* ---------- Legal details (Privacy Policy and Terms) ---------- */
+  /* ---------- Legal details (Privacy Policy and Terms) ----------
+   * Both pages simply say "We are Settle in Ireland, based in Ireland", with no legal name or postal address.
+   */
   legal: {
-    /** The registered business or company name that runs Settle in Ireland. */
-    legalName: '[BUSINESS LEGAL NAME: the registered business or company name]',
-    /** An address for formal notices. Only shown in the Terms; the Privacy Policy no longer lists one. */
-    postalAddress: '[POSTAL ADDRESS FOR FORMAL NOTICES]',
     /** Shown at the top of the Privacy Policy and the Terms. */
     lastUpdated: '27 October 2026',
   },
