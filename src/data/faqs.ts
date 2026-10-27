@@ -41,7 +41,7 @@ export const faqCategories: FAQCategory[] = [
       {
         id: 'eligible',
         q: 'Who is eligible?',
-        a: '<p>Anyone moving to Ireland who wants practical help with arriving and settling in, whether you are arranging your move yourself or an education agency is helping you. Some steps, such as registering for an Irish Residence Permit (IRP), only apply to people from outside the European Economic Area (EEA).</p><p>[OWNER TO CONFIRM: any limits on who you can support, for example minimum age]</p>',
+        a: '<p>Anyone moving to Ireland who wants practical help with arriving and settling in, whether you are arranging your move yourself or an education agency is helping you. Some steps, such as registering for an Irish Residence Permit (IRP), only apply to people from outside the European Economic Area (EEA).</p>',
       },
       {
         id: 'areas',
