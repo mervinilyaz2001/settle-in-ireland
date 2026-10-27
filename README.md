@@ -5,9 +5,9 @@ education agencies one-to-one help with arrival, IRP registration and renewal, a
 speaks as "we" (a team) and has no personal names, bios or photos, by the owner's choice.
 Built with [Astro](https://astro.build) and Tailwind CSS as a fully static site.
 
-- **Live (GitHub Pages):** https://mervinilyaz2001.github.io/settle-in-ireland/
+- **Live:** https://settleinireland.com (the old https://mervinilyaz2001.github.io/settle-in-ireland/ address forwards there)
 - **Repository:** https://github.com/mervinilyaz2001/settle-in-ireland
-- **Intended domain:** settleinireland.com (not registered yet, see section 4)
+- **Domain:** settleinireland.com, registered at GoDaddy and connected on 27 Oct 2026 (section 4)
 
 Almost everything you will want to change is in **one file: `src/config/site.ts`**. Anything still in
 **[SQUARE BRACKETS]** shows on the site with a **yellow highlight** until you replace it.
@@ -77,12 +77,13 @@ until it is done.
 
 ## 4. Custom domain (settleinireland.com)
 
-**Current status (checked 25 Oct 2026): settleinireland.com is not registered.** It has no DNS records and
-the .com registry has no entry for it. Until it is registered:
-- the site stays at the GitHub Pages address above;
-- the site uses the Gmail address settleinirelandsupport@gmail.com, which works without the domain.
+**Status (27 Oct 2026): connected.** settleinireland.com is registered at GoDaddy (renews 25 Oct 2027).
+At GoDaddy the domain forward was removed, the four A records for `@` point to GitHub Pages and `www` is a
+CNAME to `mervinilyaz2001.github.io`. In GitHub, Settings > Pages has `settleinireland.com` as the custom
+domain. GoDaddy asks for an emailed code each time DNS records change. Email stays on Gmail
+(settleinirelandsupport@gmail.com), so no MX records are needed.
 
-**To connect it once you own it:**
+**How it was connected (for reference, or if it ever needs redoing):**
 
 1. Register `settleinireland.com` with any registrar (for example Blacknight, Namecheap or Cloudflare).
 2. Recommended: verify the domain in GitHub first, which stops anyone else using it on GitHub Pages.
