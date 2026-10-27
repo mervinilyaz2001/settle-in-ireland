@@ -9,7 +9,8 @@
  * 6. The floating WhatsApp button is on every page.
  * 7. Every internal link and #anchor points to something that exists.
  * 8. No "null" or "undefined" text leaked into a page, and the email address stays hidden
- *    while emailActive is false. Redirect pages for old addresses are skipped.
+ *    while emailActive is false (and shows on the Contact page when it is true). Redirect pages for old
+ *    addresses are skipped.
  */
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -115,6 +116,7 @@ for (const [route, html] of htmlByRoute) {
   const visible = body.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<style[\s\S]*?<\/style>/g, '');
   if (/>[^<]*(null|undefined)[^<]*</.test(visible)) problems.push(`${route}: "null" or "undefined" shown on the page`);
   if (!site.emailActive && html.includes(site.email)) problems.push(`${route}: email address in the page while emailActive is false`);
+  if (site.emailActive && route === '/contact/' && !html.includes(`mailto:${site.email}`)) problems.push(`${route}: email address missing`);
 
   for (const m of html.matchAll(/href="(https:\/\/wa\.me\/[^"]*)"/g)) {
     const url = decode(m[1]);

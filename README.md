@@ -46,7 +46,7 @@ Change these in `src/config/site.ts` unless another file is named. Each one is h
 until it is done.
 
 **The business**
-- [ ] `email`: the address to show. Waiting for the owner to confirm which one.
+- [x] `email`: settleinirelandsupport@gmail.com, shown on the Contact page, footer, Privacy Policy and Terms.
 - [ ] `location`: confirm "Dublin, Ireland" is how you want it shown.
 
 **Service and pricing**
@@ -56,9 +56,8 @@ until it is done.
   the Terms). IRP and PPSN assistance on their own say "contact us for a price".
 - [ ] `supportPeriod`: confirm how long WhatsApp support lasts.
 - [ ] `fee.payments[1].when`: confirm the second payment is due once the IRP appointment is confirmed.
-- [ ] `fee.appointmentDelayPolicy`: what happens to the second payment if the IRP appointment is delayed, unavailable, rescheduled or cancelled.
-- [ ] `fee.paymentMethods`: how clients pay, and that receipts are given.
-- [ ] `fee.cancellationPolicy`: check the draft, remove `[OWNER TO CONFIRM]`, and make sure it matches the Terms.
+- [ ] `fee.cancellationPolicy`: if plans change, clients text, call or talk to you in person and you agree what happens
+  next. Have it checked with the Terms before launch.
 - [ ] `responseTime`: optional. Leave as `null` unless you want to promise a reply time.
 
 **Legal**
@@ -70,7 +69,8 @@ until it is done.
 - [ ] **Have the Privacy Policy and Terms reviewed** by a solicitor or adviser against GDPR and Irish consumer law. They are templates, and having them does not by itself make the business compliant.
 
 **Contact and launch**
-- [ ] Register **settleinireland.com** and set up the mailbox, then set `emailActive: true` (section 4).
+- [ ] Register **settleinireland.com** (section 4). The site already uses settleinirelandsupport@gmail.com, so no
+  mailbox is needed for the domain unless you want one.
 - [ ] Connect the enquiry form (section 5) and send yourself a test enquiry from both forms.
 - [ ] Optional: analytics and Search Console (section 6).
 - [ ] Launch day: set `noindex: false` so search engines can list the site.
@@ -80,7 +80,7 @@ until it is done.
 **Current status (checked 25 Oct 2026): settleinireland.com is not registered.** It has no DNS records and
 the .com registry has no entry for it. Until it is registered:
 - the site stays at the GitHub Pages address above;
-- the email address `hello@settleinireland.com` cannot receive mail, so it is hidden on the site (`emailActive: false`).
+- the site uses the Gmail address settleinirelandsupport@gmail.com, which works without the domain.
 
 **To connect it once you own it:**
 
@@ -110,7 +110,7 @@ the .com registry has no entry for it. Until it is registered:
    `https://settleinireland.com` with no code change. GitHub then redirects the old
    `github.io/settle-in-ireland/` address to the new domain, so there is no duplicate site for Google.
 6. Open https://settleinireland.com and https://www.settleinireland.com to check both load over HTTPS.
-7. Once your mailbox works, set `emailActive: true`.
+7. Optional: if you later create an address on the domain, change `email` in `site.ts`.
 
 Only consider the domain connected once step 6 works.
 

@@ -53,7 +53,6 @@ const facts = [
   { term: 'Price', value: `${packagePrice} ${site.fee.perUnit}. The price is per person, not per booking.` },
   { term: 'What it covers', value: 'All seven services listed on this page.' },
   { term: 'How support is given', value: site.supportMode },
-  { term: 'How to pay', value: site.fee.paymentMethods },
 ];
 ---
 
@@ -293,16 +292,9 @@ const facts = [
         intro="The fee is split into two payments as the service moves forward."
       />
       <PaymentTimeline class="mt-10 max-w-4xl" />
-      <div class="mt-8 max-w-4xl rounded-xl border border-line bg-white p-6">
-        <h3 class="flex items-center gap-3 text-[1.15rem]">
-          <Icon name="calendar-check" size={22} class="text-brand-700" />
-          If the IRP appointment is delayed, unavailable, rescheduled or cancelled
-        </h3>
-        <p class="mt-3"><Text value={site.fee.appointmentDelayPolicy} /></p>
-        <p class="mt-3 text-[0.95rem] text-muted">
-          IRP appointments are requested by you through the official channels. We cannot promise a specific date or outcome.
-        </p>
-      </div>
+      <p class="mt-6 max-w-4xl text-[0.95rem] text-muted">
+        IRP appointments are requested by you through the official channels. We cannot promise a specific date or outcome.
+      </p>
     </div>
   </section>
 

@@ -92,7 +92,7 @@ export const faqCategories: FAQCategory[] = [
       {
         id: 'payment',
         q: 'How does payment work?',
-        a: `<p>The Moving on Your Own package is paid in two parts:</p>${paymentList}<p>${site.fee.milestoneNote}</p><p>If the IRP registration appointment is delayed, unavailable, rescheduled or cancelled: ${site.fee.appointmentDelayPolicy}</p><p>How to pay: ${site.fee.paymentMethods}</p>`,
+        a: `<p>The Moving on Your Own package is paid in two parts:</p>${paymentList}<p>${site.fee.milestoneNote}</p>`,
       },
       {
         id: 'plans-change',

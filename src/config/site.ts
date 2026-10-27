@@ -52,13 +52,9 @@ export const site = {
   whatsappNumber: '353899741613',
   /** Shown on the site exactly as written here. Used for the "Call" links. */
   phone: '+353 89 974 1613',
-  email: 'hello@settleinireland.com',
-  /**
-   * EMAIL SWITCH
-   * false hides the email address everywhere. The domain settleinireland.com was not registered on
-   * 25 Oct 2026, so this address cannot receive mail yet. Set to true once the mailbox works.
-   */
-  emailActive: false,
+  email: 'settleinirelandsupport@gmail.com',
+  /** EMAIL SWITCH: false hides the email address everywhere on the site. */
+  emailActive: true,
   /** Optional. Only shown if you set it, for example 'We usually reply within one working day.' Leave null to make no promise. */
   responseTime: null as string | null,
 
@@ -82,17 +78,10 @@ export const site = {
       { amount: 200, when: "Once the client's IRP registration appointment is confirmed." },
     ] as Payment[],
     milestoneNote: 'This is a service milestone only. We do not sell, reserve or guarantee government appointments.',
-    /** What happens to the second payment if the IRP appointment is delayed, unavailable, rescheduled or cancelled. */
-    appointmentDelayPolicy:
-      '[OWNER TO CONFIRM: what happens to the second payment if the IRP registration appointment is delayed, unavailable, rescheduled or cancelled, for example whether it stays due only once an appointment is confirmed, and whether support continues in the meantime]',
     exclusions: 'Government fees, accommodation costs, deposits and third-party charges are separate.',
-    paymentMethods: '[OWNER TO CONFIRM: how clients pay, e.g. bank transfer, and that receipts are provided]',
-    /**
-     * Cancellation and refund summary. Shown on the pricing page and in the Terms.
-     * The text below is a starting point only. Check it, change it and have it reviewed before launch.
-     */
+    /** What happens if plans change. Shown on the Moving on Your Own page, in the FAQ and in the Terms. */
     cancellationPolicy:
-      '[OWNER TO CONFIRM] The first payment covers pre-arrival planning work, which starts as soon as it is paid. If plans change, for example a visa is refused or travel is postponed, contact us as soon as possible and we will explain what can be refunded or moved to a later date. The second payment is only due once that milestone is reached.',
+      'If your plans change, for example a visa is refused or travel is postponed, let us know as soon as possible. Send us a text or WhatsApp message, call us, or talk to us in person, and we will agree together what happens next, including what can be refunded or moved to a later date. The second payment is only due once that milestone is reached.',
   },
 
   /* ---------- Education agencies ---------- */
