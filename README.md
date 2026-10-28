@@ -71,7 +71,7 @@ until it is done.
 **Contact and launch**
 - [ ] Register **settleinireland.com** (section 4). The site already uses settleinirelandsupport@gmail.com, so no
   mailbox is needed for the domain unless you want one.
-- [ ] Connect the enquiry form (section 5) and send yourself a test enquiry from both forms.
+- [x] Enquiry forms connected to Web3Forms on 28 Oct 2026; a TEST enquiry from the live Contact page was accepted (section 5).
 - [x] Google Analytics 4 (G-QW0B8T2C0G, property "Settle in Ireland Website") and Google Search Console (verified with the
   HTML tag, sitemap submitted, homepage indexing requested), 28 Oct 2026. Section 6.
 - [x] Launched 28 Oct 2026: `noindex: false`, so search engines can list the site.
@@ -119,8 +119,10 @@ Only consider the domain connected once step 6 works.
 
 ## 5. Enquiry form
 
-**Current status: no form provider is connected.** The forms validate the answers, then open the
-enquiry in WhatsApp, ready to send to you. They never show a fake "sent" message.
+**Current status (28 Oct 2026): connected to Web3Forms** (free plan, 250 enquiries a month). Enquiries from
+both forms are emailed to the address the access key was created with (settleinirelandsupport@gmail.com). If
+Web3Forms cannot be reached, the form says so and offers WhatsApp instead. Without a provider, the forms open
+the enquiry in WhatsApp. They never show a fake "sent" message.
 
 To have enquiries emailed to you instead, connect **one** free provider:
 
