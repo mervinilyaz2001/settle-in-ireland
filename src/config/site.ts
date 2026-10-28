@@ -38,11 +38,11 @@ export const site = {
     'One-to-one help for international students and education agencies: arrival, accommodation, IRP registration and renewal, and PPSN application assistance.',
 
   /**
-   * PRE-LAUNCH SWITCH
-   * true adds a "noindex" tag to every page so search engines ignore the site while the
-   * placeholders are being filled in. Set it to false on launch day.
+   * SEARCH ENGINE SWITCH
+   * false lets Google and other search engines list the site (launched 28 Oct 2026).
+   * true adds a "noindex" tag to every page so search engines ignore it.
    */
-  noindex: true,
+  noindex: false,
 
   /** Where the team is based. Shown on the homepage, About page and in search results. */
   location: 'Dublin, Ireland',
@@ -142,11 +142,11 @@ export const site = {
    * Search Console: paste only the content value of the HTML-tag verification method.
    */
   analytics: {
-    ga4MeasurementId: null as string | null,
+    ga4MeasurementId: 'G-QW0B8T2C0G' as string | null,
     provider: null as null | 'plausible' | 'umami',
     siteId: null as string | null,
     scriptUrl: null as string | null,
-    googleSiteVerification: null as string | null,
+    googleSiteVerification: 'ecnzRttq6wok_52kpq-Xd_KjqibTSX4prmouNIGZ83I' as string | null,
   },
 
   /* ---------- Social profiles ----------
