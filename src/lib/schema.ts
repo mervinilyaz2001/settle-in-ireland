@@ -14,6 +14,7 @@ export function businessSchema() {
     '@type': 'ProfessionalService',
     '@id': businessId,
     name: site.name,
+    alternateName: 'Settle In Ireland',
     slogan: site.tagline,
     description: site.description,
     url: absoluteUrl('/'),

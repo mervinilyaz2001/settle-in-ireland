@@ -11,16 +11,19 @@ import LogoMark from '../components/LogoMark.astro';
 import OfferCards from '../components/OfferCards.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
 import { site } from '../config/site';
-import { businessSchema } from '../lib/schema';
+import { businessId, businessSchema } from '../lib/schema';
 import { absoluteUrl, url } from '../lib/url';
 import { waLink, waMessages } from '../lib/whatsapp';
 
+// Tells Google the site's name, so searches for "Settle in Ireland" show it as the brand
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: site.name,
+  alternateName: ['Settle In Ireland', 'settleinireland.com'],
   url: absoluteUrl('/'),
   inLanguage: 'en-IE',
+  publisher: { '@id': businessId },
 };
 
 const plan = [
@@ -42,7 +45,7 @@ const values = [
 ---
 
 <BaseLayout
-  title="IRP, PPSN & Student Arrival Help | Settle in Ireland"
+  title="Settle in Ireland | IRP, PPSN & Student Arrival Help"
   description="One-to-one help for international students and education agencies in Ireland: arrival, accommodation, IRP registration and renewal, and PPSN applications."
 >
   <JsonLd slot="head" data={[businessSchema(), websiteSchema]} />
@@ -65,7 +68,7 @@ const values = [
           Moving to Ireland? Have someone here <span class="text-gold-300">from day one.</span>
         </h1>
         <p class="lead hero-in mt-6 max-w-[38rem] text-brand-100" style="--d:240ms">
-          We help international students and education agencies with the practical side of moving to Ireland: arrival, accommodation, IRP
+          {site.name} helps international students and education agencies with the practical side of moving to Ireland: arrival, accommodation, IRP
           registration and renewal, and PPSN applications. One-to-one support from our team in {site.location.split(',')[0]}.
         </p>
         <div class="hero-in mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center" style="--d:360ms">
