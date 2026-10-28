@@ -112,9 +112,10 @@ export const site = {
    * Both are free for small volumes and email each enquiry to you.
    */
   forms: {
-    provider: null as null | 'formspree' | 'web3forms',
+    provider: 'web3forms' as null | 'formspree' | 'web3forms',
     formspreeId: null as string | null,
-    web3formsKey: null as string | null,
+    // Web3Forms access key for settleinirelandsupport@gmail.com. Not a secret: it is meant to be in the page.
+    web3formsKey: 'f3f06dc9-cdb0-4082-a4e1-eec8f00744f7' as string | null,
   },
 
   /* ---------- Testimonials ----------
