@@ -72,8 +72,10 @@ until it is done.
 - [ ] Register **settleinireland.com** (section 4). The site already uses settleinirelandsupport@gmail.com, so no
   mailbox is needed for the domain unless you want one.
 - [ ] Connect the enquiry form (section 5) and send yourself a test enquiry from both forms.
-- [ ] Optional: analytics and Search Console (section 6).
-- [ ] Launch day: set `noindex: false` so search engines can list the site.
+- [x] Google Analytics 4 (G-QW0B8T2C0G, property "Settle in Ireland Website") and Google Search Console (verified with the
+  HTML tag, sitemap submitted, homepage indexing requested), 28 Oct 2026. Section 6.
+- [x] Launched 28 Oct 2026: `noindex: false`, so search engines can list the site.
+- [ ] In GA4, once enquiries start arriving, mark `enquiry_submit` as a key event (Admin > Events).
 
 ## 4. Custom domain (settleinireland.com)
 
@@ -146,6 +148,9 @@ Formspree and Web3Forms add their own spam filtering.
 **Privacy:** the Privacy Policy automatically names the provider once one is connected.
 
 ## 6. Analytics and Search Console
+
+**Status (28 Oct 2026): both are set up** in the Google account that owns the site's Analytics (account 256658219).
+Search Console uses the URL-prefix property `https://settleinireland.com/`. Keep the verification tag in `site.ts`.
 
 Everything is off by default, so the site sets no cookies and shows no banner.
 
