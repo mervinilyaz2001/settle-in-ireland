@@ -1,7 +1,8 @@
 ---
 /**
  * ABOUT US
- * About the company and how the team works. No personal names, bios or photos, by the owner's choice.
+ * About the company: who we help and how the team works. No personal names, bios or photos, by the owner's choice.
+ * Keep it different from the homepage (no copy of the service cards), or Google treats the two pages as duplicates.
  * Never add credentials, client numbers or experience that cannot be backed up.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -9,12 +10,13 @@ import CTASection from '../components/CTASection.astro';
 import Disclaimer from '../components/Disclaimer.astro';
 import Icon from '../components/Icon.astro';
 import JsonLd from '../components/JsonLd.astro';
-import OfferCards from '../components/OfferCards.astro';
 import PageHero from '../components/PageHero.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import Testimonials from '../components/Testimonials.astro';
 import { site } from '../config/site';
+import { getService, serviceUrl } from '../data/services';
 import { businessSchema } from '../lib/schema';
+import { url } from '../lib/url';
 
 const values = [
   {
@@ -25,6 +27,33 @@ const values = [
   { icon: 'shield-check', title: 'Honest', text: 'We explain what we can and cannot do, and we never promise outcomes that depend on others.' },
   { icon: 'list-checks', title: 'Practical', text: 'Clear steps, simple checklists and links to official sources, in plain English.' },
   { icon: 'whatsapp', title: 'Easy to reach', text: 'Message us on WhatsApp or call. We meet in person only if it is needed.' },
+];
+
+const irp = getService('irp-application-assistance');
+const ppsn = getService('ppsn-application-assistance');
+
+const audiences = [
+  {
+    icon: 'graduation-cap',
+    title: 'International students moving on their own',
+    text: 'Many people apply to an Irish college or English language school directly, without an agency. We guide them from before they fly through their first weeks: finding a safe place to live, getting a phone and a bank account, and registering for their IRP and PPS Number.',
+    links: [{ label: 'Moving on Your Own', href: url('/moving-to-ireland-on-your-own/') }],
+  },
+  {
+    icon: 'building',
+    title: 'Education agencies and the students they send',
+    text: 'Agencies look after admission and visas. Once a student lands, we take over the practical side, one to one, and keep the agency informed at the milestones agreed at the start.',
+    links: [{ label: 'Education Agencies', href: url('/agency-partnerships/') }],
+  },
+  {
+    icon: 'id-card',
+    title: 'Anyone who needs help with one step',
+    text: 'Some people only need a hand with a single task, such as renewing an IRP as a student or applying for a PPS Number. We offer IRP and PPSN application assistance on their own, too.',
+    links: [
+      { label: 'IRP Assistance', href: serviceUrl(irp) },
+      { label: 'PPSN Assistance', href: serviceUrl(ppsn) },
+    ],
+  },
 ];
 
 const promises = [
@@ -43,21 +72,40 @@ const promises = [
 
   <PageHero
     eyebrow="About us"
-    title="A team in Ireland, helping students settle in"
-    intro={`${site.name} is an independent support service based in ${site.location}. We give international students, and the education agencies that send them, one-to-one help with the practical side of moving to Ireland.`}
+    title="About Settle in Ireland"
+    intro="Who we are, who we help and how we work. We are an independent team based in Dublin, and we are not part of any government department, agency or college."
     crumbs={[{ label: 'About Us', href: '/about/' }]}
   />
 
-  <!-- What we do -->
-  <section class="section" aria-labelledby="what-heading">
+  <!-- Who we help -->
+  <section class="section" aria-labelledby="who-heading">
     <div class="container-site">
       <SectionHeading
-        id="what-heading"
-        eyebrow="What we do"
-        title="Four ways we can help"
-        intro="Support for agencies and their students, a complete package for students moving on their own, and help with just your IRP or PPS Number if that is all you need."
+        id="who-heading"
+        eyebrow="Who we help"
+        title="Students, agencies, and anyone stuck on one step"
+        intro="Most of the people we help are international students in their first weeks in Ireland. Here is how that works in practice."
       />
-      <OfferCards class="mt-10" />
+      <ul class="mt-10 grid gap-5 lg:grid-cols-3">
+        {
+          audiences.map((a, i) => (
+            <li class="lift flex flex-col rounded-xl border border-line bg-white p-6 sm:p-7" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+              <span class="icon-tile">
+                <Icon name={a.icon} size={22} />
+              </span>
+              <h3 class="mt-4 text-[1.15rem]">{a.title}</h3>
+              <p class="mt-2 text-[0.97rem]">{a.text}</p>
+              <p class="mt-auto flex flex-wrap gap-x-5 gap-y-2 pt-5">
+                {a.links.map((l) => (
+                  <a href={l.href} class="text-link">
+                    {l.label} <Icon name="arrow-right" size={18} />
+                  </a>
+                ))}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </section>
 
@@ -87,7 +135,8 @@ const promises = [
       <div>
         <SectionHeading id="based-heading" eyebrow="Where we are" title={`Based in ${site.location.split(',')[0]}, supporting students across Ireland`} />
         <p class="lead mt-5">
-          {site.supportMode} We already support students from South Asia, and we welcome clients and education agencies from any country.
+          Our team is based in {site.location.split(',')[0]} and supports students wherever they live in Ireland. {site.supportMode} Our clients so
+          far include students from South Asia, and we welcome clients and education agencies from any country.
         </p>
         <h3 class="mt-8 text-[1.2rem]">What you can count on</h3>
         <ul class="check-list mt-4">
