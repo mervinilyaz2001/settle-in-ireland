@@ -1,0 +1,53 @@
+---
+/** The student guides hub: every free guide in one place. */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CTASection from '../../components/CTASection.astro';
+import Icon from '../../components/Icon.astro';
+import PageHero from '../../components/PageHero.astro';
+import { guides, guidesChecked } from '../../data/guides';
+import { url } from '../../lib/url';
+import { waMessages } from '../../lib/whatsapp';
+---
+
+<BaseLayout
+  title="Student Guides for Moving to Ireland | Settle in Ireland"
+  description="Free plain English guides for international students moving to Ireland: IRP registration and renewal, PPS Number, safe housing and working while studying."
+  whatsappMessage={waMessages.direct}
+>
+  <PageHero
+    eyebrow={`Free student guides, checked ${guidesChecked}`}
+    title="Free guides for students moving to Ireland"
+    intro="Clear, step-by-step answers to the questions international students ask most, from your first IRP appointment to your first part-time job. Every guide links to the official websites."
+    crumbs={[{ label: 'Student Guides', href: '/guides/' }]}
+  />
+
+  <section class="section" aria-label="All student guides">
+    <div class="container-site">
+      <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          guides.map((g, i) => (
+            <li data-reveal style={`--reveal-delay:${(i % 3) * 80}ms`}>
+              <article class="card card-hover group relative flex h-full flex-col p-6">
+                <span class="icon-tile self-start">
+                  <Icon name={g.icon} size={24} />
+                </span>
+                <h2 class="mt-5 text-[1.2rem] leading-snug">{g.cardTitle}</h2>
+                <p class="mt-2 text-[0.97rem]">{g.summary}</p>
+                <a href={url(g.path)} class="text-link mt-auto self-start pt-5 after:absolute after:inset-0 after:rounded-[inherit] after:content-['']">
+                  Read the guide<span class="sr-only">: {g.cardTitle}</span> <Icon name="arrow-right" size={18} />
+                </a>
+              </article>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <CTASection
+    title="Rather have someone walk you through it?"
+    text="Our team helps international students with every step in these guides, one to one, by WhatsApp and phone."
+    message={waMessages.direct}
+    secondary={{ label: 'See the Moving on Your Own package', href: '/moving-to-ireland-on-your-own/' }}
+  />
+</BaseLayout>

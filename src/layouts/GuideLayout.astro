@@ -1,0 +1,190 @@
+---
+/**
+ * One student guide: hero with section links, a short answer, the steps and tips, common questions
+ * (with FAQ data for Google), more guides, and a call to action. Content lives in src/data/guides.ts.
+ */
+import BaseLayout from './BaseLayout.astro';
+import CTASection from '../components/CTASection.astro';
+import Disclaimer from '../components/Disclaimer.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import Icon from '../components/Icon.astro';
+import JsonLd from '../components/JsonLd.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { site } from '../config/site';
+import { guides, guidesChecked, guidesModified, type Guide } from '../data/guides';
+import { businessId } from '../lib/schema';
+import { absoluteUrl, url } from '../lib/url';
+
+interface Props {
+  guide: Guide;
+}
+const { guide } = Astro.props;
+
+// Numbering carries on from one numbered section to the next
+let n = 0;
+const sections = guide.sections.map((s) => ({
+  ...s,
+  items: s.items.map((item) => ({ ...item, n: s.numbered ? ++n : 0 })),
+}));
+const others = guides.filter((g) => g.slug !== guide.slug);
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: guide.h1,
+  description: guide.metaDescription,
+  inLanguage: 'en-IE',
+  url: absoluteUrl(guide.path),
+  mainEntityOfPage: absoluteUrl(guide.path),
+  dateModified: guidesModified,
+  author: { '@type': 'Organization', '@id': businessId, name: site.name, url: absoluteUrl('/') },
+  publisher: { '@type': 'Organization', '@id': businessId, name: site.name, logo: { '@type': 'ImageObject', url: absoluteUrl('/logo-light.png') } },
+};
+---
+
+<BaseLayout title={guide.metaTitle} description={guide.metaDescription} whatsappMessage={guide.cta.waMessage}>
+  <JsonLd slot="head" data={articleSchema} />
+
+  <PageHero
+    eyebrow={`Student guide, checked ${guidesChecked}`}
+    title={guide.h1}
+    intro={guide.intro}
+    crumbs={[
+      { label: 'Student Guides', href: '/guides/' },
+      { label: guide.cardTitle, href: guide.path },
+    ]}
+    wide
+  >
+    <nav aria-label="Guide sections" class="mt-8 flex flex-wrap gap-2">
+      {
+        sections.map((s) => (
+          <a href={`#${s.id}`} class="inline-flex min-h-11 items-center gap-2 rounded-full border border-line-strong bg-white px-4 text-[0.95rem] font-semibold text-ink hover:border-brand-300 hover:bg-brand-50">
+            <Icon name={s.icon} size={18} class="text-accent-700" /> {s.title}
+          </a>
+        ))
+      }
+    </nav>
+  </PageHero>
+
+  <!-- Short answer, written to be quoted in search results -->
+  <section class="section pb-0" aria-labelledby="short-answer-heading">
+    <div class="container-site">
+      <div class="max-w-4xl rounded-2xl border border-brand-200 bg-brand-50 p-6 sm:p-8" data-reveal>
+        <h2 id="short-answer-heading" class="text-[1.4rem] sm:text-[1.6rem]">The short answer</h2>
+        <p class="mt-3 text-[1.05rem] text-ink">{guide.shortAnswer}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Steps and tips -->
+  {
+    sections.map((section, si) => (
+      <section id={section.id} class:list={['section', si % 2 === 1 && 'bg-white']} aria-labelledby={`${section.id}-heading`}>
+        <div class="container-site">
+          <SectionHeading id={`${section.id}-heading`} eyebrow={`Part ${si + 1} of ${sections.length}`} title={section.title} intro={section.intro} />
+          {section.numbered ? (
+            <ol class="mt-10 grid max-w-4xl gap-5" start={section.items[0].n}>
+              {section.items.map((item, i) => (
+                <li class:list={['lift flex gap-5 rounded-xl border border-line p-5 sm:p-6', si % 2 === 1 ? 'bg-canvas' : 'bg-white']} data-reveal style={`--reveal-delay:${(i % 3) * 70}ms`}>
+                  <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-900 font-display font-bold text-white">{item.n}</span>
+                  <div class="min-w-0">
+                    <h3 class="text-[1.15rem] leading-snug">{item.title}</h3>
+                    <p class="mt-2">{item.text}</p>
+                    {(item.official || item.help) && (
+                      <p class="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-[0.95rem]">
+                        {item.official && (
+                          <a href={item.official.url} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 font-semibold text-accent-700 underline underline-offset-4">
+                            <Icon name="external-link" size={16} /> {item.official.label}
+                            <span class="sr-only"> (opens in a new tab)</span>
+                          </a>
+                        )}
+                        {item.help && (
+                          <a href={url(item.help.href)} class="text-link">
+                            {item.help.label} <Icon name="arrow-right" size={16} />
+                          </a>
+                        )}
+                      </p>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          ) : (
+            <ul class="mt-10 grid max-w-5xl gap-5 sm:grid-cols-2">
+              {section.items.map((item, i) => (
+                <li class:list={['lift rounded-xl border border-line p-5 sm:p-6', si % 2 === 1 ? 'bg-canvas' : 'bg-white']} data-reveal style={`--reveal-delay:${(i % 2) * 70}ms`}>
+                  <h3 class="flex items-start gap-2.5 text-[1.08rem] leading-snug">
+                    <span aria-hidden="true" class="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-gold-500" />
+                    {item.title}
+                  </h3>
+                  <p class="mt-2 text-[0.98rem]">{item.text}</p>
+                  {(item.official || item.help) && (
+                    <p class="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-[0.93rem]">
+                      {item.official && (
+                        <a href={item.official.url} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 font-semibold text-accent-700 underline underline-offset-4">
+                          <Icon name="external-link" size={16} /> {item.official.label}
+                          <span class="sr-only"> (opens in a new tab)</span>
+                        </a>
+                      )}
+                      {item.help && (
+                        <a href={url(item.help.href)} class="text-link">
+                          {item.help.label} <Icon name="arrow-right" size={16} />
+                        </a>
+                      )}
+                    </p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </section>
+    ))
+  }
+
+  <!-- Questions -->
+  <section class="section bg-white" aria-labelledby="guide-faq-heading">
+    <div class="container-site grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <div>
+        <SectionHeading id="guide-faq-heading" eyebrow="Questions" title="Common questions from students" />
+        <p class="mt-5 text-[0.95rem] text-muted">
+          This guide was checked in {guidesChecked}. Rules and fees change, so always confirm each step on the official websites linked above.
+        </p>
+        <Disclaimer class="mt-6" />
+      </div>
+      <FAQAccordion items={guide.faqs} idPrefix={`faq-${guide.slug}`} schema />
+    </div>
+  </section>
+
+  <!-- More guides -->
+  <section class="section" aria-labelledby="more-guides-heading">
+    <div class="container-site">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <SectionHeading id="more-guides-heading" eyebrow="Student guides" title="More free guides" />
+        <a href={url('/guides/')} class="text-link shrink-0">All student guides <Icon name="arrow-right" size={18} /></a>
+      </div>
+      <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          others.slice(0, 3).map((g) => (
+            <li>
+              <a href={url(g.path)} class="card card-hover flex h-full items-start gap-4 p-5">
+                <span class="icon-tile shrink-0">
+                  <Icon name={g.icon} size={22} />
+                </span>
+                <span class="min-w-0">
+                  <span class="block font-display font-bold text-ink">{g.cardTitle}</span>
+                  <span class="mt-1 block text-[0.95rem]">{g.summary}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <div class="pt-4 lg:pt-8">
+    <CTASection title={guide.cta.title} text={guide.cta.text} message={guide.cta.waMessage} secondary={guide.cta.secondary} />
+  </div>
+</BaseLayout>

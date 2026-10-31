@@ -1,0 +1,13 @@
+---
+/** Student guides at /guides/{slug}/. The first guide lives at /moving-to-dublin-as-a-student/ instead. */
+import GuideLayout from '../../layouts/GuideLayout.astro';
+import { guides, type Guide } from '../../data/guides';
+
+export function getStaticPaths() {
+  return guides.filter((g) => g.path.startsWith('/guides/')).map((guide) => ({ params: { slug: guide.slug }, props: { guide } }));
+}
+
+const { guide } = Astro.props as { guide: Guide };
+---
+
+<GuideLayout guide={guide} />

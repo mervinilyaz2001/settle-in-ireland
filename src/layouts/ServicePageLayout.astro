@@ -10,6 +10,7 @@ import PageHero from '../components/PageHero.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
 import { site } from '../config/site';
+import { guidesForService } from '../data/guides';
 import { servicePath, services } from '../data/services';
 import type { Service } from '../data/types';
 import { serviceSchema } from '../lib/schema';
@@ -26,6 +27,7 @@ const others = services.filter((s) => s.slug !== service.slug);
 // IRP and PPSN assistance are also offered on their own; the other services are part of the package
 const standalone = Boolean(service.path);
 const packagePath = '/moving-to-ireland-on-your-own/';
+const relatedGuides = guidesForService(service.slug);
 
 const toc = [
   { id: 'covers', label: 'What this service covers' },
@@ -198,6 +200,27 @@ const toc = [
             More answers on the <a href={url('/faq/')} class="font-semibold text-accent-700 underline">FAQ page</a>.
           </p>
         </section>
+
+        <!-- Free guides on this topic -->
+        {
+          relatedGuides.length > 0 && (
+            <section aria-labelledby="guides-heading" class="rounded-xl border border-line bg-white p-6 sm:p-7">
+              <h2 id="guides-heading" class="flex items-center gap-3 text-[1.3rem]">
+                <span class="icon-tile !h-10 !w-10 !rounded-xl"><Icon name="list-checks" size={20} /></span>
+                Free step-by-step guides
+              </h2>
+              <ul class="mt-4 grid gap-2">
+                {relatedGuides.map((g) => (
+                  <li>
+                    <a href={url(g.path)} class="text-link">
+                      {g.cardTitle} <Icon name="arrow-right" size={16} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
 
         <!-- 10. Package callout -->
         <section aria-labelledby="package-heading" class="relative overflow-hidden rounded-xl border border-gold-300 bg-gold-50 p-6 sm:p-8">

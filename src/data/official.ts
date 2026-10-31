@@ -20,6 +20,31 @@ export const official = {
     label: 'Coming to study in Ireland (Immigration Service Delivery)',
     url: 'https://www.irishimmigration.ie/coming-to-study-in-ireland/',
   },
+  isdRegistrationFaq: {
+    label: 'Registration FAQs (Immigration Service Delivery)',
+    url: 'https://www.irishimmigration.ie/registering-your-immigration-permission/frequently-asked-questions-for-registration/',
+  },
+  isdRequiredDocs: {
+    label: 'Documents for first-time registration (Immigration Service Delivery)',
+    url: 'https://www.irishimmigration.ie/registering-your-immigration-permission/how-to-register-your-immigration-permission-for-the-first-time/required-documents/',
+  },
+  isdStamps: {
+    label: 'Immigration permission stamps (Immigration Service Delivery)',
+    url: 'https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/',
+  },
+  gardaRentalFraud: {
+    label: 'Student accommodation fraud warning (An Garda Síochána)',
+    url: 'https://www.garda.ie/en/about-us/our-departments/office-of-corporate-communications/news-media/news-archive/student-accommodation-fraud-scam-warning-for-3rd-level-students-31-8-22-.html',
+  },
+  revenueFirstJob: {
+    label: 'Starting your first job (Revenue)',
+    url: 'https://www.revenue.ie/en/jobs-and-pensions/starting-your-first-job/index.aspx',
+  },
+  ciMinimumWage: {
+    label: 'Minimum wage (Citizens Information)',
+    url: 'https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/pay-and-employment/minimum-wage/',
+  },
+  wrc: { label: 'Workplace Relations Commission', url: 'https://www.workplacerelations.ie/en/' },
   ciHome: { label: 'Citizens Information', url: 'https://www.citizensinformation.ie' },
   ciMovingToIreland: {
     label: 'Moving to Ireland (Citizens Information)',
