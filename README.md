@@ -253,6 +253,23 @@ description Google shows, the main heading, the address and the text. Keep them 
 | IRP | `/irp-application-assistance/` | IRP registration help, IRP renewal for students, IRP renewal online, Irish Residence Permit student, IRP application assistance |
 | PPSN | `/ppsn-application-assistance/` | PPSN application assistance, PPS Number for students, how to get a PPS Number, PPSN proof of address |
 
+**Student guides** (`/guides/`) target the questions students actually type into Google. The content for
+all six lives in `src/data/guides.ts` and they share `src/layouts/GuideLayout.astro`:
+
+| Guide | Address |
+|---|---|
+| Moving to Dublin as a student | `/moving-to-dublin-as-a-student/` |
+| How to renew your IRP online | `/guides/renew-irp-online-student/` |
+| Your first IRP appointment in Dublin | `/guides/irp-appointment-dublin/` |
+| Finding a room without getting scammed | `/guides/student-accommodation-dublin-scams/` |
+| How to get a PPS Number as a student | `/guides/pps-number-student-ireland/` |
+| Working while studying (Stamp 2) | `/guides/working-while-studying-ireland/` |
+
+Re-check every guide against the official links at least twice a year, then update `guidesChecked` and
+`guidesModified` in `guides.ts`. Amounts that change often (fees, required funds, wages) are deliberately left
+out and linked instead. To add a guide, add an entry to `guides` with a `/guides/...` path; it appears on the
+hub, in "More free guides" and on the related service pages automatically.
+
 Nobody can guarantee the first result on Google. What decides it, in order of impact:
 
 1. **Let Google in.** Set `noindex: false` on launch day, connect the domain, verify Search Console and submit
