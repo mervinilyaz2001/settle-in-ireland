@@ -16,6 +16,10 @@ export const official = {
     label: 'Renewing your registration permission if you live in Ireland (Immigration Service Delivery)',
     url: 'https://www.irishimmigration.ie/registering-your-immigration-permission/how-to-renew-your-current-permission/renewing-your-registration-permission-if-you-live-in-the-republic-of-ireland/',
   },
+  isdStudy: {
+    label: 'Coming to study in Ireland (Immigration Service Delivery)',
+    url: 'https://www.irishimmigration.ie/coming-to-study-in-ireland/',
+  },
   ciHome: { label: 'Citizens Information', url: 'https://www.citizensinformation.ie' },
   ciMovingToIreland: {
     label: 'Moving to Ireland (Citizens Information)',
@@ -48,6 +52,7 @@ export const official = {
   },
   govDsp: { label: 'Department of Social Protection (gov.ie)', url: 'https://www.gov.ie/en/department-of-social-protection/' },
   leapCard: { label: 'TFI Leap Card', url: 'https://about.leapcard.ie' },
+  studentLeapCard: { label: 'Student Leap Card', url: 'https://www.studentleapcard.ie' },
   tfi: { label: 'Transport for Ireland', url: 'https://www.transportforireland.ie' },
   tfiFares: { label: 'Fares (Transport for Ireland)', url: 'https://www.transportforireland.ie/fares/' },
   tfiLive: { label: 'TFI Live app (Transport for Ireland)', url: 'https://www.transportforireland.ie/available-apps/tfi-live/' },

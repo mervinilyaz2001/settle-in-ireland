@@ -227,7 +227,11 @@ const facts = [
         eyebrow="Before you travel"
         title="A simple checklist for your move"
         intro="General steps most people take before moving to Ireland. Requirements change, so always check the official websites."
-      />
+      >
+        <a href={url('/moving-to-dublin-as-a-student/')} class="text-link mt-4">
+          Read the full step-by-step student guide <Icon name="arrow-right" size={18} />
+        </a>
+      </SectionHeading>
       <ol class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {
           checklist.map((item, i) => (
